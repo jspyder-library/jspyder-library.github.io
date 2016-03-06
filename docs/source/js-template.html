@@ -262,7 +262,7 @@ jspyder.extend.fn(&quot;template&quot;, function () {
             if (typeof template === &quot;undefined&quot;) {
                 template = &quot;&quot;;
             }
-            template = template.replace(/[\n\r\f\s]+/gi, &quot; &quot;);
+            // template = template.replace(/[\n\r\f\s]+/gi, &quot; &quot;);
             var o = Object.create(this._data);
             js.alg.each(data || {}, function (v, k, _, o) {
                 o[k] = v;
@@ -530,6 +530,26 @@ jspyder.extend.fn(&quot;template&quot;, function () {
         html: function(str) {
             js.dom(&quot;&lt;div&gt;&quot; + str + &quot;&lt;/div&gt;&quot;).getText(function(v) { str = v; });
             return str;
+        },
+        
+        escape: function (str) {
+            var ret = [];
+            str = str.split(/\r?\n/);
+            js.alg.arrEach(str, function (str) {
+                var t = [];
+                js.alg.iterate(0, str.length, function (i) {
+                    t.push(&quot;&amp;#&quot;, str.charCodeAt(i), &quot;;&quot;);
+                });
+                ret.push(t.join(&#39;&#39;));
+            });
+            return ret.join(&#39;&lt;br /&gt;&#39;);
+        },
+        
+        tag: function (tag, props) {
+            tag = js.alg.string(tag, &quot;br&quot;);
+            props = js.alg.string(props, &quot;&quot;);
+            var voidElement = /^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)\b/i.test(tag);
+            return &quot;&lt;&quot; + tag + &quot; &quot; + props + (voidElement ? &quot; /&quot; : &quot;&gt;&lt;/&quot; + tag ) + &quot;&gt;&quot;;
         }
     });
     
