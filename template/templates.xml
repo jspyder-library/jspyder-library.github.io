@@ -83,7 +83,7 @@
             unwieldy for the uninitiated:
             
             <p class="jspyder-example" data-label="Ajax Call" data-language="JavaScript"><!--
-<!--        -->var xhr = new XMLHttpRequest();
+            -->var xhr = new XMLHttpRequest();
 <!--        -->xhr.open('get', 'send-ajax-data.php');
 
 <!--        -->xhr.onreadystatechange = function () {
