@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<templates>
+    <template name="main-page"><!--
+        --><div id="main-page-header"><!--
+            -->@insert_template("main-page-header-title")<!--
+            -->@insert_template("main-page-header-links")<!--
+        --></div><!--
+        --><div id="main-page-links">@insert_template("main-page-link-list")</div><!--
+        --><div id="main-page-content-area">Hello, World</div><!--
+    --></template>
+    
+    <template name="main-page-header-title"><h1>JSpyder ${version}</h1></template>
+    <template name="main-page-header-links"><!--
+        --><ul class="main-page-header-links">@each("header_links","link","@insert_template(`main-page-link-item`)")</ul><!--
+    --></template>
+    
+    <template name="main-page-link-list"><!-- 
+        --><ul class="main-page-link-list">@each("links","link","@insert_template(`main-page-link-item`)")</ul><!-- 
+    --></template>
+    
+    <template name="main-page-link-item"><!--
+        --><li class="main-page-link-item" data-link="@map_item(`link`,`url`)">@map_item("link","text")</li><!--
+    --></template>
+    
+    <template name="home-page">
+        @var("jQuery",`<a target="_blank" href="https://jquery.com/">jQuery</a>`)
+        @var("Intern",`<a target="_blank" href="https://theintern.github.io/">Intern</a>`)
+        @var("APIDocs",`<a target="_blank" href="./docs/">API Documentation</a>`)
+        <h2>JavaScript Library for Web-Based Applications</h2>
+        <p>
+            JSpyder is a small, extensible, and feature-rich JavaScript library for
+            web-applications.  Drawing inspiration from libraries such as ${jQuery} 
+            and ${Intern}, JSpyder provides a simplified, intuitive API to developers
+            of all levels seeking to build cross-platform, client-side web applications.
+        </p>
+        <h2>Drinking the Kool-Aid</h2>
+        <p>
+            As a demonstration of its capabilities, this site runs exclusively on 
+            the JSpyder framework.  Below are some brief examples of how the JSpyder 
+            framework can be used, but more complete ${APIDocs} is also available. 
+        </p>
+        <p class="jspyder-example" data-label="JS-Template" data-language="XML"><!--
+         -->&lt;template name="my_template">
+<!--     -->  @escape("@")var("jsp_github",`&lt;a target="_blank" href="https://github.com/theorphan/jspyder/">JSpyder GitHub&lt;/a>`)
+<!--     -->  Generates a link to the ${jsp_github} Repository.
+<!--     -->  ${my_button} to launch an Alert window.
+<!--     -->&lt;/template>
+<!--    --></p>
+        <p class="jspyder-example" data-label="JS-Form" data-language="JavaScript"><!--
+         -->js.form({
+<!--     -->  fields: {
+<!--     -->    my_button: {
+<!--     -->      type: "button",
+<!--     -->      text: "Click Me",
+<!--     -->      click: function(event) {
+<!--     -->        js.dialog.alert({
+<!--     -->          title: "Alert",
+<!--     -->          message: "You clicked the message button!"
+<!--     -->        });
+<!--     -->      }
+<!--     -->    }
+<!--     -->  }
+<!--     -->}
+<!--     -->.compile("my_template");<!--
+        --></p>
+        <p id="jspyder-example-output" class="jspyder-example" data-label="HTML Output" data-language=""><!--
+         -->@var("jsp_github",`<a target="_blank" href="https://github.com/theorphan/jspyder/">JSpyder GitHub</a>`)<!--
+         -->Generates a link to the ${jsp_github} Repository.
+<!--     -->${my_button} to launch an Alert window.<!--
+        --></p>
+    </template>
+    
+    <template name="canvas-page"><!--
+        --><div class="display-inline-block" style="vertical-align: top;">
+            The JSpyder Canvas module is an abstraction layer between the HTML5 Canvas and JavaScript.
+        </div><div class="display-inline-block" style="vertical-align: top;">
+            <div class="canvas-page" style="text-align: center;">${chart_types}</div>
+            <div id="canvas-container"></div>
+        </div><!--
+    --></template>
+    
+    <template name="form-page"><!-- 
+     --><div id="form-template" style="position: relative"><!-- 
+         --><div class="spread-5-4"><!--
+             --><div class='spread-1-1'>${hidden}</div><!--
+                 
+             --><div class='spread-3-1'>${input}</div><!--
+             --><div class='spread-3-1'>${autocomplete}</div><!--
+             --><div class='spread-3-1'>${numerical}</div><!--
+             --><div class='spread-3-1'>${currency}</div><!--
+             --><div class='spread-3-1'>${datefield}</div><!--
+             --><div class='spread-3-1'>${dropdown}</div><!--
+                 
+             --><div class='spread-2-1'>${textarea}</div><!--
+             --><div class='spread-2-1'>${textarea_resize}</div><!--
+                 
+             --><div class='spread-3-1'>${checkboxes}</div><!--
+             --><div class='spread-3-1'>${checkboxes_bitwise}</div><!--
+             --><div class='spread-3-1'>${radios}</div><!--
+                 
+             --><div class='spread-3-1'>${toggles}</div><!--
+             --><div class='spread-3-1'>${toggles_bitwise}</div><!--
+             --><div class='spread-3-1'>${toggles_radio}</div><!--
+                 
+             --><div class='spread-1-1' style="text-align: center; padding: 1em;">${button} <span>${submit}${reset}</span></div><!--
+        --></div><!--
+        --><div id="form-print" class="spread-5-1" style="border: 1px solid black;"></div><!--
+    --></div></template>
+</templates>
