@@ -212,8 +212,10 @@
         </p>
     </template>
     <template name="date-page-example"><!--
-     -->js.date().asString("dddd, dth of mmmm, at hh:nn:ss am"); <span class="comment">// ${date}</span>
-<!-- -->js.date().asString("dd-MMM-yyyy HH:nn:ss"); <span class="comment">// ${zulu}</span><!--
+     --><span class="comment">// ${date}</span>
+<!-- -->js.date().asString("dddd, dth of mmmm, at hh:nn:ss am");
+<!-- --><span class="comment">// ${zulu}</span>
+<!-- -->js.date().asString("dd-MMM-yyyy HH:nn:ss");<!--
 --></template>
 --><template name="form-page"><!-- 
      --><div id="form-template" style="position: relative"><!-- 
