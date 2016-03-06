@@ -239,6 +239,8 @@ jspyder.extend.fn(&quot;date&quot;, function () {
          * @param {Boolean} [useUtc=this._useUTC]
          * 
          * @param {Boolean} [defaultText=&quot;&quot;]
+         * 
+         * @return {String}
          */
         asString: function (format, useUtc, defaultText) {
             if( this.isValid() ) {
@@ -247,6 +249,34 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                 return __formatDate(this._value, format, useUtc);
             }
             return js.alg.string(defaultText, &quot;&quot;);
+        },
+        
+<span id='jspyder-date-method-toString'>        /**
+</span>         * @method
+         * 
+         * Ensures that the object automatically converts to a string
+         * in the appropriate context.
+         */
+        toString: function (format, useUtc, defaultText) {
+            return this.asString(format, useUtc, defaultText);
+        },
+        
+<span id='jspyder-date-method-toNumber'>        /**
+</span>         * @method
+         * 
+         * Converts the stored date to a numerical value.
+         */
+        toNumber: function (year, month, date, hour, minute, second, ms) {
+            var v = this._value;
+            year = js.alg.bool(year, true) * v.getFullYear();
+            month = js.alg.bool(month, true) * v.getMonth();
+            date = js.alg.bool(date, true) * v.getDate();
+            hour = js.alg.bool(hour, true) * v.getHours();
+            minute = js.alg.bool(minute, true) * v.getMinutes();
+            second = js.alg.bool(second, true) * v.getSeconds();
+            ms = js.alg.bool(ms, true) * v.getMilliseconds();
+            
+            return (new Date(year, month, date, hour, minute, second, ms)).getTime();
         },
         
         isValid: function() {
