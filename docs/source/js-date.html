@@ -261,12 +261,12 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             return Date.prototype.toString.apply(this._value, arguments);
         },
         
-<span id='jspyder-date-method-valueOf'>        /**
+<span id='jspyder-date-method-getTime'>        /**
 </span>         * @method
          * 
          * Converts the stored date to a numerical value.
          */
-        valueOf: function (year, month, date, hour, minute, second, ms) {
+        getTime: function (year, month, date, hour, minute, second, ms) {
             var v = this._value;
             year = js.alg.bool(year, true) * v.getFullYear();
             month = js.alg.bool(month, true) * v.getMonth();
