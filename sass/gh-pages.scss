@@ -125,4 +125,8 @@ h2 {
 .code {
     font-family: consolas;
     color: $color-deep-purple;
+    
+    .comment {
+        color: $color-deep-purple-200;
+    }
 }

@@ -95,5 +95,7 @@ h2 {
 .code {
   font-family: consolas;
   color: #673ab7; }
+  .code .comment {
+    color: #b39ddb; }
 
 /*# sourceMappingURL=gh-pages.css.map */
