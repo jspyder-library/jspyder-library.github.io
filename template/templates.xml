@@ -100,7 +100,7 @@
 
 <!--        -->xhr.send(null);                
             </p>
-            @escape("(Example from") ${ajax_wikipedia})
+            ${ajax_wikipedia}
         </p>
         <p>
             JSpyder provides the same level of flexibility, but abstracts the preparation:
