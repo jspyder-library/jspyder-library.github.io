@@ -208,7 +208,7 @@
         <h3>Formatting Dates</h3>
         <p>
             JS-Dates can be formatted using the asString function:
-            <code id="js-date-example" class="jspyder-example" data-label="JS-Date" data-language="JavaScript"></code>
+            <p id="js-date-example" class="jspyder-example" data-label="JS-Date" data-language="JavaScript"></p>
         </p>
     </template>
     <template name="date-page-example"><!--
