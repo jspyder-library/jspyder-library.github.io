@@ -103,7 +103,8 @@
             ${ajax_wikipedia}
         </p>
         <p>
-            JSpyder provides the same level of flexibility, but abstracts the preparation:
+            JSpyder provides the same level of flexibility, but abstracts the preparation and
+            configuration code:
             <p class="jspyder-example" data-label="JS-Ajax Call" data-language="JavaScript"><!--
             -->js.ajax("send-ajax-data.php")
 <!--        -->    .get(function(xhr) {
