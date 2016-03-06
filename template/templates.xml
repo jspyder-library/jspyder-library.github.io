@@ -131,7 +131,7 @@
         </p>
         <p> 
             Consider the following code:
-            <span class="jspyder-example" data-label="JavaScript Loops" data-language="JavaScript"><!--
+            <p class="jspyder-example" data-label="JavaScript Loops" data-language="JavaScript"><!--
             -->var button = document.createElement("button");
 <!--        -->for(var i = 0; i &lt; 10; i++) {
 <!--        -->    button.addEventListener("click", function(event) {
@@ -139,7 +139,7 @@
 <!--        -->    });
 <!--        -->}
 <!--        -->for(var i = 0; i &lt; 10; i++) {  }
-            </span>
+            </p>
             The error in this code is that the value of <em>i</em> is captured when the function is
             executed, rather than when the function was created.  As a result, clicking the button
             will open 10 <em>alert</em> windows, each reading "10"!  Furthermore, <em>i</em> will
@@ -149,7 +149,7 @@
         <p>
             JS-Alg provides the <em>js.alg.iterate</em> function to locally scope <em>i</em> and avoid
             polluting the scope with unnecessary variables:
-            <span class="jspyder-example" data-label="JS-Alg" data-language="JavaScript"><!--
+            <p class="jspyder-example" data-label="JS-Alg" data-language="JavaScript"><!--
             -->var button = document.createElement("button"); // same format as above
 <!--        -->js.alg.iterate(0, 10, function(i) {
 <!--        -->    button.addEventListener("click", function(event) {
@@ -157,7 +157,7 @@
 <!--        -->    });
 <!--        -->});
 <!--        -->js.alg.iterate(0, 10, function(i) { });
-            </span>
+            </p>
             In the above code, the <em>i</em> variables are only available within the context of teh loop.
             Further, when clicked, the button would create popups for each number, 0 through 9.  Using roughly
             the same amount of code, JSpyder's Algorithm library can ensure that your code behaves as you expect
@@ -166,7 +166,7 @@
         <p>
             As an added benefit, the body of the loop can be exported and stored elsewhere, cleaning up the code
             for simpler reading:
-            <span class="jspyder-example" data-label="Cleaner JS-Alg" data-language="JavaScript"><!--        
+            <p class="jspyder-example" data-label="Cleaner JS-Alg" data-language="JavaScript"><!--        
             -->var button = document.createElement("button");
 <!--        -->js.alg.iterate(0, 10, makePopups, button);
 <!--        -->js.alg.iterate(0, 10, doNothing);
@@ -177,7 +177,7 @@
 <!--        -->    }
 <!--        -->}
 <!--        -->function doNothing(i) {  }
-            </span>
+            </p>
         </p>
     </template>
     
