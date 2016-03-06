@@ -919,7 +919,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             left += js.alg.string(value, &quot;&quot;);
         });
         
-        return (left + right).replace(/[(.*)]/g, &quot;$1&quot;);
+        return (left + right).replace(/\[(.*)\]/g, &quot;$1&quot;);
     }
     
 <span id='global-method-__getTimezoneOffset'>    /** @ignore */
