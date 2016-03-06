@@ -76,7 +76,9 @@
         <p>
             JSpyder's Ajax module simplifies network operations in single-page applications.
             Ajax calls asynchronously retrieve data from a network location, without interfering
-            with the user's interface or browser behavior. 
+            with the user's interface or browser behavior.  In JSpyder, several modules rely on
+            JS-Ajax to perform data transactions in the background; notably, the JS-Template
+            module, which is serving this page.
         </p>
         <p>
             The standard interface for manipulating Ajax can be somewhat intimidating and 
@@ -115,6 +117,66 @@
 <!--        -->            alert('Error: ' + xhr.status);
 <!--        -->        }
 <!--        -->    });
+            </p>
+        </p>
+    </template>
+    
+    <template name="alg-page">
+        <h2>JS-Alg</h2>
+        <p>
+            The JS-Alg module provides generic algorithms for common JavaScript patterns.  This
+            includes data validation, function preparation, array/object iteration, and many more.
+            In many cases, these algorithms can be used to simplify code and provide variable scoping
+            in a way more consistent with other programming languages.
+        </p>
+        <p> 
+            Consider the following code:
+            <p class="jspyder-example" data-label="JavaScript Loops" data-language="JavaScript"><!--
+            -->var button = document.createElement("button");
+<!--        -->for(var i = 0; i &lt; 10; i++) {
+<!--        -->    button.addEventListener("click", function(event) {
+<!--        -->        alert(i);
+<!--        -->    });
+<!--        -->}
+<!--        -->for(var i = 0; i &lt; 10; i++) {  }
+            </p>
+            The error in this code is that the value of <em>i</em> is captured when the function is
+            executed, rather than when the function was created.  As a result, clicking the button
+            will open 10 <em>alert</em> windows, each reading "10"!  Furthermore, <em>i</em> will
+            also be available to the rest of the function despite being allocated inside of the first
+            for-loop; and could potentially create hidden bugs which are difficult to find and correct.
+        </p>
+        <p>
+            JS-Alg provides the <em>js.alg.iterate</em> function to locally scope <em>i</em> and avoid
+            polluting the scope with unnecessary variables:
+            <p class="jspyder-example" data-label="JS-Alg" data-language="JavaScript"><!--
+            -->var button = document.createElement("button"); // same format as above
+<!--        -->js.alg.iterate(0, 10, function(i) {
+<!--        -->    button.addEventListener("click", function(event) {
+<!--        -->        alert(i);
+<!--        -->    });
+<!--        -->});
+<!--        -->js.alg.iterate(0, 10, function(i) { });
+            </p>
+            In the above code, the <em>i</em> variables are only available within the context of teh loop.
+            Further, when clicked, the button would create popups for each number, 0 through 9.  Using roughly
+            the same amount of code, JSpyder's Algorithm library can ensure that your code behaves as you expect
+            it to.
+        </p>
+        <p>
+            As an added benefit, the body of the loop can be exported and stored elsewhere, cleaning up the code
+            for simpler reading:
+            <p class="jspyder-example" data-label="Cleaner JS-Alg" data-language="JavaScript"><!--        
+            -->var button = document.createElement("button");
+<!--        -->js.alg.iterate(0, 10, makePopups, button);
+<!--        -->js.alg.iterate(0, 10, doNothing);
+                
+<!--        -->function makePopups(i, button) { 
+<!--        -->    button.addEventListener("click", function(event) {
+<!--        -->        alert(i);
+<!--        -->    }
+<!--        -->}
+<!--        -->function doNothing(i) {  }
             </p>
         </p>
     </template>
