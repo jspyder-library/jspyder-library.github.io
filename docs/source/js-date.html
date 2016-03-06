@@ -56,57 +56,57 @@ jspyder.extend.fn(&quot;date&quot;, function () {
      *      understand the date value; and to use when formatting strings 
      *      from the date value.  The supported formatting characters are:
      * 
-     *      ## Year ##
-     *      - YYYY: 4-digit year
-     *      - yyyy: 4-digit year
-     *      - YY: 2-digit year
-     *      - yy: 2-digit year
+     * ## Year ##
+     * - YYYY: 4-digit year
+     * - yyyy: 4-digit year
+     * - YY: 2-digit year
+     * - yy: 2-digit year
      * 
-     *      ## Month ##
-     *      - MMMM: Month name, ALL CAPS (JANUARY)
-     *      - mmmm: Month name, Title Case (January)
-     *      - MMM: Month 3-letter abbreviation, ALL CAPS (JAN)
-     *      - mmm: Month 3-letter abbreviation, Title Case (Jan)
-     *      - MM: Month number, 0-padded (01)
-     *      - mm: Month number, 0-padded (01)
-     *      - M: Month number, standard (1)
-     *      - m: Month number, standard (1)
+     * ## Month ##
+     * - MMMM: Month name, ALL CAPS (JANUARY)
+     * - mmmm: Month name, Title Case (January)
+     * - MMM: Month 3-letter abbreviation, ALL CAPS (JAN)
+     * - mmm: Month 3-letter abbreviation, Title Case (Jan)
+     * - MM: Month number, 0-padded (01)
+     * - mm: Month number, 0-padded (01)
+     * - M: Month number, standard (1)
+     * - m: Month number, standard (1)
      * 
-     *      ## Day ##
-     *      - ddth: Date Number, 0-padded Nth (01st) 
-     *      - dth: Date Number, Nth (1st) 
-     *      - dd: Date Number, 0-padded (01)
-     *      - d: Date Number, standard (1)
+     * ## Day ##
+     * - ddth: Date Number, 0-padded Nth (01st) 
+     * - dth: Date Number, Nth (1st) 
+     * - dd: Date Number, 0-padded (01)
+     * - d: Date Number, standard (1)
      *
-     *      ## Weekday ##  
-     *      - DDDD: Weekday Name, ALL CAPS (SUNDAY)
-     *      - dddd: Weekday Name, Title Case (Sunday)
-     *      - DDD: Weekday Name 3-letter abbreviation, ALL CAPS (SUN)
-     *      - ddd: Weekday Name 3-letter abbreviation, Title Case (Sun)
-     *      - DD: Weekday Name, 2-letter abbreviation, Title Case (Su)
-     *      - D: Weekday Name, 1-letter abbreviation, Capital (S)
+     * ## Weekday ##  
+     * - DDDD: Weekday Name, ALL CAPS (SUNDAY)
+     * - dddd: Weekday Name, Title Case (Sunday)
+     * - DDD: Weekday Name 3-letter abbreviation, ALL CAPS (SUN)
+     * - ddd: Weekday Name 3-letter abbreviation, Title Case (Sun)
+     * - DD: Weekday Name, 2-letter abbreviation, Title Case (Su)
+     * - D: Weekday Name, 1-letter abbreviation, Capital (S)
      * 
-     *      ## Meridiem ##
-     *      - AM: Meridiem, ALL CAPS (AM/PM)
-     *      - am: Meridiem, lower case (am/pm)
+     * ## Meridiem ##
+     * - AM: Meridiem, ALL CAPS (AM/PM)
+     * - am: Meridiem, lower case (am/pm)
      * 
-     *      ## Hours ##
-     *      - HH: Hours, 24-hour clock, 0-padded (01)
-     *      - hh: Hours, 12-hour clock, 0-padded (01)
-     *      - H: Hours, 24-hour clock, standard (13)
-     *      - h: Hours, 12-hour clock, standard (1)
+     * ## Hours ##
+     * - HH: Hours, 24-hour clock, 0-padded (01)
+     * - hh: Hours, 12-hour clock, 0-padded (01)
+     * - H: Hours, 24-hour clock, standard (13)
+     * - h: Hours, 12-hour clock, standard (1)
      * 
-     *      ## Minutes ##
-     *      - NN: Minutes, 0-padded (01)
-     *      - nn: minutes, 0-padded (01)
-     *      - N: Minutes, standard (1)
-     *      - n: Minutes, standard (1)
+     * ## Minutes ##
+     * - NN: Minutes, 0-padded (01)
+     * - nn: minutes, 0-padded (01)
+     * - N: Minutes, standard (1)
+     * - n: Minutes, standard (1)
      *      
-     *      ## Seconds ##
-     *      - SS: Seconds, 0-padded (00)
-     *      - ss: Seconds, 0-padded (00)
-     *      - S: Seconds, standard (0)
-     *      - s: Seconds, standard (0)
+     * ## Seconds ##
+     * - SS: Seconds, 0-padded (00)
+     * - ss: Seconds, 0-padded (00)
+     * - S: Seconds, standard (0)
+     * - s: Seconds, standard (0)
      * 
      * @param {Boolean} [utc=false]
      *      Whether to default to using UTC when getting formatted values.
