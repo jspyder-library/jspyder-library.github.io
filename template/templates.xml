@@ -187,6 +187,7 @@
     </template>
     
     <template name="canvas-page"><!--
+        --><h2>JS-Canvas</h2><!--
         --><div class="display-inline-block" style="vertical-align: top;">
             The JSpyder Canvas module is an abstraction layer between the HTML5 Canvas and JavaScript.
         </div><div class="display-inline-block" style="vertical-align: top;">

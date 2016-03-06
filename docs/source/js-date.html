@@ -54,7 +54,59 @@ jspyder.extend.fn(&quot;date&quot;, function () {
      * @param {String} [format]
      *      A string to use with a String value parameter in order to 
      *      understand the date value; and to use when formatting strings 
-     *      from the date value.
+     *      from the date value.  The supported formatting characters are:
+     * 
+     *      ## Year ##
+     *      - YYYY: 4-digit year
+     *      - yyyy: 4-digit year
+     *      - YY: 2-digit year
+     *      - yy: 2-digit year
+     * 
+     *      ## Month ##
+     *      - MMMM: Month name, ALL CAPS (JANUARY)
+     *      - mmmm: Month name, Title Case (January)
+     *      - MMM: Month 3-letter abbreviation, ALL CAPS (JAN)
+     *      - mmm: Month 3-letter abbreviation, Title Case (Jan)
+     *      - MM: Month number, 0-padded (01)
+     *      - mm: Month number, 0-padded (01)
+     *      - M: Month number, standard (1)
+     *      - m: Month number, standard (1)
+     * 
+     *      ## Day ##
+     *      - ddth: Date Number, 0-padded Nth (01st) 
+     *      - dth: Date Number, Nth (1st) 
+     *      - dd: Date Number, 0-padded (01)
+     *      - d: Date Number, standard (1)
+     *
+     *      ## Weekday ##  
+     *      - DDDD: Weekday Name, ALL CAPS (SUNDAY)
+     *      - dddd: Weekday Name, Title Case (Sunday)
+     *      - DDD: Weekday Name 3-letter abbreviation, ALL CAPS (SUN)
+     *      - ddd: Weekday Name 3-letter abbreviation, Title Case (Sun)
+     *      - DD: Weekday Name, 2-letter abbreviation, Title Case (Su)
+     *      - D: Weekday Name, 1-letter abbreviation, Capital (S)
+     * 
+     *      ## Meridiem ##
+     *      - AM: Meridiem, ALL CAPS (AM/PM)
+     *      - am: Meridiem, lower case (am/pm)
+     * 
+     *      ## Hours ##
+     *      - HH: Hours, 24-hour clock, 0-padded (01)
+     *      - hh: Hours, 12-hour clock, 0-padded (01)
+     *      - H: Hours, 24-hour clock, standard (13)
+     *      - h: Hours, 12-hour clock, standard (1)
+     * 
+     *      ## Minutes ##
+     *      - NN: Minutes, 0-padded (01)
+     *      - nn: minutes, 0-padded (01)
+     *      - N: Minutes, standard (1)
+     *      - n: Minutes, standard (1)
+     *      
+     *      ## Seconds ##
+     *      - SS: Seconds, 0-padded (00)
+     *      - ss: Seconds, 0-padded (00)
+     *      - S: Seconds, standard (0)
+     *      - s: Seconds, standard (0)
      * 
      * @param {Boolean} [utc=false]
      *      Whether to default to using UTC when getting formatted values.
@@ -393,8 +445,8 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             &quot;yyyy&quot;, &quot;yy&quot;,
             &quot;MMMM&quot;, &quot;MMM&quot;, &quot;MM&quot;, &quot;M&quot;, 
             &quot;mmmm&quot;, &quot;mmm&quot;, &quot;mm&quot;, &quot;m&quot;,
-            &quot;dddd&quot;, &quot;ddd&quot;, &quot;dd&quot;, &quot;d&quot;,
-            &quot;DDDD&quot;, &quot;DDD&quot;, &quot;DD&quot;, &quot;D&quot;, &quot;W&quot;,
+            &quot;dddd&quot;, &quot;ddd&quot;, &quot;dd&quot;, &quot;d&quot;, &quot;dth&quot;, &quot;ddth&quot;,
+            &quot;DDDD&quot;, &quot;DDD&quot;, &quot;DD&quot;, &quot;D&quot;,
             &quot;AM&quot;, &quot;am&quot;, 
             &quot;HH&quot;, &quot;H&quot;, &quot;hh&quot;, &quot;h&quot;, 
             &quot;NN&quot;, &quot;N&quot;, &quot;nn&quot;, &quot;n&quot;, 
@@ -439,14 +491,37 @@ jspyder.extend.fn(&quot;date&quot;, function () {
 </span>         * @ignore
          */
         __days = [
-            { d:  &quot;1&quot;, dd: &quot;01&quot; }, { d:  &quot;2&quot;, dd: &quot;02&quot; }, { d:  &quot;3&quot;, dd: &quot;03&quot; }, { d:  &quot;4&quot;, dd: &quot;04&quot; },
-            { d:  &quot;5&quot;, dd: &quot;05&quot; }, { d:  &quot;6&quot;, dd: &quot;06&quot; }, { d:  &quot;7&quot;, dd: &quot;07&quot; }, { d:  &quot;8&quot;, dd: &quot;08&quot; },
-            { d:  &quot;9&quot;, dd: &quot;09&quot; }, { d: &quot;10&quot;, dd: &quot;10&quot; }, { d: &quot;11&quot;, dd: &quot;11&quot; }, { d: &quot;12&quot;, dd: &quot;12&quot; },
-            { d: &quot;13&quot;, dd: &quot;13&quot; }, { d: &quot;14&quot;, dd: &quot;14&quot; }, { d: &quot;15&quot;, dd: &quot;15&quot; }, { d: &quot;16&quot;, dd: &quot;16&quot; },
-            { d: &quot;17&quot;, dd: &quot;17&quot; }, { d: &quot;18&quot;, dd: &quot;18&quot; }, { d: &quot;19&quot;, dd: &quot;19&quot; }, { d: &quot;20&quot;, dd: &quot;20&quot; },
-            { d: &quot;21&quot;, dd: &quot;21&quot; }, { d: &quot;22&quot;, dd: &quot;22&quot; }, { d: &quot;23&quot;, dd: &quot;23&quot; }, { d: &quot;24&quot;, dd: &quot;24&quot; },
-            { d: &quot;25&quot;, dd: &quot;25&quot; }, { d: &quot;26&quot;, dd: &quot;26&quot; }, { d: &quot;27&quot;, dd: &quot;27&quot; }, { d: &quot;28&quot;, dd: &quot;28&quot; },
-            { d: &quot;29&quot;, dd: &quot;29&quot; }, { d: &quot;30&quot;, dd: &quot;30&quot; }, { d: &quot;31&quot;, dd: &quot;31&quot; },
+            { d:  &quot;1&quot;, dd: &quot;01&quot;, dth:  &quot;1st&quot;, ddth: &quot;01st&quot; }, 
+            { d:  &quot;2&quot;, dd: &quot;02&quot;, dth:  &quot;2nd&quot;, ddth: &quot;02nd&quot; }, 
+            { d:  &quot;3&quot;, dd: &quot;03&quot;, dth:  &quot;3rd&quot;, ddth: &quot;03th&quot; }, 
+            { d:  &quot;4&quot;, dd: &quot;04&quot;, dth:  &quot;4th&quot;, ddth: &quot;04th&quot; },
+            { d:  &quot;5&quot;, dd: &quot;05&quot;, dth:  &quot;5th&quot;, ddth: &quot;05th&quot; }, 
+            { d:  &quot;6&quot;, dd: &quot;06&quot;, dth:  &quot;6th&quot;, ddth: &quot;06th&quot; }, 
+            { d:  &quot;7&quot;, dd: &quot;07&quot;, dth:  &quot;7th&quot;, ddth: &quot;07th&quot; }, 
+            { d:  &quot;8&quot;, dd: &quot;08&quot;, dth:  &quot;8th&quot;, ddth: &quot;08th&quot; },
+            { d:  &quot;9&quot;, dd: &quot;09&quot;, dth:  &quot;9th&quot;, ddth: &quot;09rd&quot; }, 
+            { d: &quot;10&quot;, dd: &quot;10&quot;, dth: &quot;10th&quot;, ddth: &quot;10th&quot; }, 
+            { d: &quot;11&quot;, dd: &quot;11&quot;, dth: &quot;11th&quot;, ddth: &quot;11st&quot; }, 
+            { d: &quot;12&quot;, dd: &quot;12&quot;, dth: &quot;12th&quot;, ddth: &quot;12th&quot; },
+            { d: &quot;13&quot;, dd: &quot;13&quot;, dth: &quot;13th&quot;, ddth: &quot;13th&quot; }, 
+            { d: &quot;14&quot;, dd: &quot;14&quot;, dth: &quot;14th&quot;, ddth: &quot;14th&quot; }, 
+            { d: &quot;15&quot;, dd: &quot;15&quot;, dth: &quot;15th&quot;, ddth: &quot;15th&quot; }, 
+            { d: &quot;16&quot;, dd: &quot;16&quot;, dth: &quot;16th&quot;, ddth: &quot;16th&quot; },
+            { d: &quot;17&quot;, dd: &quot;17&quot;, dth: &quot;17th&quot;, ddth: &quot;17th&quot; }, 
+            { d: &quot;18&quot;, dd: &quot;18&quot;, dth: &quot;18th&quot;, ddth: &quot;18th&quot; }, 
+            { d: &quot;19&quot;, dd: &quot;19&quot;, dth: &quot;19th&quot;, ddth: &quot;19th&quot; }, 
+            { d: &quot;20&quot;, dd: &quot;20&quot;, dth: &quot;20th&quot;, ddth: &quot;20th&quot; },
+            { d: &quot;21&quot;, dd: &quot;21&quot;, dth: &quot;21st&quot;, ddth: &quot;21th&quot; }, 
+            { d: &quot;22&quot;, dd: &quot;22&quot;, dth: &quot;22nd&quot;, ddth: &quot;22nd&quot; }, 
+            { d: &quot;23&quot;, dd: &quot;23&quot;, dth: &quot;23rd&quot;, ddth: &quot;23th&quot; }, 
+            { d: &quot;24&quot;, dd: &quot;24&quot;, dth: &quot;24th&quot;, ddth: &quot;24th&quot; },
+            { d: &quot;25&quot;, dd: &quot;25&quot;, dth: &quot;25th&quot;, ddth: &quot;25th&quot; }, 
+            { d: &quot;26&quot;, dd: &quot;26&quot;, dth: &quot;26th&quot;, ddth: &quot;26th&quot; }, 
+            { d: &quot;27&quot;, dd: &quot;27&quot;, dth: &quot;27th&quot;, ddth: &quot;27th&quot; }, 
+            { d: &quot;28&quot;, dd: &quot;28&quot;, dth: &quot;28th&quot;, ddth: &quot;28th&quot; },
+            { d: &quot;29&quot;, dd: &quot;29&quot;, dth: &quot;29th&quot;, ddth: &quot;29rd&quot; }, 
+            { d: &quot;30&quot;, dd: &quot;30&quot;, dth: &quot;30th&quot;, ddth: &quot;30th&quot; }, 
+            { d: &quot;31&quot;, dd: &quot;31&quot;, dth: &quot;31st&quot;, ddth: &quot;31st&quot; },
         ],
 <span id='global-property-'>        /**
 </span>         * @ignore
@@ -557,6 +632,8 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             // days
             &quot;d&quot;:    __buildFormatRegexStringFrom(__days,     &quot;d&quot;   ),
             &quot;dd&quot;:   __buildFormatRegexStringFrom(__days,     &quot;dd&quot;  ),
+            &quot;dth&quot;:  __buildFormatRegexStringFrom(__days,     &quot;dth&quot; ),
+            &quot;ddth&quot;: __buildFormatRegexStringFrom(__days,     &quot;ddth&quot;),
             
             // weekdays
             &quot;D&quot;:    __buildFormatRegexStringFrom(__weekdays, &quot;D&quot;   ),
@@ -686,6 +763,10 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                     break;
                 
                 // date
+                case &quot;ddth&quot;:
+                case &quot;dth&quot;:
+                    value = value.substr(0, value.length - 2);
+                
                 case &quot;dd&quot;:
                 case &quot;d&quot;:
                     d[&quot;d&quot;] = js.alg.number(value) || 1;
@@ -695,7 +776,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                 case &quot;h&quot;:
                 case &quot;HH&quot;:
                 case &quot;H&quot;:
-                    d[&quot;h&quot;] = js.alg.number(value);
+                    d[&quot;h&quot;] = js.alg.number(value, 0);
                     break;
                     
                 case &quot;am&quot;:
@@ -728,9 +809,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             if(!collection) { return match; }
             
             // get the regexp
-            var regexp = collection.regexp,
-                values = collection.values,
-                len = match.length,
+            var len = match.length,
                 start = right.indexOf(match),
                 value = &quot;&quot;;
                 
@@ -759,6 +838,8 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                     value = collection.lookup[d.m];
                     break;
                     
+                case &quot;dth&quot;:
+                case &quot;ddth&quot;:
                 case &quot;dd&quot;:
                 case &quot;d&quot;:
                     value = collection.lookup[d.d - 1];
