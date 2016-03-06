@@ -84,6 +84,7 @@ js.alg.run(function() {
             
             if(page) {
                 page();
+                js.registry.stash("gh-pages::page", link);
             }
             return;
         });
@@ -184,6 +185,27 @@ js.alg.run(function() {
                 .render();
             
             return;
+        },
+        "date": function () {
+            var html = js.template().compile("date-page").output();
+            js.lib("set-content", [html]);
+            tick();
+            
+            function tick() {
+                if (js.registry.fetch("gh-pages::page") === "date") {
+                    setTimeout(tick, 250);
+                }
+                js.dom("#js-date-example", function (ex) {
+                    var now = js.dom(),
+                        data = {
+                            date: now.asString("dddd, dth of mmmm, at hh:nn:ss am"),
+                            zulu: now.asString("dd-MMM-yyyy HH:nn:ss")
+                        },
+                        code = js.template(data).compile("date-page-example").output();
+                        
+                    ex.setHtml(code);
+                });
+            }
         },
         "form": function () {
             var formData = {

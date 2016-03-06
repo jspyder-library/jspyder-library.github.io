@@ -196,6 +196,26 @@
         </div><!--
     --></template>
     
+    
+    <template name="date-page">
+        <h2>JS-Date</h2>
+        <p>
+            Manipulating dates in JavaScript is not always a simple task; 
+            especially when mixing Dates and Strings or performing arithmatic.
+            JSpyder streamlines these operations with a smoothed, object-oriented
+            interface.    
+        </p>
+        <h3>Formatting Dates</h3>
+        <p>
+            JS-Dates can be formatted using the asString function:
+            <code 
+                id="js-date-example" 
+                class="jspyder-example" 
+                data-label="JS-Date" 
+                data-language="JavaScript"></code>
+        </p>
+    </template>
+    
     <template name="form-page"><!-- 
      --><div id="form-template" style="position: relative"><!-- 
          --><div class="spread-5-4"><!--
