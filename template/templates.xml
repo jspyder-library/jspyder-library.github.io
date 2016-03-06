@@ -213,7 +213,7 @@
     </template>
     <template name="date-page-example"><!--
      --><span class="comment">// ${date}</span>
-<!-- -->js.date().asString("dddd, the dth of mmmm, at hh:nn:ss am");
+<!-- -->js.date().asString("dddd, `the` dth `of` mmmm`, at` hh:nn:ss am");
 
 <!-- --><span class="comment">// ${zulu}</span>
 <!-- -->js.date().asString("dd-MMM-yyyy HH:nn:ss");<!--

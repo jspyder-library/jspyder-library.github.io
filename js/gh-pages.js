@@ -197,7 +197,7 @@ js.alg.run(function() {
                 }
                 var now = js.date(),
                     data = {
-                        date: now.asString("dddd, t`he dth of mmmm, at hh:nn:ss am"),
+                        date: now.asString("dddd, [the] dth of mmmm, at hh:nn:ss am"),
                         zulu: now.asString("dd-MMM-yyyy HH:nn:ss")
                     },
                     code = js.template(data).compile("date-page-example").output();
