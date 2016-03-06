@@ -208,15 +208,13 @@
         <h3>Formatting Dates</h3>
         <p>
             JS-Dates can be formatted using the asString function:
-            <code 
-                id="js-date-example" 
-                class="jspyder-example" 
-                data-label="JS-Date" 
-                data-language="JavaScript"></code>
+            <code id="js-date-example" class="jspyder-example" data-label="JS-Date" data-language="JavaScript"></code>
         </p>
     </template>
-    
-    <template name="form-page"><!-- 
+    <template name="date-page-example"><!--
+     -->js.date().asString("dddd, dth of mmmm, at hh:nn:ss am"); <span class="comment">// ${date}</span>
+<!-- -->js.date().asString("dd-MMM-yyyy HH:nn:ss"); <span class="comment">// ${zulu}</span><!--    </template>
+--><template name="form-page"><!-- 
      --><div id="form-template" style="position: relative"><!-- 
          --><div class="spread-5-4"><!--
              --><div class='spread-1-1'>${hidden}</div><!--
