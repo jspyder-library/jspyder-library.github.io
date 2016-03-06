@@ -257,16 +257,16 @@ jspyder.extend.fn(&quot;date&quot;, function () {
          * Ensures that the object automatically converts to a string
          * in the appropriate context.
          */
-        toString: function (format, useUtc, defaultText) {
-            return this.asString(format, useUtc, defaultText);
+        toString: function () {
+            return Date.prototype.toString.apply(this._value, arguments);
         },
         
-<span id='jspyder-date-method-toNumber'>        /**
+<span id='jspyder-date-method-valueOf'>        /**
 </span>         * @method
          * 
          * Converts the stored date to a numerical value.
          */
-        toNumber: function (year, month, date, hour, minute, second, ms) {
+        valueOf: function (year, month, date, hour, minute, second, ms) {
             var v = this._value;
             year = js.alg.bool(year, true) * v.getFullYear();
             month = js.alg.bool(month, true) * v.getMonth();
@@ -276,7 +276,9 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             second = js.alg.bool(second, true) * v.getSeconds();
             ms = js.alg.bool(ms, true) * v.getMilliseconds();
             
-            return (new Date(year, month, date, hour, minute, second, ms)).getTime();
+            var d = new Date(year, month, date, hour, minute, second, ms);
+            
+            return Date.prototype.getTime.call(d);
         },
         
         isValid: function() {
