@@ -195,16 +195,14 @@ js.alg.run(function() {
                 if (js.registry.fetch("gh-pages::page") === "date") {
                     setTimeout(tick, 250);
                 }
-                js.dom("#js-date-example", function (ex) {
-                    var now = js.date(),
-                        data = {
-                            date: now.asString("dddd, dth of mmmm, at hh:nn:ss am"),
-                            zulu: now.asString("dd-MMM-yyyy HH:nn:ss")
-                        },
-                        code = js.template(data).compile("date-page-example").output();
-                        
-                    ex.setHtml(code);
-                });
+                var now = js.date(),
+                    data = {
+                        date: now.asString("dddd, dth of mmmm, at hh:nn:ss am"),
+                        zulu: now.asString("dd-MMM-yyyy HH:nn:ss")
+                    },
+                    code = js.template(data).compile("date-page-example").output();
+                    
+                js.dom("#js-date-example").setHtml(code);
             }
         },
         "form": function () {
