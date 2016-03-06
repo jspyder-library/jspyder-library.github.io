@@ -132,7 +132,7 @@ js.alg.run(function() {
         },
         "ajax": function () {
             js.template()
-                .compile("page-ajax", null, function (html) {
+                .compile("ajax-page", null, function (html) {
                     js.lib("set-content", [html]);
                 });
         },
