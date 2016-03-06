@@ -70,6 +70,57 @@
         --></p>
     </template>
     
+    <template name="ajax-page">
+        <h2>JS-Ajax</h2>
+        <p>
+            JSpyder's Ajax module simplifies network operations in single-page applications.
+            Ajax calls asynchronously retrieve data from a network location, without interfering
+            with the user's interface or browser behavior. 
+        </p>
+        <p>
+            The standard interface for manipulating Ajax can be somewhat intimidating and 
+            unwieldy for the uninitiated:
+            
+            <p class="jspyder-example" data-label="Ajax Call" data-language="JavaScript"><!--
+            -->// This is the client-side script.
+
+<!--        -->// Initialize the Http request.
+<!--        -->var xhr = new XMLHttpRequest();
+<!--        -->xhr.open('get', 'send-ajax-data.php');
+
+<!--        -->// Track the state changes of the request.
+<!--        -->xhr.onreadystatechange = function () {
+<!--        -->    var DONE = 4; // readyState 4 means the request is done.
+<!--        -->    var OK = 200; // status 200 is a successful return.
+<!--        -->    if (xhr.readyState === DONE) {
+<!--        -->        if (xhr.status === OK) {
+<!--        -->            alert(xhr.responseText); // 'This is the returned text.'
+<!--        -->        } else {
+<!--        -->            alert('Error: ' + xhr.status); // An error occurred during the request.
+<!--        -->        }
+<!--        -->    }
+<!--        -->};
+
+<!--        -->// Send the request to send-ajax-data.php
+<!--        -->xhr.send(null);                
+            </p>
+        </p>
+        <p>
+            JSpyder provides the same level of flexibility, but abstracts the preparation:
+            <p class="jspyder-example" data-label="JS-Ajax Call" data-language="JavaScript"><!--
+            -->js.ajax("send-ajax-data.php")
+<!--        -->    .get(function(xhr) {
+<!--        -->        if(xhr.status === 200) {
+<!--        -->            alert(xhr.responseText);
+<!--        -->        }
+<!--        -->        else {
+<!--        -->            alert('Error: ' + xhr.status);
+<!--        -->        }
+<!--        -->    });
+            </p>
+        </p>
+    </template>
+    
     <template name="canvas-page"><!--
         --><div class="display-inline-block" style="vertical-align: top;">
             The JSpyder Canvas module is an abstraction layer between the HTML5 Canvas and JavaScript.
