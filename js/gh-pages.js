@@ -75,7 +75,7 @@ js.alg.run(function() {
                     window.open("https://www.github.com/theorphan/jspyder/");
                     break;
                 case "docs":
-                    window.open("http://theorphan.github.io/jspyder/docs/index.html");
+                    window.open("./docs/index.html");
                     break;
                 case "waffle":
                     window.open("https://waffle.io/theorphan/jspyder");
