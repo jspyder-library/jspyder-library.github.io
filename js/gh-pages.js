@@ -130,6 +130,12 @@ js.alg.run(function() {
                 .compileDom("#jspyder-example-output");
             return;
         },
+        "ajax": function () {
+            js.template()
+                .compile("page-ajax", null, function (html) {
+                    js.lib("set-content", [html]);
+                });
+        },
         "canvas": function() {
             var canvasDef = {
                 css: { "border": "1px solid black" },
