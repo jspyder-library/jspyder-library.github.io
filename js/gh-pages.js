@@ -136,6 +136,12 @@ js.alg.run(function() {
                     js.lib("set-content", [html]);
                 });
         },
+        "alg": function () {
+            js.template()
+                .compile("alg-page", null, function (html) {
+                    js.lib("set-content", [html]);
+                });
+        },
         "canvas": function() {
             var canvasDef = {
                 css: { "border": "1px solid black" },
