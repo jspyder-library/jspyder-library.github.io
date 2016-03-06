@@ -69,7 +69,7 @@ h2 {
   margin-left: 2em;
   margin-right: 2em;
   background-color: #e8eaf6;
-  color: #3f51b5;
+  color: #673ab7;
   font-family: consolas;
   white-space: pre; }
   .jspyder-example:before {
@@ -91,5 +91,9 @@ h2 {
     top: 0;
     right: 0;
     z-index: 2; }
+
+.code {
+  font-family: consolas;
+  color: #673ab7; }
 
 /*# sourceMappingURL=gh-pages.css.map */
