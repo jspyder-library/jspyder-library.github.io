@@ -140,14 +140,14 @@
 <!--        -->}
 <!--        -->for(var i = 0; i &lt; 10; i++) {  }
             </p>
-            The error in this code is that the value of <em>i</em> is captured when the function is
+            The error in this code is that the value of <font style="font-family: consolas">i</font> is captured when the function is
             executed, rather than when the function was created.  As a result, clicking the button
-            will open 10 <em>alert</em> windows, each reading "10"!  Furthermore, <em>i</em> will
+            will open 10 <font style="font-family: consolas">alert</font> windows, each reading "10"!  Furthermore, <font style="font-family: consolas">i</font> will
             also be available to the rest of the function despite being allocated inside of the first
             for-loop; and could potentially create hidden bugs which are difficult to find and correct.
         </p>
         <p>
-            JS-Alg provides the <em>js.alg.iterate</em> function to locally scope <em>i</em> and avoid
+            JS-Alg provides the <font style="font-family: consolas">js.alg.iterate</font> function to locally scope <font style="font-family: consolas">i</font> and avoid
             polluting the scope with unnecessary variables:
             <p class="jspyder-example" data-label="JS-Alg" data-language="JavaScript"><!--
             -->var button = document.createElement("button"); // same format as above
@@ -158,7 +158,7 @@
 <!--        -->});
 <!--        -->js.alg.iterate(0, 10, function(i) { });
             </p>
-            In the above code, the <em>i</em> variables are only available within the context of teh loop.
+            In the above code, the <font style="font-family: consolas">i</font> variables are only available within the context of teh loop.
             Further, when clicked, the button would create popups for each number, 0 through 9.  Using roughly
             the same amount of code, JSpyder's Algorithm library can ensure that your code behaves as you expect
             it to.
