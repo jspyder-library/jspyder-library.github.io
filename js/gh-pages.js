@@ -196,7 +196,7 @@ js.alg.run(function() {
                     setTimeout(tick, 250);
                 }
                 js.dom("#js-date-example", function (ex) {
-                    var now = js.dom(),
+                    var now = js.date(),
                         data = {
                             date: now.asString("dddd, dth of mmmm, at hh:nn:ss am"),
                             zulu: now.asString("dd-MMM-yyyy HH:nn:ss")
