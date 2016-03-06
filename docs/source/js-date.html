@@ -477,7 +477,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             &quot;yyyy&quot;, &quot;yy&quot;,
             &quot;MMMM&quot;, &quot;MMM&quot;, &quot;MM&quot;, &quot;M&quot;, 
             &quot;mmmm&quot;, &quot;mmm&quot;, &quot;mm&quot;, &quot;m&quot;,
-            &quot;dddd&quot;, &quot;ddd&quot;, &quot;dd&quot;, &quot;d&quot;, &quot;dth&quot;, &quot;ddth&quot;,
+            &quot;dddd&quot;, &quot;ddd&quot;, &quot;ddth&quot;,&quot;dth&quot;, &quot;dd&quot;, &quot;d&quot;,
             &quot;DDDD&quot;, &quot;DDD&quot;, &quot;DD&quot;, &quot;D&quot;,
             &quot;AM&quot;, &quot;am&quot;, 
             &quot;HH&quot;, &quot;H&quot;, &quot;hh&quot;, &quot;h&quot;, 
@@ -487,7 +487,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
 <span id='global-property-'>        /**
 </span>         * @ignore
          */
-        __reSearch = new RegExp(&quot;(&quot; + __reSearchStrings.join(&quot;|&quot;) + &quot;)&quot;, &quot;g&quot;),
+        __reSearch = new RegExp(&quot;[^\\](&quot; + __reSearchStrings.join(&quot;|&quot;) + &quot;)&quot;, &quot;g&quot;),
 <span id='global-property-'>        /**
 </span>         * @ignore
          */
