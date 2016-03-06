@@ -83,8 +83,8 @@ js.alg.run(function() {
             }
             
             if(page) {
-                page();
                 js.registry.stash("gh-pages::page", link);
+                page();
             }
             return;
         });
