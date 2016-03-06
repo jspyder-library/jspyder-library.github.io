@@ -107,17 +107,17 @@
         <p>
             JSpyder provides the same level of flexibility, but abstracts the preparation and
             configuration code:
-            <p class="jspyder-example" data-label="JS-Ajax Call" data-language="JavaScript"><!--
-            -->js.ajax("send-ajax-data.php")
-<!--        -->    .get(function(xhr) {
-<!--        -->        if(xhr.status === 200) {
-<!--        -->            alert(xhr.responseText);
-<!--        -->        }
-<!--        -->        else {
-<!--        -->            alert('Error: ' + xhr.status);
-<!--        -->        }
-<!--        -->    });
-            </p>
+        </p>
+        <p class="jspyder-example" data-label="JS-Ajax Call" data-language="JavaScript"><!--
+        -->js.ajax("send-ajax-data.php")
+<!--    -->    .get(function(xhr) {
+<!--    -->        if(xhr.status === 200) {
+<!--    -->            alert(xhr.responseText);
+<!--    -->        }
+<!--    -->        else {
+<!--    -->            alert('Error: ' + xhr.status);
+<!--    -->        }
+<!--    -->    });
         </p>
     </template>
     
@@ -131,15 +131,17 @@
         </p>
         <p> 
             Consider the following code:
-            <p class="jspyder-example" data-label="JavaScript Loops" data-language="JavaScript"><!--
-            -->var button = document.createElement("button");
-<!--        -->for(var i = 0; i &lt; 10; i++) {
-<!--        -->    button.addEventListener("click", function(event) {
-<!--        -->        alert(i);
-<!--        -->    });
-<!--        -->}
-<!--        -->for(var i = 0; i &lt; 10; i++) {  }
-            </p>
+        </p>
+        <p class="jspyder-example" data-label="JavaScript Loops" data-language="JavaScript"><!--
+        -->var button = document.createElement("button");
+<!--    -->for(var i = 0; i &lt; 10; i++) {
+<!--    -->    button.addEventListener("click", function(event) {
+<!--    -->        alert(i);
+<!--    -->    });
+<!--    -->}
+<!--    -->for(var i = 0; i &lt; 10; i++) {  }
+        </p>
+        <p>
             The error in this code is that the value of <font style="font-family: consolas">i</font> is captured when the function is
             executed, rather than when the function was created.  As a result, clicking the button
             will open 10 <font style="font-family: consolas">alert</font> windows, each reading "10"!  Furthermore, <font style="font-family: consolas">i</font> will
@@ -149,15 +151,17 @@
         <p>
             JS-Alg provides the <font style="font-family: consolas">js.alg.iterate</font> function to locally scope <font style="font-family: consolas">i</font> and avoid
             polluting the scope with unnecessary variables:
-            <p class="jspyder-example" data-label="JS-Alg" data-language="JavaScript"><!--
-            -->var button = document.createElement("button"); // same format as above
-<!--        -->js.alg.iterate(0, 10, function(i) {
-<!--        -->    button.addEventListener("click", function(event) {
-<!--        -->        alert(i);
-<!--        -->    });
-<!--        -->});
-<!--        -->js.alg.iterate(0, 10, function(i) { });
-            </p>
+        </p>
+        <p class="jspyder-example" data-label="JS-Alg" data-language="JavaScript"><!--
+        -->var button = document.createElement("button"); // same format as above
+<!--    -->js.alg.iterate(0, 10, function(i) {
+<!--    -->    button.addEventListener("click", function(event) {
+<!--    -->        alert(i);
+<!--    -->    });
+<!--    -->});
+<!--    -->js.alg.iterate(0, 10, function(i) { });
+        </p>
+        <p>
             In the above code, the <font style="font-family: consolas">i</font> variables are only available within the context of teh loop.
             Further, when clicked, the button would create popups for each number, 0 through 9.  Using roughly
             the same amount of code, JSpyder's Algorithm library can ensure that your code behaves as you expect
@@ -166,18 +170,18 @@
         <p>
             As an added benefit, the body of the loop can be exported and stored elsewhere, cleaning up the code
             for simpler reading:
-            <p class="jspyder-example" data-label="Cleaner JS-Alg" data-language="JavaScript"><!--        
-            -->var button = document.createElement("button");
-<!--        -->js.alg.iterate(0, 10, makePopups, button);
-<!--        -->js.alg.iterate(0, 10, doNothing);
-                
-<!--        -->function makePopups(i, button) { 
-<!--        -->    button.addEventListener("click", function(event) {
-<!--        -->        alert(i);
-<!--        -->    }
-<!--        -->}
-<!--        -->function doNothing(i) {  }
-            </p>
+        </p>
+        <p class="jspyder-example" data-label="Cleaner JS-Alg" data-language="JavaScript"><!--        
+        -->var button = document.createElement("button");
+<!--    -->js.alg.iterate(0, 10, makePopups, button);
+<!--    -->js.alg.iterate(0, 10, doNothing);
+            
+<!--    -->function makePopups(i, button) { 
+<!--    -->    button.addEventListener("click", function(event) {
+<!--    -->        alert(i);
+<!--    -->    }
+<!--    -->}
+<!--    -->function doNothing(i) {  }
         </p>
     </template>
     
