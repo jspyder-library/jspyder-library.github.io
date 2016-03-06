@@ -83,25 +83,26 @@
         <p>
             The standard interface for manipulating Ajax can be somewhat intimidating and 
             unwieldy for the uninitiated:
-            
-            <p class="jspyder-example" data-label="Ajax Call" data-language="JavaScript"><!--
-            -->var xhr = new XMLHttpRequest();
-<!--        -->xhr.open('get', 'send-ajax-data.php');
+        </p>
+        <p class="jspyder-example" data-label="Ajax Call" data-language="JavaScript"><!--
+        -->var xhr = new XMLHttpRequest();
+<!--    -->xhr.open('get', 'send-ajax-data.php');
 
-<!--        -->xhr.onreadystatechange = function () {
-<!--        -->    var DONE = 4;
-<!--        -->    var OK = 200;
-<!--        -->    if (xhr.readyState === DONE) {
-<!--        -->        if (xhr.status === OK) {
-<!--        -->            alert(xhr.responseText);
-<!--        -->        } else {
-<!--        -->            alert('Error: ' + xhr.status);
-<!--        -->        }
-<!--        -->    }
-<!--        -->};
+<!--    -->xhr.onreadystatechange = function () {
+<!--    -->    var DONE = 4;
+<!--    -->    var OK = 200;
+<!--    -->    if (xhr.readyState === DONE) {
+<!--    -->        if (xhr.status === OK) {
+<!--    -->            alert(xhr.responseText);
+<!--    -->        } else {
+<!--    -->            alert('Error: ' + xhr.status);
+<!--    -->        }
+<!--    -->    }
+<!--    -->};
 
-<!--        -->xhr.send(null);                
-            </p>
+<!--    -->xhr.send(null);                
+        </p>
+        <p>
             ${ajax_wikipedia}
         </p>
         <p>
