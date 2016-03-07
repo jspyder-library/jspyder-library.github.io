@@ -215,7 +215,7 @@
             when the string is parsed.  However, when pasing a string, only the
             order and format of each piece of data is needed.  Thus, the following
             examples yield the same result:
-            <p class="jspyder-example" data-label="JS-Date Parsing", data-language="JavaScript"><!--
+            <p class="jspyder-example" data-label="JS-Date Parsing" data-language="JavaScript"><!--
              -->js.date("@gh_date("dth of mmmm, in [the] year yyyy")", "dth of mmmm, in [the] year yyyy")
 <!--         -->js.date("@gh_date("dth of mmmm, in [the] year yyyy")", "d mmmm yyyy")
 <!--     --></p>
