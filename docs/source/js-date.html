@@ -924,7 +924,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                 case &quot;xxx&quot;:
                 case &quot;xx&quot;:
                 case &quot;x&quot;:
-                    value = (&quot;000&quot; + js.alg.string(d.x)).substring(match.length);
+                    value = (js.alg.string(d.x) + &quot;000&quot;).substring(0, match.length);
                     break;
             }
             
