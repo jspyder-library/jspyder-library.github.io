@@ -1659,7 +1659,7 @@ jspyder.extend.fn("date", function() {
     $v$$ = $js$$.alg.string($v$$, "");
     var $format$$ = $js$$.alg.string($f$$), $d$$ = {y:0, m:0, d:1, h:0, n:0, s:0, x:0, a:0};
     $js$$.alg.arrEach($format$$.match($__reSearch$$), function($match$$) {
-      var $collection$$1_value$$ = $__formatCollection$$[$match$$];
+      var $collection$$1_value$$ = $__formatCollection$$[$match$$] || /\[.*\]/.test($match$$);
       if (!$collection$$1_value$$) {
         return $match$$;
       }
