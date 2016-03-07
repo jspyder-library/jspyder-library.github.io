@@ -109,12 +109,12 @@ h4 {
   vertical-align: top;
   border-radius: 0.2em 0.2em 0 0;
   border: 0.0625em solid #3f51b5;
-  margin-left: 2em;
-  margin-right: 2em;
+  margin: 1em;
   background-color: #e8eaf6;
   color: #673ab7; }
   .js-date-minitable .row-header {
     text-align: center;
-    background-color: #9fa8da; }
+    background-color: #3f51b5;
+    color: #e8eaf6; }
 
 /*# sourceMappingURL=gh-pages.css.map */

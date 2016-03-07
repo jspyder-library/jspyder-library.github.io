@@ -144,13 +144,13 @@ h4 {
     vertical-align: top;
     border-radius: $border-radius $border-radius 0 0;
     border: $px solid $color-indigo;
-    margin-left: 2em;
-    margin-right: 2em;
+    margin: 1em;
     background-color: $color-indigo-50;
     color: $color-deep-purple;
     
     .row-header {
         text-align: center;
-        background-color: $color-indigo-200;
+        background-color: $color-indigo;
+        color: $color-indigo-50;
     }
 }
