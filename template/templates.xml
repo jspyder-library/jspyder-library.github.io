@@ -209,8 +209,24 @@
         <p>
             JS-Dates can be formatted using the asString function:
             <p id="js-date-example" class="jspyder-example" data-label="JS-Date" data-language="JavaScript"></p>
+            <h4>Recognized Patterns</h4>
+            <h5>Year Formats</h5>
+            @var("format_row",`<div class="spread-3-1">${row}
+            <div style="width: 300px">
+                <div class="spread-3-3">
+                    Year Formats
+                </div>
+                @insert_template("date-page-format-row","YYYY")
+                @insert_template("date-page-format-row","yyyy")
+                @insert_template("date-page-format-row","YY")
+                @insert_template("date-page-format-row","yy")
+            </div>
         </p>
     </template>
+    <template name="date-page-format-row"><!--
+    --><div class="spread-3-1">${format}</div><!--
+    --><div class="spread-3-2">@gh_date(`${format}`)<!--
+    --></template>
     <template name="date-page-example"><!--
      --><span class="comment">// ${date}</span>
 <!-- -->js.date().asString("dddd, [the] dth of mmmm, at hh:nn:ss am");
@@ -218,7 +234,8 @@
 <!-- --><span class="comment">// ${zulu}</span>
 <!-- -->js.date().asString("dd-MMM-yyyy HH:nn:ss");<!--
 --></template>
---><template name="form-page"><!-- 
+
+   <template name="form-page"><!-- 
      --><div id="form-template" style="position: relative"><!-- 
          --><div class="spread-5-4"><!--
              --><div class='spread-1-1'>${hidden}</div><!--

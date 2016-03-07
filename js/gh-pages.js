@@ -11,6 +11,11 @@ js.alg.run(function() {
             version: js.env.version
         };
     
+    js.template
+        .register("gh_date", function (format) {
+            return js.date().asString(format);
+        });
+    
     js.lib
         // initializes the main page
         .register("init", function() {
