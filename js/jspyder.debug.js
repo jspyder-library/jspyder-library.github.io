@@ -1832,7 +1832,7 @@ jspyder.extend.fn("date", function() {
           $value$$ = $js$$.alg.string($JSCompiler_object_inline_x_59$$).substr(0, 1);
           break;
         default:
-          $value$$ = $value$$.substring(1, $value$$.length - 1);
+          $value$$ = $match$$.substring(1, $match$$.length - 1);
       }
       $left$$ += $js$$.alg.string($value$$, "");
     });
