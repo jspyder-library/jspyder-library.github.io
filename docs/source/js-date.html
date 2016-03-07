@@ -899,19 +899,12 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                 case &quot;s&quot;:
                     value = collection.lookup[d.s];
                     break;
-                    
-                default:
-                    // value = value.substring(1, value.length - 1);
-                    console.log(value);
-            }
-            if (/\[.*\]/.test(value)) {
-                value = value.substring(1, value.length - 1);
             }
             
             left += js.alg.string(value, &quot;&quot;);
         });
         
-        return left + right;
+        return (left + right).replace(/\[(.*)\]/g, &quot;$1&quot;);
     }
     
 <span id='global-method-__getTimezoneOffset'>    /** @ignore */
