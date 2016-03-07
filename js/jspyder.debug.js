@@ -1659,7 +1659,7 @@ jspyder.extend.fn("date", function() {
     $v$$ = $js$$.alg.string($v$$, "");
     var $format$$ = $js$$.alg.string($f$$), $d$$ = {y:0, m:0, d:1, h:0, n:0, s:0, x:0, a:0};
     $js$$.alg.arrEach($format$$.match($__reSearch$$), function($match$$) {
-      var $collection$$1_value$$ = $__formatCollection$$[$match$$] || /\[.*\]/.test($match$$);
+      var $collection$$1_value$$ = $__formatCollection$$[$match$$];
       if (!$collection$$1_value$$) {
         return $match$$;
       }
@@ -1830,10 +1830,13 @@ jspyder.extend.fn("date", function() {
           break;
         case "x":
           $value$$ = $js$$.alg.string($JSCompiler_object_inline_x_59$$).substr(0, 1);
+          break;
+        default:
+          $value$$ = $value$$.substring(1, $value$$.length - 1);
       }
       $left$$ += $js$$.alg.string($value$$, "");
     });
-    return ($left$$ + $right$$).replace(/\[(.*)\]/g, "$1");
+    return $left$$ + $right$$;
   }
   var $js$$ = this;
   $js_date$$.fn = $js_date$$.prototype = {_value:null, _format:"", _useUTC:!1, clone:function $$js_date$$$$clone$() {
