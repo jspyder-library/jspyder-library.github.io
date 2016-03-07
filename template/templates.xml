@@ -211,7 +211,6 @@
             <p id="js-date-example" class="jspyder-example" data-label="JS-Date" data-language="JavaScript"></p>
             <h4>Recognized Patterns</h4>
             <h5>Year Formats</h5>
-            @var("format_row",`<div class="spread-3-1">${row}
             <div style="width: 300px">
                 <div class="spread-3-3">Year Formats</div>
                 @insert_template("date-page-format-row","YYYY")
