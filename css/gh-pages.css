@@ -71,7 +71,7 @@ h2 {
   background-color: #e8eaf6;
   color: #673ab7;
   font-family: consolas;
-  white-space: pre; }
+  white-space: pre-wrap; }
   .jspyder-example:before {
     content: attr(data-label);
     background-color: #3f51b5;
@@ -107,9 +107,14 @@ h4 {
   width: 300px;
   display: inline-block;
   vertical-align: top;
-  border-radius: 0.2em 0.2em 0 0; }
+  border-radius: 0.2em 0.2em 0 0;
+  border: 0.0625em solid #3f51b5;
+  margin-left: 2em;
+  margin-right: 2em;
+  background-color: #e8eaf6;
+  color: #673ab7; }
   .js-date-minitable .row-header {
     text-align: center;
-    background-color: #eeeeee; }
+    background-color: #9fa8da; }
 
 /*# sourceMappingURL=gh-pages.css.map */

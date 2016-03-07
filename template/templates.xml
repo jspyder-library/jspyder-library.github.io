@@ -216,7 +216,7 @@
                 @insert_template("date-page-format-row","yyyy")
                 @insert_template("date-page-format-row","YY")
                 @insert_template("date-page-format-row","yy")
-            </div><div style="width: 300px; display: inline-block; vertical-align: top;">
+            </div><div class="js-date-minitable">
                 <div class="spread-3-3 row-header">Month Formats</div>
                 @insert_template("date-page-format-row","MMMM")
                 @insert_template("date-page-format-row","mmmm")
@@ -226,13 +226,13 @@
                 @insert_template("date-page-format-row","mm")
                 @insert_template("date-page-format-row","M")
                 @insert_template("date-page-format-row","m")
-            </div><div style="width: 300px; display: inline-block; vertical-align: top;">
+            </div><div class="js-date-minitable">
                 <div class="spread-3-3 row-header">Date Formats</div>
                 @insert_template("date-page-format-row","ddth")
                 @insert_template("date-page-format-row","dth")
                 @insert_template("date-page-format-row","dd")
                 @insert_template("date-page-format-row","d")
-            </div><div style="width: 300px; display: inline-block; vertical-align: top;">
+            </div><div class="js-date-minitable">
                 <div class="spread-3-3 row-header">Weekday Formats</div>
                 @insert_template("date-page-format-row","DDDD")
                 @insert_template("date-page-format-row","dddd")
@@ -240,23 +240,23 @@
                 @insert_template("date-page-format-row","ddd")
                 @insert_template("date-page-format-row","DD")
                 @insert_template("date-page-format-row","D")
-            </div><div style="width: 300px; display: inline-block; vertical-align: top;">
+            </div><div class="js-date-minitable">
                 <div class="spread-3-3 row-header">Meridiem Formats</div>
                 @insert_template("date-page-format-row","AM")
                 @insert_template("date-page-format-row","am")
-            </div><div style="width: 300px; display: inline-block; vertical-align: top;">
+            </div><div class="js-date-minitable">
                 <div class="spread-3-3 row-header">Hours Formats</div>
                 @insert_template("date-page-format-row","HH")
                 @insert_template("date-page-format-row","hh")
                 @insert_template("date-page-format-row","H")
                 @insert_template("date-page-format-row","h")
-            </div><div style="width: 300px; display: inline-block; vertical-align: top;">
+            </div><div class="js-date-minitable">
                 <div class="spread-3-3 row-header">Minutes Formats</div>
                 @insert_template("date-page-format-row","NN")
                 @insert_template("date-page-format-row","nn")
                 @insert_template("date-page-format-row","N")
                 @insert_template("date-page-format-row","n")
-            </div><div style="width: 300px; display: inline-block; vertical-align: top;">
+            </div><div class="js-date-minitable">
                 <div class="spread-3-3 row-header">Seconds Formats</div>
                 @insert_template("date-page-format-row","SS")
                 @insert_template("date-page-format-row","ss")
