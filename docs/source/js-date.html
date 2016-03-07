@@ -97,15 +97,11 @@ jspyder.extend.fn(&quot;date&quot;, function () {
      * - h: Hours, 12-hour clock, standard (1)
      * 
      * ## Minutes ##
-     * - NN: Minutes, 0-padded (01)
      * - nn: minutes, 0-padded (01)
-     * - N: Minutes, standard (1)
      * - n: Minutes, standard (1)
      *      
      * ## Seconds ##
-     * - SS: Seconds, 0-padded (00)
      * - ss: Seconds, 0-padded (00)
-     * - S: Seconds, standard (0)
      * - s: Seconds, standard (0)
      * 
      * @param {Boolean} [utc=false]
@@ -481,8 +477,8 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             &quot;DDDD&quot;, &quot;DDD&quot;, &quot;DD&quot;, &quot;D&quot;,
             &quot;AM&quot;, &quot;am&quot;, 
             &quot;HH&quot;, &quot;H&quot;, &quot;hh&quot;, &quot;h&quot;, 
-            &quot;NN&quot;, &quot;N&quot;, &quot;nn&quot;, &quot;n&quot;, 
-            &quot;SS&quot;, &quot;S&quot;, &quot;ss&quot;, &quot;s&quot;
+            &quot;nn&quot;, &quot;n&quot;, 
+            &quot;ss&quot;, &quot;s&quot;
         ],
 <span id='global-property-'>        /**
 </span>         * @ignore
@@ -688,14 +684,10 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             // minutes
             &quot;n&quot;:    __buildFormatRegexStringFrom(__minutes, &quot;n&quot;    ),
             &quot;nn&quot;:   __buildFormatRegexStringFrom(__minutes, &quot;nn&quot;   ),
-            &quot;N&quot;:    __buildFormatRegexStringFrom(__minutes, &quot;N&quot;    ),
-            &quot;NN&quot;:   __buildFormatRegexStringFrom(__minutes, &quot;NN&quot;   ),
             
             // seconds
             &quot;s&quot;:    __buildFormatRegexStringFrom(__seconds, &quot;s&quot;    ),
-            &quot;ss&quot;:   __buildFormatRegexStringFrom(__seconds, &quot;ss&quot;   ),
-            &quot;S&quot;:    __buildFormatRegexStringFrom(__seconds, &quot;S&quot;    ),
-            &quot;SS&quot;:   __buildFormatRegexStringFrom(__seconds, &quot;SS&quot;   )
+            &quot;ss&quot;:   __buildFormatRegexStringFrom(__seconds, &quot;ss&quot;   )
         };
     
 <span id='global-method-__buildFormatRegexStringFrom'>    /**
@@ -898,15 +890,11 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                     value = collection.lookup[d.h];
                     break;
                     
-                case &quot;NN&quot;:
-                case &quot;N&quot;:
                 case &quot;nn&quot;:
                 case &quot;n&quot;:
                     value = collection.lookup[d.n];
                     break;
                     
-                case &quot;SS&quot;:
-                case &quot;S&quot;:
                 case &quot;ss&quot;:
                 case &quot;s&quot;:
                     value = collection.lookup[d.s];
