@@ -1746,7 +1746,6 @@ jspyder.extend.fn("date", function() {
         return $match$$;
       }
       var $len$$ = $match$$.length, $start$$ = $right$$.indexOf($match$$), $value$$ = "";
-      console.log("Match: " + $match$$);
       $left$$ += $right$$.substring(0, $start$$);
       $right$$ = $right$$.substring($start$$ + $len$$);
       switch($match$$) {
@@ -1832,7 +1831,6 @@ jspyder.extend.fn("date", function() {
         case "x":
           $value$$ = $js$$.alg.string($JSCompiler_object_inline_x_59$$).substr(0, 1);
       }
-      console.log("Value: " + $value$$);
       $left$$ += $js$$.alg.string($value$$, "");
     });
     return ($left$$ + $right$$).replace(/\[(.*)\]/g, "$1");
@@ -1972,7 +1970,8 @@ jspyder.extend.fn("date", function() {
   {s:"47", ss:"47"}, {s:"48", ss:"48"}, {s:"49", ss:"49"}, {s:"50", ss:"50"}, {s:"51", ss:"51"}, {s:"52", ss:"52"}, {s:"53", ss:"53"}, {s:"54", ss:"54"}, {s:"55", ss:"55"}, {s:"56", ss:"56"}, {s:"57", ss:"57"}, {s:"58", ss:"58"}, {s:"59", ss:"59"}], $__formatCollection$$ = {yy:$__buildFormatRegexStringFrom$$($__years$$, "yy"), yyyy:$__buildFormatRegexStringFrom$$($__years$$, "yyyy"), YY:$__buildFormatRegexStringFrom$$($__years$$, "YY"), YYYY:$__buildFormatRegexStringFrom$$($__years$$, "YYYY"), m:$__buildFormatRegexStringFrom$$($__months$$, 
   "m"), mm:$__buildFormatRegexStringFrom$$($__months$$, "mm"), mmm:$__buildFormatRegexStringFrom$$($__months$$, "mmm"), mmmm:$__buildFormatRegexStringFrom$$($__months$$, "mmmm"), M:$__buildFormatRegexStringFrom$$($__months$$, "M"), MM:$__buildFormatRegexStringFrom$$($__months$$, "MM"), MMM:$__buildFormatRegexStringFrom$$($__months$$, "MMM"), MMMM:$__buildFormatRegexStringFrom$$($__months$$, "MMMM"), d:$__buildFormatRegexStringFrom$$($__days$$, "d"), dd:$__buildFormatRegexStringFrom$$($__days$$, "dd"), 
   dth:$__buildFormatRegexStringFrom$$($__days$$, "dth"), ddth:$__buildFormatRegexStringFrom$$($__days$$, "ddth"), D:$__buildFormatRegexStringFrom$$($__weekdays$$, "D"), DD:$__buildFormatRegexStringFrom$$($__weekdays$$, "DD"), DDD:$__buildFormatRegexStringFrom$$($__weekdays$$, "DDD"), DDDD:$__buildFormatRegexStringFrom$$($__weekdays$$, "DDDD"), ddd:$__buildFormatRegexStringFrom$$($__weekdays$$, "ddd"), dddd:$__buildFormatRegexStringFrom$$($__weekdays$$, "dddd"), am:$__buildFormatRegexStringFrom$$($__hours$$, 
-  "am"), AM:$__buildFormatRegexStringFrom$$($__hours$$, "AM"), h:$__buildFormatRegexStringFrom$$($__hours$$, "h"), hh:$__buildFormatRegexStringFrom$$($__hours$$, "hh"), H:$__buildFormatRegexStringFrom$$($__hours$$, "H"), HH:$__buildFormatRegexStringFrom$$($__hours$$, "HH"), n:$__buildFormatRegexStringFrom$$($__minutes$$, "n"), nn:$__buildFormatRegexStringFrom$$($__minutes$$, "nn"), s:$__buildFormatRegexStringFrom$$($__seconds$$, "s"), ss:$__buildFormatRegexStringFrom$$($__seconds$$, "ss")};
+  "am"), AM:$__buildFormatRegexStringFrom$$($__hours$$, "AM"), h:$__buildFormatRegexStringFrom$$($__hours$$, "h"), hh:$__buildFormatRegexStringFrom$$($__hours$$, "hh"), H:$__buildFormatRegexStringFrom$$($__hours$$, "H"), HH:$__buildFormatRegexStringFrom$$($__hours$$, "HH"), n:$__buildFormatRegexStringFrom$$($__minutes$$, "n"), nn:$__buildFormatRegexStringFrom$$($__minutes$$, "nn"), s:$__buildFormatRegexStringFrom$$($__seconds$$, "s"), ss:$__buildFormatRegexStringFrom$$($__seconds$$, "ss"), xxx:!0, 
+  xx:!0, x:!0};
   return $js_date$$;
 });
 jspyder.extend.fn("dialog", function() {
