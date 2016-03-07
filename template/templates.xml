@@ -209,60 +209,16 @@
         <p>
             JS-Dates can be formatted using the asString function:
             <p id="js-date-example" class="jspyder-example" data-label="JS-Date" data-language="JavaScript"></p>
-            <h4>Recognized Patterns</h4>
-            <div class="js-date-minitable">
-                <div class="spread-3-3 row-header">Year Formats</div>
-                @insert_template("date-page-format-row","YYYY")
-                @insert_template("date-page-format-row","yyyy")
-                @insert_template("date-page-format-row","YY")
-                @insert_template("date-page-format-row","yy")
-            </div><div class="js-date-minitable">
-                <div class="spread-3-3 row-header">Month Formats</div>
-                @insert_template("date-page-format-row","MMMM")
-                @insert_template("date-page-format-row","mmmm")
-                @insert_template("date-page-format-row","MMM")
-                @insert_template("date-page-format-row","mmm")
-                @insert_template("date-page-format-row","MM")
-                @insert_template("date-page-format-row","mm")
-                @insert_template("date-page-format-row","M")
-                @insert_template("date-page-format-row","m")
-            </div><div class="js-date-minitable">
-                <div class="spread-3-3 row-header">Date Formats</div>
-                @insert_template("date-page-format-row","ddth")
-                @insert_template("date-page-format-row","dth")
-                @insert_template("date-page-format-row","dd")
-                @insert_template("date-page-format-row","d")
-            </div><div class="js-date-minitable">
-                <div class="spread-3-3 row-header">Weekday Formats</div>
-                @insert_template("date-page-format-row","DDDD")
-                @insert_template("date-page-format-row","dddd")
-                @insert_template("date-page-format-row","DDD")
-                @insert_template("date-page-format-row","ddd")
-                @insert_template("date-page-format-row","DD")
-                @insert_template("date-page-format-row","D")
-            </div><div class="js-date-minitable">
-                <div class="spread-3-3 row-header">Meridiem Formats</div>
-                @insert_template("date-page-format-row","AM")
-                @insert_template("date-page-format-row","am")
-            </div><div class="js-date-minitable">
-                <div class="spread-3-3 row-header">Hours Formats</div>
-                @insert_template("date-page-format-row","HH")
-                @insert_template("date-page-format-row","hh")
-                @insert_template("date-page-format-row","H")
-                @insert_template("date-page-format-row","h")
-            </div><div class="js-date-minitable">
-                <div class="spread-3-3 row-header">Minutes Formats</div>
-                @insert_template("date-page-format-row","NN")
-                @insert_template("date-page-format-row","nn")
-                @insert_template("date-page-format-row","N")
-                @insert_template("date-page-format-row","n")
-            </div><div class="js-date-minitable">
-                <div class="spread-3-3 row-header">Seconds Formats</div>
-                @insert_template("date-page-format-row","SS")
-                @insert_template("date-page-format-row","ss")
-                @insert_template("date-page-format-row","S")
-                @insert_template("date-page-format-row","s")
-            </div>
+        </p>
+        <p>
+            Dates can also be parsed from text, so long as the format is known
+            when the string is parsed.  However, when pasing a string, only the
+            order and format of each piece of data is needed.  Thus, the following
+            examples yield the same result:
+            <p class="jspyder-example" data-label="JS-Date Parsing", data-language="JavaScript"><!--
+<!--         -->js.date("@gh_date("dth of mmmm, in [the] year yyyy")", "dth of mmmm, in [the] year yyyy")
+<!--         -->js.date("@gh_date("dth of mmmm, in [the] year yyyy")", "d mmmm yyyy")
+<!--     --></p>
         </p>
     </template>
     <template name="date-page-format-row"><!--
