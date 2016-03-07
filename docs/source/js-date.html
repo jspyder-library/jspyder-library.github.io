@@ -487,7 +487,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
 <span id='global-property-'>        /**
 </span>         * @ignore
          */
-        __reSearch = new RegExp(&quot;(?!\\[.*)(&quot; + __reSearchStrings.join(&quot;|&quot;) + &quot;)(?!.*\\])&quot;, &quot;g&quot;),
+        __reSearch = new RegExp(&quot;(\[.*\]|&quot; + __reSearchStrings.join(&quot;|&quot;) + &quot;)&quot;, &quot;g&quot;),
 <span id='global-property-'>        /**
 </span>         * @ignore
          */
@@ -913,7 +913,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                     break;
                     
                 default:
-                    console.log(collection);
+                    value = value.substring(1, value.length - 1);
             }
             
             left += js.alg.string(value, &quot;&quot;);
