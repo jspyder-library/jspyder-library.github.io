@@ -3,6 +3,7 @@
 $px: (1em / 16);
 $header-height: 3em;
 $menu-width: 150px;
+$border-radius: .2em;
 
 body {
     padding: 0;
@@ -34,7 +35,7 @@ body {
             cursor: pointer;
             padding: .2em .4em;
             border: $px solid transparent;
-            border-radius: 2 * $px;
+            border-radius: $border-radius;
             display: inline-block;
             margin-right: .5em;
             margin-top: .6em;
@@ -91,7 +92,7 @@ h2 {
     position: relative;
     padding: 1.8em .4em .4em .4em;
     border: $px solid $color-indigo;
-    border-radius: .2em .2em 0 0;
+    border-radius: $border-radius $border-radius 0 0;
     margin-left: 2em;
     margin-right: 2em;
     background-color: $color-indigo-50;
@@ -128,5 +129,23 @@ h2 {
     
     .comment {
         color: $color-deep-purple-200;
+    }
+}
+
+h4 {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.js-date-minitable {
+    width: 300px; 
+    display: inline-block; 
+    vertical-align: top;
+    border-radius: $border-radius $border-radius 0 0; 
+    
+    .row-header {
+        text-align: center;
+        background-color: $color-grey-200;
     }
 }

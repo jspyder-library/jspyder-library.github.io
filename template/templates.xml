@@ -210,7 +210,7 @@
             JS-Dates can be formatted using the asString function:
             <p id="js-date-example" class="jspyder-example" data-label="JS-Date" data-language="JavaScript"></p>
             <h4>Recognized Patterns</h4>
-            <div style="width: 300px; display: inline-block; vertical-align: top;">
+            <div class="js-date-minitable">
                 <div class="spread-3-3 row-header">Year Formats</div>
                 @insert_template("date-page-format-row","YYYY")
                 @insert_template("date-page-format-row","yyyy")

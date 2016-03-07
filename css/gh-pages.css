@@ -22,7 +22,7 @@ body {
       cursor: pointer;
       padding: .2em .4em;
       border: 0.0625em solid transparent;
-      border-radius: 0.125em;
+      border-radius: 0.2em;
       display: inline-block;
       margin-right: .5em;
       margin-top: .6em; }
@@ -65,7 +65,7 @@ h2 {
   position: relative;
   padding: 1.8em .4em .4em .4em;
   border: 0.0625em solid #3f51b5;
-  border-radius: .2em .2em 0 0;
+  border-radius: 0.2em 0.2em 0 0;
   margin-left: 2em;
   margin-right: 2em;
   background-color: #e8eaf6;
@@ -97,5 +97,19 @@ h2 {
   color: #673ab7; }
   .code .comment {
     color: #b39ddb; }
+
+h4 {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto; }
+
+.js-date-minitable {
+  width: 300px;
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 0.2em 0.2em 0 0; }
+  .js-date-minitable .row-header {
+    text-align: center;
+    background-color: #eeeeee; }
 
 /*# sourceMappingURL=gh-pages.css.map */
