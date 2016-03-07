@@ -478,7 +478,8 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             &quot;AM&quot;, &quot;am&quot;, 
             &quot;HH&quot;, &quot;H&quot;, &quot;hh&quot;, &quot;h&quot;, 
             &quot;nn&quot;, &quot;n&quot;, 
-            &quot;ss&quot;, &quot;s&quot;
+            &quot;ss&quot;, &quot;s&quot;,
+            &quot;xxx&quot;, &quot;xx&quot;, &quot;x&quot;
         ],
 <span id='global-property-'>        /**
 </span>         * @ignore
@@ -745,7 +746,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
 </span>    function __parseString(v, f) {
         v = js.alg.string(v, &quot;&quot;);
         var format = js.alg.string(f),
-            d = { y: 0, m: 0, d: 1, h: 0, n: 0, s: 0, a: 0 };
+            d = { y: 0, m: 0, d: 1, h: 0, n: 0, s: 0, x: 0, a: 0 };
         
         js.alg.arrEach(format.match(__reSearch), function(match) {
             // get the collection
@@ -809,21 +810,41 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                         ? 12
                         : 0);
                     break;
+                    
+                case &quot;nn&quot;:
+                case &quot;n&quot;:
+                    d[&quot;n&quot;] = js.alg.number(value, 0);
+                    break;
+                
+                case &quot;ss&quot;:
+                case &quot;s&quot;:
+                    d[&quot;s&quot;] = js.alg.number(value, 0);
+                    break;
+                    
+                case &quot;xxx&quot;:
+                    d[&quot;x&quot;] = js.alg.number(value, 0);
+                    break;
+                case &quot;xx&quot;:
+                    d[&quot;x&quot;] = js.alg.number(value, 0) * 10;
+                    break;
+                case &quot;x&quot;:
+                    d[&quot;x&quot;] = js.alg.number(value, 0) * 100;
             }
         });
-        return new Date(d.y, d.m, d.d, d.h + d.a, d.n, d.s);
+        return new Date(d.y, d.m, d.d, d.h + d.a, d.n, d.s, d.x);
     }
     
 <span id='global-method-__formatDate'>    /** @ignore */
 </span>    function __formatDate(date, format, useUTC) {
         var d = {
-            y: useUTC ? date.getUTCFullYear() : date.getFullYear(),
-            m: useUTC ? date.getUTCMonth()    : date.getMonth(),
-            d: useUTC ? date.getUTCDate()     : date.getDate(),
-            h: useUTC ? date.getUTCHours()    : date.getHours(),
-            n: useUTC ? date.getUTCMinutes()  : date.getMinutes(),
-            s: useUTC ? date.getUTCSeconds()  : date.getSeconds(),
-            w: useUTC ? date.getUTCDay()      : date.getDay()
+            y: useUTC ? date.getUTCFullYear()     : date.getFullYear(),
+            m: useUTC ? date.getUTCMonth()        : date.getMonth(),
+            d: useUTC ? date.getUTCDate()         : date.getDate(),
+            h: useUTC ? date.getUTCHours()        : date.getHours(),
+            n: useUTC ? date.getUTCMinutes()      : date.getMinutes(),
+            s: useUTC ? date.getUTCSeconds()      : date.getSeconds(),
+            w: useUTC ? date.getUTCDay()          : date.getDay(),
+            x: useUTC ? date.getUTCMilliseconds() : date.getMilliseconds()
         };
         
         var left = &quot;&quot;, right = format;
@@ -898,6 +919,12 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                 case &quot;ss&quot;:
                 case &quot;s&quot;:
                     value = collection.lookup[d.s];
+                    break;
+                
+                case &quot;xxx&quot;:
+                case &quot;xx&quot;:
+                case &quot;x&quot;:
+                    value = js.alg.string(d.x).substring(0, match.length);
                     break;
             }
             
