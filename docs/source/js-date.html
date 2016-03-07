@@ -901,7 +901,10 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                     break;
                     
                 default:
-                    value = value.substring(1, value.length - 1);
+                    // value = value.substring(1, value.length - 1);
+            }
+            if (/\[.*\]/.test(value)) {
+                value = value.substring(1, value.length - 1);
             }
             
             left += js.alg.string(value, &quot;&quot;);
