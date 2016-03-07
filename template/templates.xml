@@ -221,7 +221,7 @@
         </p>
     </template>
     <template name="date-page-format-row"><!--
-    -->@var("format","@map_item(`${arguments}`,`0`)")<!--
+    -->@var("format",`@arguments("0")`)<!--
     --><div class="spread-3-1">${format}</div><!--
     --><div class="spread-3-2">@gh_date(`${format}`)</div><!--
     --></template>
