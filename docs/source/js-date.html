@@ -484,7 +484,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
 <span id='global-property-'>        /**
 </span>         * @ignore
          */
-        __reSearch = new RegExp(&quot;(\\[.*\\]|&quot; + __reSearchStrings.join(&quot;|&quot;) + &quot;)&quot;, &quot;g&quot;),
+        __reSearch = new RegExp(&quot;(\\[[^\\]]*\\]|&quot; + __reSearchStrings.join(&quot;|&quot;) + &quot;)&quot;, &quot;g&quot;),
 <span id='global-property-'>        /**
 </span>         * @ignore
          */
@@ -688,7 +688,12 @@ jspyder.extend.fn(&quot;date&quot;, function () {
             
             // seconds
             &quot;s&quot;:    __buildFormatRegexStringFrom(__seconds, &quot;s&quot;    ),
-            &quot;ss&quot;:   __buildFormatRegexStringFrom(__seconds, &quot;ss&quot;   )
+            &quot;ss&quot;:   __buildFormatRegexStringFrom(__seconds, &quot;ss&quot;   ),
+            
+            // milliseconds
+            &quot;xxx&quot;:  true,
+            &quot;xx&quot;:   true,
+            &quot;x&quot;:    true
         };
     
 <span id='global-method-__buildFormatRegexStringFrom'>    /**
@@ -763,7 +768,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                 start = v.indexOf(value);
             
             v = v.substring(start + len);
-            
+                            
             switch (match) {
                 // year
                 case &quot;yy&quot;:
@@ -850,7 +855,7 @@ jspyder.extend.fn(&quot;date&quot;, function () {
         var left = &quot;&quot;, right = format;
         js.alg.arrEach(format.match(__reSearch), function(match) {
             // get the collection
-            var collection = __formatCollection[match];
+            var collection = __formatCollection[match] || /\[[^\\]*\]/g.test(match);
             if(!collection) { return match; }
             
             // get the regexp
@@ -922,16 +927,25 @@ jspyder.extend.fn(&quot;date&quot;, function () {
                     break;
                 
                 case &quot;xxx&quot;:
-                case &quot;xx&quot;:
-                case &quot;x&quot;:
-                    value = (js.alg.string(d.x) + &quot;000&quot;).substring(0, match.length);
+                    value = (js.alg.string(d.x) + &quot;00&quot;).substr(0, 3);
                     break;
+                    
+                case &quot;xx&quot;:
+                    value = (js.alg.string(d.x) + &quot;0&quot;).substr(0, 2);
+                    break;
+                    
+                case &quot;x&quot;:
+                    value = (js.alg.string(d.x)).substr(0, 1);
+                    break;
+                    
+                default:
+                    value = match.substring(1, match.length - 1);
             }
             
             left += js.alg.string(value, &quot;&quot;);
         });
         
-        return (left + right).replace(/\[(.*)\]/g, &quot;$1&quot;);
+        return (left + right);
     }
     
 <span id='global-method-__getTimezoneOffset'>    /** @ignore */
