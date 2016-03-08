@@ -2704,12 +2704,13 @@ jspyder.extend.fn("form", function() {
       for ($i$$ = 0;$i$$ < $options$$.length;$i$$++) {
         $$option_option$$ = $js$$.alg.mergeObj({name:$cfgname$$, "class":$cfgclass$$, readonly:$cfg$$.readonly}, $options$$[$i$$]), $$option_option$$.class = $cfgclass$$ + $js$$.alg.string($options$$[$i$$].class), $$option_option$$ = $js$$.dom("<div></div>").append($single$$($$option_option$$)), $$radio$$.and($$option_option$$);
       }
+      var $lastvalue$$ = $$radio$$.exportValue();
       $$radio$$.find("input").on("change", function($attrs$$15_event$$) {
         $attrs$$15_event$$ = {readonly:null};
         var $$me$$ = $js$$.dom(this);
         $$me$$.getAttrs($attrs$$15_event$$);
-        $attrs$$15_event$$.readonly ? this.checked = !this.checked : $$me$$.getValue(function($v$$) {
-          $cfg$$["data-value"] = $v$$;
+        $attrs$$15_event$$.readonly ? $$radio$$.setValue($lastvalue$$) : $$me$$.getValue(function($v$$) {
+          $lastvalue$$ = $cfg$$["data-value"] = $v$$;
         });
       });
       $cfg$$.exportValue = $exportValue$$;
