@@ -2709,7 +2709,7 @@ jspyder.extend.fn("form", function() {
         $attrs$$15_event$$ = {readonly:null};
         var $$me$$ = $js$$.dom(this);
         $$me$$.getAttrs($attrs$$15_event$$);
-        $attrs$$15_event$$.readonly ? $form$$.setFieldValue($cfgname$$, $form$$.exportFieldValue(cfgName)) : $$me$$.getValue(function($v$$) {
+        $attrs$$15_event$$.readonly ? $form$$.setFieldValue($cfgname$$, $form$$.exportFieldValue($cfgname$$)) : $$me$$.getValue(function($v$$) {
           $cfg$$["data-value"] = $v$$;
         });
       });
