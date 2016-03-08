@@ -279,7 +279,8 @@ js.alg.run(function() {
                             ]},
                         hidden: {
                             type: "hidden",
-                            text: "Hidden Field" },
+                            text: "Hidden Field",
+                            tooltip: "Hidden fields do not render to the DOM" },
                         input: {
                             type: "input",
                             text: "Input Field" },
