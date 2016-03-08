@@ -2747,9 +2747,12 @@ jspyder.extend.fn("form", function() {
       for ($i$$ = 0;$i$$ < $options$$.length;$i$$++) {
         $$option$$1_option$$ = $js$$.alg.mergeObj({name:$cfgname$$, readonly:$cfg$$.readonly}, $options$$[$i$$]), $$option$$1_option$$.class = $cfgclass$$ + $js$$.alg.string($options$$[$i$$].class), $$option$$1_option$$ = $js$$.dom("<div></div>").append($checkbox$$($$option$$1_option$$)), $$checkbox$$.and($$option$$1_option$$);
       }
-      $$checkbox$$.find("input").on("change", function($event$$) {
+      $$checkbox$$.find("input").on("change", function($event$$26_self$$) {
         var $checked$$ = this.checked;
-        $js$$.dom(this).getValue(function($v$$) {
+        $event$$26_self$$ = $js$$.dom(this);
+        var $attrs$$ = {readonly:null};
+        $event$$26_self$$.getAttrs($attrs$$);
+        $attrs$$.readonly ? this.checked = !$checked$$ : $event$$26_self$$.getValue(function($v$$) {
           $cfg$$["data-values"]["val-" + $js$$.alg.string($v$$)] = $checked$$;
         });
       });
@@ -2919,10 +2922,10 @@ jspyder.extend.fn("form", function() {
               $found$$.find(".search-item.selected").trigger("mousedown");
           }
         }
-      }).on("blur", function($attrs$$30_event$$31_match$$) {
-        $attrs$$30_event$$31_match$$ = {readonly:null};
-        $js$$.dom(this).getAttrs($attrs$$30_event$$31_match$$);
-        $attrs$$30_event$$31_match$$.readonly || ("" === this.value ? $js$$.dom(this).setAttrs({"data-value":""}) : $config$$.strict && (($attrs$$30_event$$31_match$$ = $searchValue$$($config$$, this.value, !0)) ? (this.value = $attrs$$30_event$$31_match$$.text, $js$$.dom(this).setAttrs({"data-value":$attrs$$30_event$$31_match$$.value})) : (this.value = "", $js$$.dom(this).setAttrs({"data-value":""}))), $fns$$.hide());
+      }).on("blur", function($attrs$$31_event$$31_match$$) {
+        $attrs$$31_event$$31_match$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($attrs$$31_event$$31_match$$);
+        $attrs$$31_event$$31_match$$.readonly || ("" === this.value ? $js$$.dom(this).setAttrs({"data-value":""}) : $config$$.strict && (($attrs$$31_event$$31_match$$ = $searchValue$$($config$$, this.value, !0)) ? (this.value = $attrs$$31_event$$31_match$$.text, $js$$.dom(this).setAttrs({"data-value":$attrs$$31_event$$31_match$$.value})) : (this.value = "", $js$$.dom(this).setAttrs({"data-value":""}))), $fns$$.hide());
       });
       var $fns$$ = {show:function search($css$$7_value$$) {
         var $values$$ = $config$$.values || [], $minlen$$ = $js$$.alg.number($config$$.minlen, 3), $data$$ = {match:[], regexp:new RegExp($js$$.alg.escapeString($css$$7_value$$), "i"), depth:$js$$.alg.number($config$$.length, 5)};
@@ -2970,25 +2973,25 @@ jspyder.extend.fn("form", function() {
       $cfg$$.setValue = $setValue$$;
       $cfg$$.exportValue = $exportValue$$;
       $search$$ = $buildFunctions$$(this, $$autocomplete$$, $cfg$$);
-      $$autocomplete$$.on("focus input", function($attrs$$33_event$$) {
-        $attrs$$33_event$$ = {readonly:null};
-        $js$$.dom(this).getAttrs($attrs$$33_event$$);
-        $attrs$$33_event$$.readonly || $$autocomplete$$.getValue($search$$.show);
+      $$autocomplete$$.on("focus input", function($attrs$$34_event$$) {
+        $attrs$$34_event$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($attrs$$34_event$$);
+        $attrs$$34_event$$.readonly || $$autocomplete$$.getValue($search$$.show);
       });
       return $$autocomplete$$;
     };
   }).registerControlFn("number", function() {
     function $setValue$$($data$$, $v$$) {
       $v$$ = $js$$.alg.string($v$$, "");
-      $data$$.field.filter("input").getAttrs({"data-focus":!1}, function($attrs$$34_c$$) {
-        if ($attrs$$34_c$$["data-focus"]) {
+      $data$$.field.filter("input").getAttrs({"data-focus":!1}, function($attrs$$35_c$$) {
+        if ($attrs$$35_c$$["data-focus"]) {
           $v$$ = $toNumber$$($v$$, $data$$.config.acc);
         } else {
           var $n$$inline_16_part$$ = $v$$;
-          $attrs$$34_c$$ = $data$$.config.tsep;
+          $attrs$$35_c$$ = $data$$.config.tsep;
           var $d$$ = $data$$.config.dec, $a$$inline_19_num$$ = $data$$.config.acc;
-          "" === $js$$.alg.string($n$$inline_16_part$$, "") ? $v$$ = $n$$inline_16_part$$ : ($n$$inline_16_part$$ = $js$$.alg.number($n$$inline_16_part$$, 0), $attrs$$34_c$$ = $js$$.alg.string($attrs$$34_c$$, ","), $d$$ = $js$$.alg.string($d$$, "."), "undefined" !== typeof $a$$inline_19_num$$ && ($n$$inline_16_part$$ = $n$$inline_16_part$$.toFixed($a$$inline_19_num$$)), $n$$inline_16_part$$ = $js$$.alg.string($n$$inline_16_part$$, "").split("."), $a$$inline_19_num$$ = [], $a$$inline_19_num$$[0] = 
-          ($n$$inline_16_part$$[0] || "").replace(/\B(?=(\d{3})+(?!\d))/g, $attrs$$34_c$$), $n$$inline_16_part$$[1] && $a$$inline_19_num$$.push($n$$inline_16_part$$[1]), $v$$ = $a$$inline_19_num$$.join($d$$));
+          "" === $js$$.alg.string($n$$inline_16_part$$, "") ? $v$$ = $n$$inline_16_part$$ : ($n$$inline_16_part$$ = $js$$.alg.number($n$$inline_16_part$$, 0), $attrs$$35_c$$ = $js$$.alg.string($attrs$$35_c$$, ","), $d$$ = $js$$.alg.string($d$$, "."), "undefined" !== typeof $a$$inline_19_num$$ && ($n$$inline_16_part$$ = $n$$inline_16_part$$.toFixed($a$$inline_19_num$$)), $n$$inline_16_part$$ = $js$$.alg.string($n$$inline_16_part$$, "").split("."), $a$$inline_19_num$$ = [], $a$$inline_19_num$$[0] = 
+          ($n$$inline_16_part$$[0] || "").replace(/\B(?=(\d{3})+(?!\d))/g, $attrs$$35_c$$), $n$$inline_16_part$$[1] && $a$$inline_19_num$$.push($n$$inline_16_part$$[1]), $v$$ = $a$$inline_19_num$$.join($d$$));
         }
         this.setValue($v$$);
       });
@@ -3014,10 +3017,10 @@ jspyder.extend.fn("form", function() {
       $$input_cfg2$$.filter("input").on("blur", function($$input$$1_event$$) {
         $$input$$1_event$$ = $js$$.dom(this).setAttrs({"data-focus":null});
         $form$$.setFieldValue($cfg$$.name, $$input$$1_event$$.exportValue());
-      }).on("focus", function($$input$$2_attrs$$35_event$$) {
-        $$input$$2_attrs$$35_event$$ = {readonly:null};
-        $js$$.dom(this).getAttrs($$input$$2_attrs$$35_event$$);
-        $$input$$2_attrs$$35_event$$.readonly || ($$input$$2_attrs$$35_event$$ = $js$$.dom(this).setAttrs({"data-focus":!0}), $form$$.setFieldValue($cfg$$.name, $$input$$2_attrs$$35_event$$.exportValue()));
+      }).on("focus", function($$input$$2_attrs$$36_event$$) {
+        $$input$$2_attrs$$36_event$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($$input$$2_attrs$$36_event$$);
+        $$input$$2_attrs$$36_event$$.readonly || ($$input$$2_attrs$$36_event$$ = $js$$.dom(this).setAttrs({"data-focus":!0}), $form$$.setFieldValue($cfg$$.name, $$input$$2_attrs$$36_event$$.exportValue()));
       });
       return $$input_cfg2$$;
     };
