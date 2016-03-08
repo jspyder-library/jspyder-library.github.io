@@ -2680,11 +2680,10 @@ jspyder.extend.fn("form", function() {
       return $cfg$$15_textarea$$;
     };
   }).registerControlFn("radio", function() {
-    function $single$$($cfg$$16_cfgclass$$) {
-      var $cfgtext$$ = $js$$.alg.string($cfg$$16_cfgclass$$.text, ""), $cfgvalue$$1_html$$ = $js$$.alg.string($cfg$$16_cfgclass$$.value, ""), $cfgname$$ = $js$$.alg.string($cfg$$16_cfgclass$$.name, "");
-      $cfg$$16_cfgclass$$ = $js$$.alg.string($cfg$$16_cfgclass$$.class, "");
-      $cfgvalue$$1_html$$ = ['<input value="', $cfgvalue$$1_html$$, '" name="', $cfgname$$, '" type="radio" class="', $cfg$$16_cfgclass$$, '"></input>'].join("");
-      return $js$$.dom($cfgvalue$$1_html$$).and($js$$.form.fn.buildLabel($cfgname$$, $cfgtext$$, $cfg$$16_cfgclass$$));
+    function $single$$($cfg$$16_html$$) {
+      var $cfgtext$$ = $js$$.alg.string($cfg$$16_html$$.text, ""), $cfgvalue$$ = $js$$.alg.string($cfg$$16_html$$.value, ""), $cfgname$$ = $js$$.alg.string($cfg$$16_html$$.name, ""), $cfgclass$$ = $js$$.alg.string($cfg$$16_html$$.class, "");
+      $cfg$$16_html$$ = ['<input value="', $cfgvalue$$, '" name="', $cfgname$$, '" type="radio"', $cfg$$16_html$$.readonly ? ' readonly="true"' : "", ' class="', $cfgclass$$, '"></input>'].join("");
+      return $js$$.dom($cfg$$16_html$$).and($js$$.form.fn.buildLabel($cfgname$$, $cfgtext$$, $cfgclass$$));
     }
     function $exportValue$$($data$$) {
       return $data$$.config["data-value"] || null;
@@ -2703,13 +2702,13 @@ jspyder.extend.fn("form", function() {
       var $cfgname$$ = $js$$.alg.string($cfg$$.name, ""), $cfgclass$$ = $js$$.alg.string($cfg$$.class, ""), $options$$ = $cfg$$.values || [], $$option_option$$ = null, $$option_option$$ = null, $$radio$$ = $js$$.dom(), $i$$;
       $cfg$$["data-values"] = {};
       for ($i$$ = 0;$i$$ < $options$$.length;$i$$++) {
-        $$option_option$$ = $js$$.alg.mergeObj({name:$cfgname$$, "class":$cfgclass$$}, $options$$[$i$$]), $$option_option$$.class = $cfgclass$$ + $js$$.alg.string($options$$[$i$$].class), $$option_option$$ = $js$$.dom("<div></div>").append($single$$($$option_option$$)), $$radio$$.and($$option_option$$);
+        $$option_option$$ = $js$$.alg.mergeObj({name:$cfgname$$, "class":$cfgclass$$, readonly:$cfg$$.readonly}, $options$$[$i$$]), $$option_option$$.class = $cfgclass$$ + $js$$.alg.string($options$$[$i$$].class), $$option_option$$ = $js$$.dom("<div></div>").append($single$$($$option_option$$)), $$radio$$.and($$option_option$$);
       }
       $$radio$$.find("input").on("change", function($attrs$$15_event$$) {
         $attrs$$15_event$$ = {readonly:null};
         var $$me$$ = $js$$.dom(this);
         $$me$$.getAttrs($attrs$$15_event$$);
-        $attrs$$15_event$$.readonly || $$me$$.getValue(function($v$$) {
+        $attrs$$15_event$$.readonly ? this.checked = !this.checked : $$me$$.getValue(function($v$$) {
           $cfg$$["data-value"] = $v$$;
         });
       });
