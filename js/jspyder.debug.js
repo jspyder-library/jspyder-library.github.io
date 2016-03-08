@@ -2081,64 +2081,22 @@ js.extend.fn("download", function() {
     window.open($url$$, "_blank");
     $URL$$.revokeObjectURL($url$$);
   }
-  function $__saveTextWithMime$$($content$$, $filename$$0$$, $extension$$, $dataType$$, $charset$$) {
-    $__saveTextWithMime$$ = window.Blob ? function($blob$$6_content$$, $filename$$, $extension$$, $dataType$$, $charset$$) {
-      $charset$$ = js.alg.string($charset$$, "UTF-8");
-      $filename$$ = js.alg.string($filename$$, "download");
-      $blob$$6_content$$ = new window.Blob([($__encoding$$[$charset$$] || "") + ($blob$$6_content$$ || "")], {type:$dataType$$ + ";charset=" + $charset$$});
-      $__save$$($filename$$, $dataType$$, $blob$$6_content$$);
-    } : "IE" === js.env.browser && 9 >= js.env.browserVersion ? function($content$$, $filename$$, $extension$$, $dataType$$, $charset$$) {
-      $charset$$ = js.alg.string($charset$$, "UTF-8");
-      $filename$$ = js.alg.string($filename$$, "download");
-      $content$$ = $content$$ || "";
-      js.dialog.alert({title:"Alert", message:["Because you are using Internet Explorer ", js.env.browserVersion, ', your download "', $filename$$, ".", $extension$$, '" has been changed to "', $filename$$, '.txt".  It is recommended that this value be changed in the save menu, or after the file has been downloaded.'].join("")});
-      $__saveText$$($content$$, $filename$$, $charset$$);
-    } : function($content$$, $filename$$, $extension$$, $dataType$$, $charset$$) {
-      $charset$$ = js.alg.string($charset$$, "UTF-8");
-      $filename$$ = js.alg.string($filename$$, "download");
-      $__saveText$$($content$$ || "", $filename$$ + "." + $extension$$, $charset$$);
-    };
-    return $__saveTextWithMime$$.apply(this, arguments);
-  }
-  function $__saveText$$($content$$0$$, $name$$0$$, $charset$$0$$) {
-    $content$$0$$ = $content$$0$$.replace(/\r?\n/g, "\r\n");
-    $__saveText$$ = window.Blob ? function($blob$$7_content$$, $name$$, $charset$$) {
-      $charset$$ = js.alg.string($charset$$, "UTF-8");
-      filename = js.alg.string(filename, "download");
-      $blob$$7_content$$ = new Blob([$blob$$7_content$$ || ""], {type:"text/plain;charset=" + $charset$$});
-      $__save$$($name$$, "text/text", $blob$$7_content$$);
-    } : function($content$$, $name$$, $charset$$) {
-      $charset$$ = js.alg.string($charset$$, "UTF-8");
-      filename = js.alg.string(filename, "download");
-      $content$$ = $content$$ || "";
-      var $ret$$ = "";
-      js.dom("<iframe></iframe>").setCss({display:"none"}).attach(document.body).element(0, function($el$$) {
-        $el$$.document.open("text/html", "replace");
-        $el$$.document.charset = $charset$$;
-        /(.html|.htm)$/i.test($name$$) ? ($el$$.document.close(), $el$$.document.body.innerHTML = "\r\n" + $content$$ + "\r\n") : (/.txt$/i.test($name$$) || ($name$$ += ".txt"), $el$$.document.write($content$$), $el$$.document.close());
-        $ret$$ = $el$$.document.execCommand("SaveAs", null, $name$$);
-        $el$$.close();
-      });
-      return $ret$$;
-    };
-    return $__saveText$$.apply(this, arguments);
-  }
   $download$$.fn = {save:function $$download$$$fn$save$($def$$) {
     $def$$ = $def$$ || {};
     $__save$$($def$$.name || this._name, $def$$.type || this._type, $def$$.data || this._data);
     return this;
   }, saveText:function $$download$$$fn$saveText$($def$$) {
     $def$$ = $def$$ || {};
-    $__saveText$$($def$$.name || this._name, $def$$.charset || this._charset, $def$$.data || this._name);
+    $__saveText$$($def$$.data || this._data, $def$$.name || this._name, $def$$.charset || this._charset);
     return this;
-  }, saveMime:function $$download$$$fn$saveMime$($charset$$8_def$$) {
-    $charset$$8_def$$ = $charset$$8_def$$ || {};
-    var $name$$ = ($charset$$8_def$$.name || this._name).split("."), $data$$ = $charset$$8_def$$.data || this._data, $type$$ = $charset$$8_def$$.type || this._type;
-    $charset$$8_def$$ = $charset$$8_def$$.charset || this._charset;
+  }, saveMime:function $$download$$$fn$saveMime$($charset$$1_def$$) {
+    $charset$$1_def$$ = $charset$$1_def$$ || {};
+    var $name$$ = ($charset$$1_def$$.name || this._name).split("."), $data$$ = $charset$$1_def$$.data || this._data, $type$$ = $charset$$1_def$$.type || this._type;
+    $charset$$1_def$$ = $charset$$1_def$$.charset || this._charset;
     var $extension$$ = ".txt";
     1 < $name$$.length && ($extension$$ = $name$$.pop());
     $name$$ = $name$$.join("");
-    $__saveTextWithMime$$($data$$, $name$$, $extension$$, $type$$, $charset$$8_def$$);
+    $__saveTextWithMime$$($data$$, $name$$, $extension$$, $type$$, $charset$$1_def$$);
     return this;
   }, setName:function $$download$$$fn$setName$($name$$) {
     this._name = js.alg.string($name$$, "download");
@@ -2161,7 +2119,47 @@ js.extend.fn("download", function() {
   }, getCharset:function $$download$$$fn$getCharset$() {
     return this._charset;
   }};
-  var $doc$$ = window.document, $URL$$ = window.URL || window.webkitURL || window, $safeType$$ = "application/octet-stream", $sliceBlob$$ = Blob.prototype.slice || Blob.prototype.webkitSlice, $__encoding$$ = {"UTF-8":"", "UTF-16":"\ufeff", "UTF-32":"\x00\ufeff", "UTF-7":"+/v8", "UTF-1":"\u00f7dL"};
+  var $doc$$ = window.document, $URL$$ = window.URL || window.webkitURL || window, $safeType$$ = "application/octet-stream", $sliceBlob$$ = Blob.prototype.slice || Blob.prototype.webkitSlice, $__encoding$$ = {"UTF-8":"", "UTF-16":"\ufeff", "UTF-32":"\x00\ufeff", "UTF-7":"+/v8", "UTF-1":"\u00f7dL"}, $__saveTextWithMime$$ = function $$__saveTextWithMime$$$($content$$, $filename$$, $extension$$0$$, $dataType$$, $charset$$0$$) {
+    $__saveTextWithMime$$ = window.Blob ? function($blob$$7_content$$, $filename$$, $extension$$, $dataType$$, $charset$$) {
+      $charset$$ = js.alg.string($charset$$, "UTF-8");
+      $filename$$ = js.alg.string($filename$$, "download");
+      $blob$$7_content$$ = new window.Blob([($__encoding$$[$charset$$] || "") + ($blob$$7_content$$ || "")], {type:$dataType$$ + ";charset=" + $charset$$});
+      $__save$$($filename$$, $dataType$$, $blob$$7_content$$);
+    } : "IE" === js.env.browser && 9 >= js.env.browserVersion ? function($content$$, $filename$$, $extension$$, $dataType$$, $charset$$) {
+      $charset$$ = js.alg.string($charset$$, "UTF-8");
+      $filename$$ = js.alg.string($filename$$, "download");
+      $content$$ = $content$$ || "";
+      js.dialog.alert({title:"Alert", message:["Because you are using Internet Explorer ", js.env.browserVersion, ', your download "', $filename$$, ".", $extension$$, '" has been changed to "', $filename$$, '.txt".  It is recommended that this value be changed in the save menu, or after the file has been downloaded.'].join("")});
+      $__saveText$$($content$$, $filename$$, $charset$$);
+    } : function($content$$, $filename$$, $extension$$, $dataType$$, $charset$$) {
+      $charset$$ = js.alg.string($charset$$, "UTF-8");
+      $filename$$ = js.alg.string($filename$$, "download");
+      $__saveText$$($content$$ || "", $filename$$ + "." + $extension$$, $charset$$);
+    };
+    return $__saveTextWithMime$$.apply(this, arguments);
+  }, $__saveText$$ = function $$__saveText$$$($content$$0$$, $name$$0$$, $charset$$0$$) {
+    $content$$0$$ = $content$$0$$.replace(/\r?\n/g, "\r\n");
+    $__saveText$$ = window.Blob ? function($blob$$8_content$$, $name$$, $charset$$) {
+      $charset$$ = js.alg.string($charset$$, "UTF-8");
+      $name$$ = js.alg.string($name$$, "download");
+      $blob$$8_content$$ = new Blob([$blob$$8_content$$ || ""], {type:"text/plain;charset=" + $charset$$});
+      $__save$$($name$$, "text/text", $blob$$8_content$$);
+    } : function($content$$, $name$$, $charset$$) {
+      $charset$$ = js.alg.string($charset$$, "UTF-8");
+      $name$$ = js.alg.string($name$$, "download");
+      $content$$ = $content$$ || "";
+      var $ret$$ = "";
+      js.dom("<iframe></iframe>").setCss({display:"none"}).attach(document.body).element(0, function($el$$) {
+        $el$$.document.open("text/html", "replace");
+        $el$$.document.charset = $charset$$;
+        /(.html|.htm)$/i.test($name$$) ? ($el$$.document.close(), $el$$.document.body.innerHTML = "\r\n" + $content$$ + "\r\n") : (/.txt$/i.test($name$$) || ($name$$ += ".txt"), $el$$.document.write($content$$), $el$$.document.close());
+        $ret$$ = $el$$.document.execCommand("SaveAs", null, $name$$);
+        $el$$.close();
+      });
+      return $ret$$;
+    };
+    return $__saveText$$.apply(this, arguments);
+  };
   return $download$$;
 });
 jspyder.extend.fn("dtype", function() {
@@ -2958,23 +2956,25 @@ jspyder.extend.fn("form", function() {
       $cfg$$.setValue = $setValue$$;
       $cfg$$.exportValue = $exportValue$$;
       $search$$ = $buildFunctions$$(this, $$autocomplete$$, $cfg$$);
-      $$autocomplete$$.on("focus input", function($event$$) {
-        $$autocomplete$$.getValue($search$$.show);
+      $$autocomplete$$.on("focus input", function($attrs$$24_event$$) {
+        $attrs$$24_event$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($attrs$$24_event$$);
+        $attrs$$24_event$$.readonly || $$autocomplete$$.getValue($search$$.show);
       });
       return $$autocomplete$$;
     };
   }).registerControlFn("number", function() {
     function $setValue$$($data$$, $v$$) {
       $v$$ = $js$$.alg.string($v$$, "");
-      $data$$.field.filter("input").getAttrs({"data-focus":!1}, function($attrs$$24_c$$) {
-        if ($attrs$$24_c$$["data-focus"]) {
+      $data$$.field.filter("input").getAttrs({"data-focus":!1}, function($attrs$$25_c$$) {
+        if ($attrs$$25_c$$["data-focus"]) {
           $v$$ = $toNumber$$($v$$, $data$$.config.acc);
         } else {
           var $n$$inline_16_part$$ = $v$$;
-          $attrs$$24_c$$ = $data$$.config.tsep;
+          $attrs$$25_c$$ = $data$$.config.tsep;
           var $d$$ = $data$$.config.dec, $a$$inline_19_num$$ = $data$$.config.acc;
-          "" === $js$$.alg.string($n$$inline_16_part$$, "") ? $v$$ = $n$$inline_16_part$$ : ($n$$inline_16_part$$ = $js$$.alg.number($n$$inline_16_part$$, 0), $attrs$$24_c$$ = $js$$.alg.string($attrs$$24_c$$, ","), $d$$ = $js$$.alg.string($d$$, "."), "undefined" !== typeof $a$$inline_19_num$$ && ($n$$inline_16_part$$ = $n$$inline_16_part$$.toFixed($a$$inline_19_num$$)), $n$$inline_16_part$$ = $js$$.alg.string($n$$inline_16_part$$, "").split("."), $a$$inline_19_num$$ = [], $a$$inline_19_num$$[0] = 
-          ($n$$inline_16_part$$[0] || "").replace(/\B(?=(\d{3})+(?!\d))/g, $attrs$$24_c$$), $n$$inline_16_part$$[1] && $a$$inline_19_num$$.push($n$$inline_16_part$$[1]), $v$$ = $a$$inline_19_num$$.join($d$$));
+          "" === $js$$.alg.string($n$$inline_16_part$$, "") ? $v$$ = $n$$inline_16_part$$ : ($n$$inline_16_part$$ = $js$$.alg.number($n$$inline_16_part$$, 0), $attrs$$25_c$$ = $js$$.alg.string($attrs$$25_c$$, ","), $d$$ = $js$$.alg.string($d$$, "."), "undefined" !== typeof $a$$inline_19_num$$ && ($n$$inline_16_part$$ = $n$$inline_16_part$$.toFixed($a$$inline_19_num$$)), $n$$inline_16_part$$ = $js$$.alg.string($n$$inline_16_part$$, "").split("."), $a$$inline_19_num$$ = [], $a$$inline_19_num$$[0] = 
+          ($n$$inline_16_part$$[0] || "").replace(/\B(?=(\d{3})+(?!\d))/g, $attrs$$25_c$$), $n$$inline_16_part$$[1] && $a$$inline_19_num$$.push($n$$inline_16_part$$[1]), $v$$ = $a$$inline_19_num$$.join($d$$));
         }
         this.setValue($v$$);
       });
@@ -3080,40 +3080,42 @@ js.extend.fn("sp", function() {
   function $__failureParse$$($listItems$$, $failureFn$$, $sender$$, $args$$) {
     $failureFn$$($sender$$, $args$$);
   }
-  function $__parseRows$$($row$$, $f$$2_id$$, $_rows_filter$$, $filterData$$) {
-    if ($row$$ && $filterData$$ && $filterData$$.length) {
-      var $drop$$, $value$$, $orDrop$$;
+  function $__parseRows$$($row$$, $filterData_id$$, $_rows_f$$, $data$$) {
+    if ($row$$ && $data$$ && $data$$.filterArray && $data$$.filterArray.length) {
+      $filterData_id$$ = $data$$.filterArray;
+      $data$$ = $data$$.exclude;
+      var $filter$$, $drop$$, $value$$, $orDrop$$;
       $drop$$ = !1;
-      for ($f$$2_id$$ = 0;!$drop$$ && $f$$2_id$$ < $filterData$$.length;$f$$2_id$$++) {
-        ($_rows_filter$$ = $filterData$$[$f$$2_id$$]) && $_rows_filter$$.column && "undefined" !== typeof $row$$[$_rows_filter$$.column] && ($value$$ = $row$$[$_rows_filter$$.column].value, $orDrop$$ = !0, $drop$$ || "undefined" === typeof $_rows_filter$$.gt || ($_rows_filter$$.gt && "object" === typeof $_rows_filter$$.gt ? ($js$$.alg.each($_rows_filter$$.gt, function($or$$) {
+      for ($_rows_f$$ = 0;!$drop$$ && $_rows_f$$ < $filterData_id$$.length;$_rows_f$$++) {
+        ($filter$$ = $filterData_id$$[$_rows_f$$]) && $filter$$.column && "undefined" !== typeof $row$$[$filter$$.column] && ($value$$ = $row$$[$filter$$.column].value, $orDrop$$ = !0, $drop$$ || "undefined" === typeof $filter$$.gt || ($filter$$.gt && "object" === typeof $filter$$.gt ? ($js$$.alg.each($filter$$.gt, function($or$$) {
           ($orDrop$$ = $orDrop$$ && !($value$$ > $or$$)) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = !($value$$ > $_rows_filter$$.gt)), $drop$$ || "undefined" === typeof $_rows_filter$$.geq || ($_rows_filter$$.geq && "object" === typeof $_rows_filter$$.geq ? ($js$$.alg.each($_rows_filter$$.geq, function($or$$) {
+        }), $drop$$ = $orDrop$$) : $drop$$ = !($value$$ > $filter$$.gt)), $drop$$ || "undefined" === typeof $filter$$.geq || ($filter$$.geq && "object" === typeof $filter$$.geq ? ($js$$.alg.each($filter$$.geq, function($or$$) {
           ($orDrop$$ = $orDrop$$ && !($value$$ >= $or$$)) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = !($value$$ >= $_rows_filter$$.geq)), $drop$$ || "undefined" === typeof $_rows_filter$$.leq || ($_rows_filter$$.leq && "object" === typeof $_rows_filter$$.leq ? ($js$$.alg.each($_rows_filter$$.leq, function($or$$) {
+        }), $drop$$ = $orDrop$$) : $drop$$ = !($value$$ >= $filter$$.geq)), $drop$$ || "undefined" === typeof $filter$$.leq || ($filter$$.leq && "object" === typeof $filter$$.leq ? ($js$$.alg.each($filter$$.leq, function($or$$) {
           ($orDrop$$ = $orDrop$$ && !($value$$ <= $or$$)) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = !($value$$ <= $_rows_filter$$.leq)), $drop$$ || "undefined" === typeof $_rows_filter$$.lt || ($_rows_filter$$.lt && "object" === typeof $_rows_filter$$.lt ? ($js$$.alg.each($_rows_filter$$.lt, function($or$$) {
+        }), $drop$$ = $orDrop$$) : $drop$$ = !($value$$ <= $filter$$.leq)), $drop$$ || "undefined" === typeof $filter$$.lt || ($filter$$.lt && "object" === typeof $filter$$.lt ? ($js$$.alg.each($filter$$.lt, function($or$$) {
           ($orDrop$$ = $orDrop$$ && !($value$$ < $or$$)) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = !($value$$ < $_rows_filter$$.lt)), $drop$$ || "undefined" === typeof $_rows_filter$$.eq || ($_rows_filter$$.eq && "object" === typeof $_rows_filter$$.eq ? ($js$$.alg.each($_rows_filter$$.eq, function($or$$) {
+        }), $drop$$ = $orDrop$$) : $drop$$ = !($value$$ < $filter$$.lt)), $drop$$ || "undefined" === typeof $filter$$.eq || ($filter$$.eq && "object" === typeof $filter$$.eq ? ($js$$.alg.each($filter$$.eq, function($or$$) {
           ($orDrop$$ = $orDrop$$ && $value$$ != $or$$) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = $value$$ != $_rows_filter$$.eq), $drop$$ || "undefined" === typeof $_rows_filter$$.seq || ($_rows_filter$$.seq && "object" === typeof $_rows_filter$$.seq ? ($js$$.alg.each($_rows_filter$$.seq, function($or$$) {
+        }), $drop$$ = $orDrop$$) : $drop$$ = $value$$ != $filter$$.eq), $drop$$ || "undefined" === typeof $filter$$.seq || ($filter$$.seq && "object" === typeof $filter$$.seq ? ($js$$.alg.each($filter$$.seq, function($or$$) {
           ($orDrop$$ = $orDrop$$ && $value$$ !== $or$$) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = $value$$ !== $_rows_filter$$.seq), $drop$$ || "undefined" === typeof $_rows_filter$$.neq || ($_rows_filter$$.neq && "object" === typeof $_rows_filter$$.neq ? ($js$$.alg.each($_rows_filter$$.neq, function($or$$) {
+        }), $drop$$ = $orDrop$$) : $drop$$ = $value$$ !== $filter$$.seq), $drop$$ || "undefined" === typeof $filter$$.neq || ($filter$$.neq && "object" === typeof $filter$$.neq ? ($js$$.alg.each($filter$$.neq, function($or$$) {
           ($orDrop$$ = $orDrop$$ && $value$$ == $or$$) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = $value$$ == $_rows_filter$$.neq), $drop$$ || "undefined" === typeof $_rows_filter$$.snq || ($_rows_filter$$.snq && "object" === typeof $_rows_filter$$.snq ? ($js$$.alg.each($_rows_filter$$.snq, function($or$$) {
+        }), $drop$$ = $orDrop$$) : $drop$$ = $value$$ == $filter$$.neq), $drop$$ || "undefined" === typeof $filter$$.snq || ($filter$$.snq && "object" === typeof $filter$$.snq ? ($js$$.alg.each($filter$$.snq, function($or$$) {
           ($orDrop$$ = $orDrop$$ && $value$$ === $or$$) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = $value$$ === $_rows_filter$$.snq), $drop$$ || "undefined" === typeof $_rows_filter$$.and || ($_rows_filter$$.and && "object" === typeof $_rows_filter$$.and ? ($js$$.alg.each($_rows_filter$$.and, function($or$$) {
+        }), $drop$$ = $orDrop$$) : $drop$$ = $value$$ === $filter$$.snq), $drop$$ || "undefined" === typeof $filter$$.and || ($filter$$.and && "object" === typeof $filter$$.and ? ($js$$.alg.each($filter$$.and, function($or$$) {
           ($orDrop$$ = $orDrop$$ && ($value$$ & $or$$) !== $or$$) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = ($value$$ & $_rows_filter$$.and) !== $_rows_filter$$.and), $drop$$ || "undefined" === typeof $_rows_filter$$.not || ($_rows_filter$$.not && "object" === typeof $_rows_filter$$.not ? ($js$$.alg.each($_rows_filter$$.not, function($or$$) {
-          ($orDrop$$ = $orDrop$$ && ($value$$ & $or$$) === $or$$) || this.stop();
-        }), $drop$$ = $orDrop$$) : $drop$$ = ($value$$ & $_rows_filter$$.not) === $_rows_filter$$.not), $drop$$ || "undefined" === typeof $_rows_filter$$.test || ($_rows_filter$$.test instanceof RegExp ? $drop$$ = !$_rows_filter$$.test.test($value$$) : $_rows_filter$$.test && "object" === typeof $_rows_filter$$.test && ($js$$.alg.each($_rows_filter$$.test, function($or$$) {
+        }), $drop$$ = $orDrop$$) : $drop$$ = ($value$$ & $filter$$.and) !== $filter$$.and), $drop$$ || "undefined" === typeof $filter$$.not || ($filter$$.not && "object" === typeof $filter$$.not ? ($js$$.alg.each($filter$$.not, function($or$$) {
+          ($orDrop$$ = $orDrop$$ && 0 !== ($value$$ & $or$$)) || this.stop();
+        }), $drop$$ = $orDrop$$) : $drop$$ = 0 !== ($value$$ & $filter$$.not)), $drop$$ || "undefined" === typeof $filter$$.test || ($filter$$.test instanceof RegExp ? $drop$$ = !$filter$$.test.test($value$$) : $filter$$.test && "object" === typeof $filter$$.test && ($js$$.alg.each($filter$$.test, function($or$$) {
           ($orDrop$$ = $orDrop$$ && !$or$$.test($value$$)) || this.stop();
         }), $drop$$ = $orDrop$$)));
       }
-      $drop$$ && this.drop();
+      (!$data$$ && $drop$$ || $data$$ && !$drop$$) && this.drop();
       return this;
     }
   }
-  function $__generateXML$$($name$$, $rows$$, $columns$$0$$, $styles$$) {
+  function $__generateXML$$($name$$, $table$$, $rows$$, $columns$$0$$, $styles$$) {
     return ['<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?>', ['<ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><ss:Styles><ss:Style ss:ID="1"><ss:Font ss:Bold="1" /></ss:Style></ss:Styles>', ['<ss:Worksheet ss:Name="', $name$$, '"><ss:Table>', function __rows($rows$$, $columns$$) {
       function $__pushRow$$($col$$, $i$$, $cols$$, $data$$) {
         __rows.push(['<ss:Cell><ss:Data ss:Type="String">', $rows$$[$col$$][$data$$], "</ss:Data></ss:Cell>"].join(""));
@@ -3130,19 +3132,22 @@ js.extend.fn("sp", function() {
       return __rows.join("");
     }($rows$$, $columns$$0$$), "</ss:Table></ss:Worksheet>"].join(""), "</ss:Workbook>"].join("")].join("");
   }
-  function $__generateCSV$$($rows$$0$$, $columns$$0$$) {
-    return ["\ufeff", function __rows$$0($rows$$, $columns$$) {
+  function $__generateCSV$$($table$$0$$, $rows$$0$$, $columns$$0$$) {
+    return ["\ufeff", function __headers($table$$, $columns$$) {
+      var __headers = [];
+      $js$$.alg.arrEach($columns$$, function($column$$) {
+        __headers.push(['"', $table$$.getColumn($column$$).text || " ", '"'].join(""));
+      });
+      return __headers.join(",");
+    }($table$$0$$, $columns$$0$$), "\r\n", function __rows$$0($rows$$, $columns$$) {
       function $__pushRow$$($col$$, $i$$, $cols$$, $data$$) {
-        $__oneRow$$.push(['"', ($data$$.row[$col$$] || {})[$data$$.type] || "", '"'].join(""));
+        $data$$.row && $__oneRow$$.push(['"', ($data$$.row[$col$$] || {})[$data$$.type] || "", '"'].join(""));
       }
-      var $__rows$$ = [], $__oneRow$$ = [];
-      $js$$.alg.arrEach($columns$$, $__pushRow$$, {row:$rows$$[0], type:"text"});
-      $__rows$$.push($__oneRow$$.join(","));
-      $__oneRow$$ = [];
+      var $__rows$$ = [], $__oneRow$$ = null;
       $js$$.alg.arrEach($rows$$, function($row$$, $i$$) {
+        $__oneRow$$ = [];
         $js$$.alg.arrEach($columns$$, $__pushRow$$, {row:$row$$, type:"value", r:[]});
         $__rows$$.push($__oneRow$$.join(","));
-        $__oneRow$$ = [];
       });
       return $__rows$$.join("\r\n");
     }($rows$$0$$, $columns$$0$$)].join("");
@@ -3165,6 +3170,7 @@ js.extend.fn("sp", function() {
   }, addColumn:function $$sp$$$list$fn$addColumn$($name$$, $data$$) {
     var $column$$ = Object.create($sp$$.column.fn, {list:{value:this}, name:{value:$name$$}});
     $js$$.alg.mergeObj($column$$, $data$$);
+    "undefined" === typeof $data$$["default"] && "number" === $column$$.type && ($column$$["default"] = 0);
     this._columns[$name$$] = $column$$;
     return this;
   }, addColumns:function $$sp$$$list$fn$addColumns$($dataObj$$) {
@@ -3192,11 +3198,11 @@ js.extend.fn("sp", function() {
   }, getRowCount:function $$sp$$$list$fn$getRowCount$($n$$) {
     return this._rows.length;
   }, pull:function $$sp$$$list$fn$pull$($success$$, $failure$$) {
-    var $ctx$$ = new window.SP.ClientContext(this._url), $list$$8_listItems$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $caml$$ = new window.SP.CamlQuery, $successFn$$ = "function" === typeof $success$$ ? $success$$ : this._success, $failureFn$$ = "function" === typeof $failure$$ ? $failure$$ : this._failure;
+    var $ctx$$ = new window.SP.ClientContext(this._url), $list$$7_listItems$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $caml$$ = new window.SP.CamlQuery, $successFn$$ = "function" === typeof $success$$ ? $success$$ : this._success, $failureFn$$ = "function" === typeof $failure$$ ? $failure$$ : this._failure;
     $caml$$.set_viewXml(this.caml);
-    $list$$8_listItems$$ = $list$$8_listItems$$.getItems($caml$$);
-    $ctx$$.load($list$$8_listItems$$);
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successParse$$, [$list$$8_listItems$$, $successFn$$]), $js$$.alg.bindFn(this, $__failureParse$$, [$list$$8_listItems$$, $failureFn$$]));
+    $list$$7_listItems$$ = $list$$7_listItems$$.getItems($caml$$);
+    $ctx$$.load($list$$7_listItems$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successParse$$, [$list$$7_listItems$$, $successFn$$]), $js$$.alg.bindFn(this, $__failureParse$$, [$list$$7_listItems$$, $failureFn$$]));
     return this;
   }, query:function $$sp$$$list$fn$query$($criteria$$) {
     var $query$$ = $sp$$.query(this).reset();
@@ -3210,9 +3216,9 @@ js.extend.fn("sp", function() {
     });
     return this;
   }, push:function $$sp$$$list$fn$push$($success$$, $failure$$) {
-    var $ctx$$ = new window.SP.ClientContext(this._url), $data$$101_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$101_list$$ = {clientContext:$ctx$$, items:[], list:$data$$101_list$$, self:this};
-    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$101_list$$);
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$101_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$101_list$$.items, $failure$$]));
+    var $ctx$$ = new window.SP.ClientContext(this._url), $data$$102_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$102_list$$ = {clientContext:$ctx$$, items:[], list:$data$$102_list$$, self:this};
+    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$102_list$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$102_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$102_list$$.items, $failure$$]));
     return this;
   }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$50_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
     $i$$50_rowID$$ = $row$$.ID.value;
@@ -3233,12 +3239,12 @@ js.extend.fn("sp", function() {
     $colName$$1_value$$ = $data$$[$colData$$.name];
     $row$$ = $colName$$1_value$$ !== $colData$$.value;
     "undefined" !== typeof $colName$$1_value$$ && $row$$ && ($colData$$.value = $colName$$1_value$$);
-  }, createRow:function $$sp$$$list$fn$createRow$($data$$106_values$$) {
+  }, createRow:function $$sp$$$list$fn$createRow$($data$$107_values$$) {
     var $columns$$ = this._columns;
-    $data$$106_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$106_values$$)};
-    $js$$.alg.each($columns$$, this._createRowEach, $data$$106_values$$);
-    $data$$106_values$$.row.ID.value = $data$$106_values$$.rowID;
-    this._dirtyRows.push($data$$106_values$$.row);
+    $data$$107_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$107_values$$)};
+    $js$$.alg.each($columns$$, this._createRowEach, $data$$107_values$$);
+    $data$$107_values$$.row.ID.value = $data$$107_values$$.rowID;
+    this._dirtyRows.push($data$$107_values$$.row);
     return this;
   }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$2_value$$, $column$$, $cell$$1_data$$) {
     var $row$$ = $cell$$1_data$$.row;
@@ -3281,10 +3287,13 @@ js.extend.fn("sp", function() {
     this._rows = this._list._rows.slice(0);
     return this;
   }, filter:function $$sp$$$query$fn$filter$($filterData$$) {
-    $filterData$$ && $js$$.alg.arrEach(this._rows, $__parseRows$$, [$filterData$$]);
+    $filterData$$ && $js$$.alg.arrEach(this._rows, $__parseRows$$, {filterArray:[$filterData$$], exclude:!1});
     return this;
   }, filters:function $$sp$$$query$fn$filters$($filterArray$$) {
-    $js$$.alg.arrEach(this._rows, $__parseRows$$, $filterArray$$);
+    $js$$.alg.arrEach(this._rows, $__parseRows$$, {filterArray:$filterArray$$, exclude:!1});
+    return this;
+  }, excludes:function $$sp$$$query$fn$excludes$($filterArray$$) {
+    $js$$.alg.arrEach(this._rows, $__parseRows$$, {filterArray:$filterArray$$, exclude:!0});
     return this;
   }, _cleanRows:function $$sp$$$query$fn$_cleanRows$() {
     this._rows.sort();
@@ -3337,9 +3346,9 @@ js.extend.fn("sp", function() {
     $clone$$._rows = this._rows.slice(0);
     return $clone$$;
   }, toExcelString:function $$sp$$$query$fn$toExcelString$($name$$, $columns$$) {
-    return $__generateXML$$($name$$, this._rows, $columns$$);
+    return $__generateXML$$($name$$, this._list, this._rows, $columns$$);
   }, toCsvString:function $$sp$$$query$fn$toCsvString$($columns$$) {
-    return $__generateCSV$$(this._rows, $columns$$);
+    return $__generateCSV$$(this._list, this._rows, $columns$$);
   }};
   $sp$$.column = function $$sp$$$column$() {
   };
@@ -3487,9 +3496,9 @@ jspyder.extend.fn("template", function() {
     return "";
   }, map_item:function($map$$, $id$$) {
     return ($map$$ = this[$map$$]) ? $map$$[$id$$] : $id$$;
-  }, js_registry:function($data$$120_key$$) {
-    $data$$120_key$$ = $js$$.registry.fetch($data$$120_key$$);
-    return null === $data$$120_key$$ || "undefined" === typeof $data$$120_key$$ ? "" : $data$$120_key$$;
+  }, js_registry:function($data$$121_key$$) {
+    $data$$121_key$$ = $js$$.registry.fetch($data$$121_key$$);
+    return null === $data$$121_key$$ || "undefined" === typeof $data$$121_key$$ ? "" : $data$$121_key$$;
   }, js_log:function($data$$) {
     console.log($data$$);
   }, concat:function($str$$) {
