@@ -2139,7 +2139,9 @@ js.extend.fn("download", function() {
   }, getCharset:function $$download$$$fn$getCharset$() {
     return this._charset;
   }};
-  var $win$$ = window, $safeType$$ = "application/octet-stream", $URL$$ = window.URL || window.webkitURL || window, $Blob$$ = $win$$.Blob || $win$$.MozBlob || $win$$.WebKitBlob, $saveBlob$$ = $win$$.navigator.msSaveOrOpenBlob || $win$$.navigator.msSaveBlob, $__decode$$ = function $$__decode$$$($text$$0$$) {
+  var $win$$ = window, $safeType$$ = "application/octet-stream", $URL$$ = window.URL || window.webkitURL || window, $Blob$$ = $win$$.Blob || $win$$.MozBlob || $win$$.WebKitBlob, $saveBlob$$ = $win$$.navigator.msSaveOrOpenBlob || $win$$.navigator.msSaveBlob ? function() {
+    return js.alg.use($win$$.navigator, $win$$.navigator.msSaveOrOpenBlob || $win$$.navigator.msSaveBlob, arguments);
+  } : null, $__decode$$ = function $$__decode$$$($text$$0$$) {
     var $btoa$$ = $win$$.btoa;
     $__decode$$ = $win$$.btoa ? function($text$$) {
       return ";base64," + $btoa$$($text$$);
