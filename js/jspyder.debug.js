@@ -2074,7 +2074,7 @@ js.extend.fn("download", function() {
     if ($__reDataUrl$$.test($blob$$)) {
       return $saveBlob$$ ? $saveBlob$$($__encode$$($blob$$), $filereader_name$$) : $__triggerSave$$($blob$$);
     }
-    $blob$$ = $blob$$ instanceof $Blob$$ ? $blob$$ : new $Blob$$([x], {type:$type$$});
+    $blob$$ = $blob$$ instanceof $Blob$$ ? $blob$$ : new $Blob$$([$blob$$], {type:$type$$});
     if ($saveBlob$$) {
       return $saveBlob$$($blob$$, $filereader_name$$);
     }
