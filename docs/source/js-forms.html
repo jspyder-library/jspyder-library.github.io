@@ -319,7 +319,8 @@ jspyder.extend.fn(&quot;form&quot;, function () {
          *      second parameter to js.form.registerControl
          */
         registerControlFn: function (typename, preconstructor) {
-            return this.registerControl(typename, js.alg.use(this, preconstructor));
+            this.registerControl(typename, js.alg.use(this, preconstructor));
+            return this;
         },
         
 <span id='jspyder-form-method-buildControl'>        /**
