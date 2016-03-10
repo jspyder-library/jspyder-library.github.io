@@ -2426,7 +2426,7 @@ jspyder.extend.fn("form", function() {
         $form$$._compiler($html$$, $data$$, $fn$$, $dom$$);
       });
     }
-    return this;
+    return $dom$$;
   }, _compiler:function $$js_form$$$fn$_compiler$($template$$, $data$$, $fn$$, $compile$$) {
     var $dom$$ = null;
     if ("string" !== typeof $compile$$) {
