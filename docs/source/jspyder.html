@@ -1014,9 +1014,10 @@
             if (!(js_dom.fn.isPrototypeOf(element))) {
 
                 if (typeof s === &quot;string&quot;) {
-                    try {
+                    if((s.match(/(^\\\&lt;|\&lt;)/g) || []).indexOf(&#39;&lt;&#39;) === -1) {
                         element = document.querySelectorAll(s);
-                    } catch (e) {
+                    }
+                    else {
                         element = _parseHtml(s);
                     }
                 }
@@ -1652,19 +1653,21 @@
                 var e;
                 for (var i = 0; i &lt; event.length; i++) {
                     if(!event[i]) { continue; }
-                    try {
-                        e = new Event(event[i], { &quot;bubbles&quot;: true, &quot;cancelable&quot;: false });
-                    }
-                    catch (_) {
-                        e = document.createEvent(&quot;Event&quot;);
-                        e.initEvent(event[i], true, true);
-                    }
+                    e = this._eventConstructor(event[i], true, true);
                     this.each(function (el) {
                         el.dispatchEvent(e);
                     });
                 }
 
                 return this;
+            },
+            
+            _eventConstructor: function(type, bubbles, cancelable) {
+                js_dom.fn._eventConstructor = (&quot;function&quot; === typeof window.Event
+                    ? function(type, bubbles, cancelable) { return new Event(type, { &quot;bubbles&quot;: bubbles, &quot;cancelable&quot;: cancelable }); }
+                    : function(type, bubbles, cancelable) { var e = window.document.createEvent(&quot;Event&quot;); e.initEvent(type, bubbles, cancelable); return e; });
+                    
+                return js_dom.fn._eventConstructor.apply(this, arguments);
             },
 
 <span id='jspyder-dom-method-setHtml'>            /**
