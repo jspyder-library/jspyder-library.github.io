@@ -1,0 +1,156 @@
+@import "../sass/colors.scss";
+
+$px: (1em / 16);
+$header-height: 3em;
+$menu-width: 150px;
+$border-radius: .2em;
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+#main-page-header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: $header-height;
+    background-color: $color-indigo-900;
+    color: $color-white;
+    // box-shadow: 0 3 * $px 0 rgba($color-black, 0.3);
+    
+    h1 {
+        line-height: 1.5em;
+    }
+    
+    .main-page-header-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        margin: 0;
+        list-style: none;
+        
+        .main-page-link-item {
+            cursor: pointer;
+            padding: .2em .4em;
+            border: $px solid transparent;
+            border-radius: $border-radius;
+            display: inline-block;
+            margin-right: .5em;
+            margin-top: .6em;
+            
+            &:hover {
+                border-color: $color-white;
+                // box-shadow: (2 * $px) (2 * $px) ($px) rgba($color-black, 0.2); 
+            }
+        }
+    }
+}
+
+.main-page-link-list {
+    position: fixed;
+    left: 0;
+    top: $header-height;
+    bottom: 0;
+    background-color: $color-indigo-200;
+    padding: 0;
+    margin: 0;
+    width: $menu-width;
+    max-width: $menu-width;
+    list-style: none;
+    // box-shadow: 2 * $px 0 $px rgba($color-black, 0.3);
+    
+    .main-page-link-item {
+        cursor: pointer;
+        padding: .2em .4em;
+        
+        &:hover {
+            background-color: $color-indigo-100;
+        } 
+    }
+}
+
+#main-page-content-area {
+    position: fixed;
+    top: $header-height;
+    left: $menu-width;
+    right: 0;
+    bottom: 0;
+    padding: .2em .4em;
+    height: calc(100% - $header-height);
+    overflow: auto;
+}
+
+h2 {
+    border: $px solid $color-black;
+    padding: 0.2em 0.4em;
+    background-color: $color-grey-300;
+}
+
+.jspyder-example {
+    position: relative;
+    padding: 1.8em .4em .4em .4em;
+    border: $px solid $color-indigo;
+    border-radius: $border-radius $border-radius 0 0;
+    margin-left: 2em;
+    margin-right: 2em;
+    background-color: $color-indigo-50;
+    color: $color-deep-purple;
+    font-family: consolas;
+    white-space: pre-wrap;
+    
+    &:before {
+        content: attr(data-label);
+        background-color: $color-indigo;
+        color: $color-white;
+        font-weight: bold;
+        padding: .2em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+    }
+    &:after {
+        content: attr(data-language);
+        color: $color-indigo-100;
+        padding: .2em;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 2;
+    }
+}
+
+.code {
+    font-family: consolas;
+    color: $color-deep-purple;
+    
+    .comment {
+        color: $color-deep-purple-200;
+    }
+}
+
+h4 {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.js-date-minitable {
+    width: 300px; 
+    display: inline-block; 
+    vertical-align: top;
+    border-radius: $border-radius $border-radius 0 0;
+    border: $px solid $color-indigo;
+    margin: 1em;
+    background-color: $color-indigo-50;
+    color: $color-deep-purple;
+    
+    .row-header {
+        text-align: center;
+        background-color: $color-indigo;
+        color: $color-indigo-50;
+    }
+}
