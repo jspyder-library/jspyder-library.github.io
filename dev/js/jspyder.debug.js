@@ -1006,6 +1006,10 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
         }, {first:$css$$1$$, others:$o$$});
       }
       return this;
+    }, exportCss:function $$js_dom$$$fn$exportCss$($css$$) {
+      $css$$ = $css$$ || {};
+      this.getCss($css$$);
+      return $css$$;
     }, getPosition:function $$js_dom$$$fn$getPosition$($fn$$) {
       this.each(function($el$$) {
         var $pos$$ = $el$$.getBoundingClientRect();
@@ -1019,19 +1023,25 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       });
       return $pos$$;
     }, getOffsetPosition:function $$js_dom$$$fn$getOffsetPosition$($fn$$) {
-      this.each(function() {
-        for (var $el$$ = this.parentNode, $ret$$0$$ = {top:0, left:0, bottom:0, right:0, x:0, y:0, height:0, width:0};$el$$ && "static" === getComputedStyle($el$$).position;) {
+      this.each(function($self$$) {
+        for (var $el$$ = $self$$.parentNode, $ret$$0$$ = {top:0, left:0, bottom:0, right:0, x:0, y:0, height:0, width:0};$el$$ && "static" === getComputedStyle($el$$).position;) {
           $el$$ = $el$$.parentNode;
         }
         if ($el$$) {
-          var $me$$ = this.getBoundingClientRect(), $pr$$ = $el$$.getBoundingClientRect();
+          var $me$$ = $self$$.getBoundingClientRect(), $pr$$ = $el$$.getBoundingClientRect();
           $js$$.each($ret$$0$$, function($v$$, $p$$, $ret$$) {
             $ret$$[$p$$] = $pr$$[$p$$] - $me$$[$p$$];
           });
         }
-        $js_dom$$(this).use($fn$$, [$ret$$0$$]);
+        $js_dom$$($el$$).use($fn$$, [$ret$$0$$]);
       });
       return this;
+    }, exportOffsetPosition:function $$js_dom$$$fn$exportOffsetPosition$() {
+      var $first$$ = null;
+      this.getOffsetPosition(function($v$$) {
+        $first$$ || ($first$$ = $v$$);
+      });
+      return $first$$;
     }, getAttrs:function $$js_dom$$$fn$getAttrs$($attrs$$, $fn$$) {
       if ($attrs$$ && "object" === typeof $attrs$$) {
         var $o$$ = Object.create($attrs$$), $_each$$ = $js$$.alg.each;
@@ -1044,6 +1054,10 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
         }, {first:$attrs$$, others:$o$$});
       }
       return this;
+    }, exportAttrs:function $$js_dom$$$fn$exportAttrs$($attrs$$) {
+      $attrs$$ = $attrs$$ || {};
+      this.getAttrs($attrs$$);
+      return $attrs$$;
     }, setAttrs:function $$js_dom$$$fn$setAttrs$($attrs$$1$$, $fn$$) {
       if ($attrs$$1$$ && "object" === typeof $attrs$$1$$) {
         var $o$$ = Object.create($attrs$$1$$), $_each$$ = $js$$.alg.each;
@@ -1086,7 +1100,7 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
         $p$$.use($fn$$, $children$$);
       });
       return this;
-    }, attachBefore:function $$js_dom$$$fn$attachBefore$($parent$$, $fn$$) {
+    }, attachStart:function $$js_dom$$$fn$attachStart$($parent$$, $fn$$) {
       var $children$$ = this;
       $js_dom$$($parent$$).element(0, function($p$$) {
         var $doc$$ = $document$$.createDocumentFragment();
@@ -1095,7 +1109,7 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
         $p$$.use($fn$$, $children$$);
       });
       return this;
-    }, attachAfter:function $$js_dom$$$fn$attachAfter$($parent$$, $fn$$) {
+    }, attachEnd:function $$js_dom$$$fn$attachEnd$($parent$$, $fn$$) {
       var $children$$ = this;
       $js_dom$$($parent$$).element(0, function($p$$) {
         var $doc$$ = $document$$.createDocumentFragment();
@@ -1113,14 +1127,14 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       return this;
     }, _append:function $$js_dom$$$fn$_append$($c$$, $_1$$, $_2$$, $doc$$) {
       $doc$$.appendChild($c$$);
-    }, insertBefore:function $$js_dom$$$fn$insertBefore$($child$$) {
+    }, appendBefore:function $$js_dom$$$fn$appendBefore$($child$$) {
       this.element(0, function() {
         var $doc$$ = $document$$.createDocumentFragment();
         $js_dom$$($child$$).each($js_dom$$.fn._append, $doc$$);
         this.parentNode && this.parentNode.insertBefore($doc$$, this);
       });
       return this;
-    }, insertAfter:function $$js_dom$$$fn$insertAfter$($child$$) {
+    }, appendAfter:function $$js_dom$$$fn$appendAfter$($child$$) {
       this.element(0, function() {
         var $doc$$ = $document$$.createDocumentFragment();
         $js_dom$$($child$$).each($js_dom$$.fn._append, $doc$$);
@@ -1163,6 +1177,10 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
         $js_dom$$($element$$, $fn$$, [$classes$$]);
       }, {first:$classes$$0$$, second:Object.create($classes$$0$$)});
       return this;
+    }, exportClasses:function $$js_dom$$$fn$exportClasses$($classes$$) {
+      $classes$$ = $classes$$ || {};
+      this.getClasses($classes$$);
+      return $classes$$;
     }, on:function $$js_dom$$$fn$on$($events$$, $handler$$) {
       $events$$ = ($events$$ || "").split(/\s+/);
       $js$$.alg.each($events$$, function($event$$, $_1$$, $_2$$, $self$$) {
@@ -1214,14 +1232,31 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
         $fn$$.call($element$$, $element$$.innerHTML || "");
       });
       return this;
-    }, getText:function $$js_dom$$$fn$getText$($fn$$) {
-      "function" === typeof $fn$$ && this.each(function($element$$) {
-        $fn$$.call($element$$, $element$$.textContent || "");
+    }, exportHtml:function $$js_dom$$$fn$exportHtml$() {
+      var $html$$ = null;
+      this.getHtml(function($h$$) {
+        $html$$ || ($html$$ = $h$$);
       });
+      return $html$$;
+    }, getText:function $$js_dom$$$fn$getText$($fn$$) {
+      if ("function" === typeof $fn$$) {
+        var $t$$ = "undefined" === typeof $document$$.documentElement.textContent ? "innerText" : "textContent";
+        this.each(function($element$$) {
+          $fn$$.call($element$$, $js$$.alg.string($element$$[$t$$]));
+        });
+      }
       return this;
+    }, exportText:function $$js_dom$$$fn$exportText$() {
+      var $text$$ = null;
+      this.getText(function($t$$) {
+        $text$$ || ($text$$ = $t$$);
+      });
+      return $text$$;
     }, setText:function $$js_dom$$$fn$setText$($text$$) {
+      $text$$ = $js$$.alg.string($text$$);
+      fn = "undefined" === typeof $document$$.documentElement.textContent ? "innerText" : "textContent";
       this.each(function($element$$) {
-        $element$$.textContent = $text$$ || "";
+        $element$$[fn] = $text$$;
       });
       return this;
     }, find:function $$js_dom$$$fn$find$($cssSelector$$) {
@@ -1285,23 +1320,12 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       return this.each(function($element$$) {
         "undefined" !== typeof $element$$.value && "LI" !== $element$$.tagName ? $element$$.value = $val$$ : $element$$.setAttribute("value", $val$$);
       }).use($fn$$);
-    }, setOverride:function $$js_dom$$$fn$setOverride$($name$$, $fn$$) {
-      this.each(function($element$$) {
-        $element$$.__jspyder.override = $element$$.__jspyder.override || {};
-        $element$$.__jspyder.override[$name$$] = $fn$$;
-      });
-      return this;
-    }, getOverride:function $$js_dom$$$fn$getOverride$($name$$) {
-      var $fn$$ = null;
-      this.each(function($element$$) {
-        $element$$.__jspyder.override && $element$$.__jspyder.override[$name$$] && ($fn$$ = $element$$.__jspyder.override[$name$$], this.stop());
-      });
-      return $fn$$;
     }, getValue:function $$js_dom$$$fn$getValue$($fn$$) {
       var $self$$ = this;
       return $self$$.each(function($element$$) {
-        var $$me_value$$ = $js_dom$$($element$$), $override$$ = $$me_value$$.getOverride("getValue");
-        $override$$ ? $$me_value$$.use($override$$, [$fn$$]) : ($$me_value$$ = "undefined" !== typeof $element$$.value ? $element$$.value : $element$$.getAttribute("value"), "LI" === $element$$.tagName && ($$me_value$$ = $element$$.getAttribute("value")), "undefined" !== $$me_value$$ && $self$$.use($fn$$, [$$me_value$$]));
+        var $value$$ = "undefined" !== typeof $element$$.value ? $element$$.value : $element$$.getAttribute("value");
+        "LI" === $element$$.tagName && ($value$$ = $element$$.getAttribute("value"));
+        "undefined" !== $value$$ && $self$$.use($fn$$, [$value$$]);
       });
     }, exportValue:function $$js_dom$$$fn$exportValue$() {
       var $value$$ = null;
@@ -1317,6 +1341,10 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       });
       this.use($fn$$, [$obj$$0$$]);
       return this;
+    }, exportProps:function $$js_dom$$$fn$exportProps$($obj$$) {
+      $obj$$ = $obj$$ || {};
+      this.getProps($obj$$);
+      return $obj$$;
     }, setProps:function $$js_dom$$$fn$setProps$($obj$$) {
       this.each(function($element$$) {
         $js$$.alg.each($obj$$, function($val$$, $name$$) {
@@ -2049,9 +2077,9 @@ jspyder.extend.fn("dialog", function() {
     }}]});
     return $dlg$$;
   };
-  $js_dialog$$.fn = {_element:null, _buttonDefs:null, _template:'<div class="js-dialog-background"><div class="js-dialog"><div class="js-dialog-header"><span class="title-container"></span><span class="dialog-buttons"><i class="button-close close"></i></span></div><div class="js-dialog-body"><div class="body-container"></div></div><div class="js-dialog-footer"><div class="footer-container"></div></div></div></div>', _height:237.2, _width:498, _buttonFactory:function $$js_dialog$$$fn$_buttonFactory$($html$$1_text$$) {
-    $html$$1_text$$ = ["<div>", $html$$1_text$$, "</div>"].join("");
-    return $js$$.dom($html$$1_text$$);
+  $js_dialog$$.fn = {_element:null, _buttonDefs:null, _template:'<div class="js-dialog-background"><div class="js-dialog"><div class="js-dialog-header"><span class="title-container"></span><span class="dialog-buttons"><i class="button-close close"></i></span></div><div class="js-dialog-body"><div class="body-container"></div></div><div class="js-dialog-footer"><div class="footer-container"></div></div></div></div>', _height:237.2, _width:498, _buttonFactory:function $$js_dialog$$$fn$_buttonFactory$($html$$2_text$$) {
+    $html$$2_text$$ = ["<div>", $html$$2_text$$, "</div>"].join("");
+    return $js$$.dom($html$$2_text$$);
   }, setBody:function $$js_dialog$$$fn$setBody$($body$$) {
     this._element && this._element.find(".body-container").setHtml("").append($body$$);
     return this;
@@ -2507,10 +2535,10 @@ jspyder.extend.fn("form", function() {
     var $__override$$ = {type:"input"};
     return function($cfg$$) {
       var $$datepicker$$ = this.buildControl($js$$.alg.mergeObj({}, $cfg$$, $__override$$), !0), $calStruct$$ = $__calStructFactory$$($cfg$$);
-      $$datepicker$$.filter("input").on("click", function($attrs$$8_dateVal_event$$) {
-        $attrs$$8_dateVal_event$$ = {readonly:null};
-        $js$$.dom(this).getAttrs($attrs$$8_dateVal_event$$);
-        $attrs$$8_dateVal_event$$.readonly || ($attrs$$8_dateVal_event$$ = this.value || $cfg$$.value || $cfg$$.default || new Date, $calStruct$$.clear(), $calStruct$$.input = $js$$.dom(this), $calStruct$$.date.setDate($attrs$$8_dateVal_event$$, $calStruct$$.format), $calStruct$$.load().preventClose(), $js$$.dom(this.parentNode).append($calStruct$$.dom), $calStruct$$.DOCDOM.on("click", function __docClick($event$$) {
+      $$datepicker$$.filter("input").on("click", function($attrs$$9_dateVal_event$$) {
+        $attrs$$9_dateVal_event$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($attrs$$9_dateVal_event$$);
+        $attrs$$9_dateVal_event$$.readonly || ($attrs$$9_dateVal_event$$ = this.value || $cfg$$.value || $cfg$$.default || new Date, $calStruct$$.clear(), $calStruct$$.input = $js$$.dom(this), $calStruct$$.date.setDate($attrs$$9_dateVal_event$$, $calStruct$$.format), $calStruct$$.load().preventClose(), $js$$.dom(this.parentNode).append($calStruct$$.dom), $calStruct$$.DOCDOM.on("click", function __docClick($event$$) {
           if ($calStruct$$.pause) {
             return $calStruct$$.enableClose();
           }
@@ -2553,10 +2581,10 @@ jspyder.extend.fn("form", function() {
     };
   }).registerControlFn("submit", function() {
     function $__submitClickFactory$$($form$$) {
-      return function __submitClick($attrs$$10_event$$) {
-        $attrs$$10_event$$ = {readonly:null};
-        $js$$.dom(this).getAttrs($attrs$$10_event$$);
-        $attrs$$10_event$$.readonly || $form$$.submit();
+      return function __submitClick($attrs$$11_event$$) {
+        $attrs$$11_event$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($attrs$$11_event$$);
+        $attrs$$11_event$$.readonly || $form$$.submit();
       };
     }
     var $__override$$ = {type:"button", nolabel:!0};
@@ -2567,10 +2595,10 @@ jspyder.extend.fn("form", function() {
     };
   }).registerControlFn("reset", function() {
     function $__resetClickFactory$$($form$$) {
-      return function __resetClick($attrs$$11_event$$) {
-        $attrs$$11_event$$ = {readonly:null};
-        $js$$.dom(this).getAttrs($attrs$$11_event$$);
-        $attrs$$11_event$$.readonly || $form$$.reset();
+      return function __resetClick($attrs$$12_event$$) {
+        $attrs$$12_event$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($attrs$$12_event$$);
+        $attrs$$12_event$$.readonly || $form$$.reset();
       };
     }
     var $__override$$ = {type:"button", nolabel:!0};
@@ -2645,12 +2673,12 @@ jspyder.extend.fn("form", function() {
       $v$$ = $js$$.alg.string($v$$, "");
       this.setValue($v$$);
     }
-    function $input$$($attrs$$13_css$$6_event$$) {
-      $attrs$$13_css$$6_event$$ = {readonly:null};
-      $js$$.dom(this).getAttrs($attrs$$13_css$$6_event$$);
-      if (!$attrs$$13_css$$6_event$$.readonly) {
+    function $input$$($attrs$$14_css$$7_event$$) {
+      $attrs$$14_css$$7_event$$ = {readonly:null};
+      $js$$.dom(this).getAttrs($attrs$$14_css$$7_event$$);
+      if (!$attrs$$14_css$$7_event$$.readonly) {
         div = document.createElement("div");
-        $attrs$$13_css$$6_event$$ = {"font-family":null, "font-size":null, "font-weight":null, "padding-left":null, "padding-right":null, "padding-bottom":null, "padding-top":null, "border-left":null, "border-right":null, "border-top":null, "border-bottom":null, "line-height":null, "word-wrap":null};
+        $attrs$$14_css$$7_event$$ = {"font-family":null, "font-size":null, "font-weight":null, "padding-left":null, "padding-right":null, "padding-bottom":null, "padding-top":null, "border-left":null, "border-right":null, "border-top":null, "border-bottom":null, "line-height":null, "word-wrap":null};
         div.style.position = "fixed";
         div.style.left = "-65535px";
         div.style["white-space"] = "pre-wrap";
@@ -2659,8 +2687,8 @@ jspyder.extend.fn("form", function() {
         div.style["white-space"] = "-o-pre-wrap";
         div.style.width = div.style["min-width"] = div.style["max-width"] = this.clientWidth + "px";
         document.body.appendChild(div);
-        var $textarea$$ = $js$$.dom(this).getCss($attrs$$13_css$$6_event$$);
-        $js$$.dom(div).setText(this.value).setCss($attrs$$13_css$$6_event$$).getPosition(function($pos$$) {
+        var $textarea$$ = $js$$.dom(this).getCss($attrs$$14_css$$7_event$$);
+        $js$$.dom(div).setText(this.value).setCss($attrs$$14_css$$7_event$$).getPosition(function($pos$$) {
           $textarea$$.setCss({height:$pos$$.height + 20 + "px"});
         }).remove();
       }
@@ -2698,11 +2726,11 @@ jspyder.extend.fn("form", function() {
         $$option_option$$ = $js$$.alg.mergeObj({name:$cfgname$$, "class":$cfgclass$$, readonly:$cfg$$.readonly}, $options$$[$i$$]), $$option_option$$.class = $cfgclass$$ + $js$$.alg.string($options$$[$i$$].class), $$option_option$$ = $js$$.dom("<div></div>").append($single$$($$option_option$$)), $$radio$$.and($$option_option$$);
       }
       var $form$$ = this;
-      $$radio$$.find("input").on("change", function($attrs$$16_event$$) {
-        $attrs$$16_event$$ = {readonly:null};
+      $$radio$$.find("input").on("change", function($attrs$$17_event$$) {
+        $attrs$$17_event$$ = {readonly:null};
         var $$me$$ = $js$$.dom(this);
-        $$me$$.getAttrs($attrs$$16_event$$);
-        $attrs$$16_event$$.readonly ? $form$$.setFieldValue($cfgname$$, $form$$.exportFieldValue($cfgname$$)) : $$me$$.getValue(function($v$$) {
+        $$me$$.getAttrs($attrs$$17_event$$);
+        $attrs$$17_event$$.readonly ? $form$$.setFieldValue($cfgname$$, $form$$.exportFieldValue($cfgname$$)) : $$me$$.getValue(function($v$$) {
           $cfg$$["data-value"] = $v$$;
         });
       });
@@ -2914,30 +2942,30 @@ jspyder.extend.fn("form", function() {
               $found$$.find(".search-item.selected").trigger("mousedown");
           }
         }
-      }).on("blur", function($attrs$$32_event$$32_match$$) {
-        $attrs$$32_event$$32_match$$ = {readonly:null};
-        $js$$.dom(this).getAttrs($attrs$$32_event$$32_match$$);
-        $attrs$$32_event$$32_match$$.readonly || ("" === this.value ? $js$$.dom(this).setAttrs({"data-value":""}) : $config$$.strict && (($attrs$$32_event$$32_match$$ = $searchValue$$($config$$, this.value, !0)) ? (this.value = $attrs$$32_event$$32_match$$.text, $js$$.dom(this).setAttrs({"data-value":$attrs$$32_event$$32_match$$.value})) : (this.value = "", $js$$.dom(this).setAttrs({"data-value":""}))), $fns$$.hide());
+      }).on("blur", function($attrs$$33_event$$32_match$$) {
+        $attrs$$33_event$$32_match$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($attrs$$33_event$$32_match$$);
+        $attrs$$33_event$$32_match$$.readonly || ("" === this.value ? $js$$.dom(this).setAttrs({"data-value":""}) : $config$$.strict && (($attrs$$33_event$$32_match$$ = $searchValue$$($config$$, this.value, !0)) ? (this.value = $attrs$$33_event$$32_match$$.text, $js$$.dom(this).setAttrs({"data-value":$attrs$$33_event$$32_match$$.value})) : (this.value = "", $js$$.dom(this).setAttrs({"data-value":""}))), $fns$$.hide());
       });
-      var $fns$$ = {show:function search($css$$7_value$$) {
-        var $values$$ = $config$$.values || [], $minlen$$ = $js$$.alg.number($config$$.minlen, 3), $data$$ = {match:[], regexp:new RegExp($js$$.alg.escapeString($css$$7_value$$), "i"), depth:$js$$.alg.number($config$$.length, 5)};
-        $css$$7_value$$.length >= $minlen$$ ? ($js$$.alg.arrEach($values$$, $__searchLoop$$, $data$$), $css$$7_value$$ = {width:0}, this.getCss($css$$7_value$$), $found$$.setHtml($data$$.match.join("")).attachAfter(this).setCss($css$$7_value$$).find(".search-item").on("mousedown", $searchClick$$)) : $found$$.remove();
+      var $fns$$ = {show:function search($css$$8_value$$) {
+        var $values$$ = $config$$.values || [], $minlen$$ = $js$$.alg.number($config$$.minlen, 3), $data$$ = {match:[], regexp:new RegExp($js$$.alg.escapeString($css$$8_value$$), "i"), depth:$js$$.alg.number($config$$.length, 5)};
+        $css$$8_value$$.length >= $minlen$$ ? ($js$$.alg.arrEach($values$$, $__searchLoop$$, $data$$), $css$$8_value$$ = {width:0}, this.getCss($css$$8_value$$), $found$$.setHtml($data$$.match.join("")).attachEnd(this).setCss($css$$8_value$$).find(".search-item").on("mousedown", $searchClick$$)) : $found$$.remove();
       }, hide:function() {
         $found$$.remove();
       }, getFirst:function() {
       }};
       return $fns$$;
     }
-    function $__searchLoop$$($text$$22_valObj$$, $i$$44_value$$, $values$$, $data$$) {
-      $i$$44_value$$ = $js$$.alg.string($text$$22_valObj$$.value);
-      $text$$22_valObj$$ = $js$$.alg.string($text$$22_valObj$$.text, $i$$44_value$$);
-      $data$$.regexp.test($text$$22_valObj$$) && $data$$.match.push('<li class="search-item" data-value="' + $i$$44_value$$ + '" title="' + $text$$22_valObj$$ + '">' + $text$$22_valObj$$ + "</li>");
+    function $__searchLoop$$($text$$23_valObj$$, $i$$44_value$$, $values$$, $data$$) {
+      $i$$44_value$$ = $js$$.alg.string($text$$23_valObj$$.value);
+      $text$$23_valObj$$ = $js$$.alg.string($text$$23_valObj$$.text, $i$$44_value$$);
+      $data$$.regexp.test($text$$23_valObj$$) && $data$$.match.push('<li class="search-item" data-value="' + $i$$44_value$$ + '" title="' + $text$$23_valObj$$ + '">' + $text$$23_valObj$$ + "</li>");
       $data$$.match.length >= $data$$.depth && this.stop();
     }
-    function $__searchValue$$($text$$23_valObj$$, $i$$45_value$$, $values$$, $data$$) {
-      $i$$45_value$$ = $js$$.alg.string($text$$23_valObj$$.value);
-      $text$$23_valObj$$ = $js$$.alg.string($text$$23_valObj$$.text, $i$$45_value$$);
-      $data$$.find.test($data$$.searchText ? $text$$23_valObj$$ : $i$$45_value$$) && ($data$$.match = {value:$i$$45_value$$, text:$text$$23_valObj$$}, this.stop());
+    function $__searchValue$$($text$$24_valObj$$, $i$$45_value$$, $values$$, $data$$) {
+      $i$$45_value$$ = $js$$.alg.string($text$$24_valObj$$.value);
+      $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$45_value$$);
+      $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$45_value$$) && ($data$$.match = {value:$i$$45_value$$, text:$text$$24_valObj$$}, this.stop());
     }
     function $searchValue$$($config$$, $data$$86_value$$, $searchText$$) {
       $data$$86_value$$ = {match:null, find:new RegExp("^" + $data$$86_value$$ + "$"), searchText:$searchText$$};
@@ -2965,25 +2993,25 @@ jspyder.extend.fn("form", function() {
       $cfg$$.setValue = $setValue$$;
       $cfg$$.exportValue = $exportValue$$;
       $search$$ = $buildFunctions$$(this, $$autocomplete$$, $cfg$$);
-      $$autocomplete$$.on("focus input", function($attrs$$35_event$$) {
-        $attrs$$35_event$$ = {readonly:null};
-        $js$$.dom(this).getAttrs($attrs$$35_event$$);
-        $attrs$$35_event$$.readonly || $$autocomplete$$.getValue($search$$.show);
+      $$autocomplete$$.on("focus input", function($attrs$$36_event$$) {
+        $attrs$$36_event$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($attrs$$36_event$$);
+        $attrs$$36_event$$.readonly || $$autocomplete$$.getValue($search$$.show);
       });
       return $$autocomplete$$;
     };
   }).registerControlFn("number", function() {
     function $setValue$$($data$$, $v$$) {
       $v$$ = $js$$.alg.string($v$$, "");
-      $data$$.field.filter("input").getAttrs({"data-focus":!1}, function($attrs$$36_c$$) {
-        if ($attrs$$36_c$$["data-focus"]) {
+      $data$$.field.filter("input").getAttrs({"data-focus":!1}, function($attrs$$37_c$$) {
+        if ($attrs$$37_c$$["data-focus"]) {
           $v$$ = $toNumber$$($v$$, $data$$.config.acc);
         } else {
           var $n$$inline_16_part$$ = $v$$;
-          $attrs$$36_c$$ = $data$$.config.tsep;
+          $attrs$$37_c$$ = $data$$.config.tsep;
           var $d$$ = $data$$.config.dec, $a$$inline_19_num$$ = $data$$.config.acc;
-          "" === $js$$.alg.string($n$$inline_16_part$$, "") ? $v$$ = $n$$inline_16_part$$ : ($n$$inline_16_part$$ = $js$$.alg.number($n$$inline_16_part$$, 0), $attrs$$36_c$$ = $js$$.alg.string($attrs$$36_c$$, ","), $d$$ = $js$$.alg.string($d$$, "."), "undefined" !== typeof $a$$inline_19_num$$ && ($n$$inline_16_part$$ = $n$$inline_16_part$$.toFixed($a$$inline_19_num$$)), $n$$inline_16_part$$ = $js$$.alg.string($n$$inline_16_part$$, "").split("."), $a$$inline_19_num$$ = [], $a$$inline_19_num$$[0] = 
-          ($n$$inline_16_part$$[0] || "").replace(/\B(?=(\d{3})+(?!\d))/g, $attrs$$36_c$$), $n$$inline_16_part$$[1] && $a$$inline_19_num$$.push($n$$inline_16_part$$[1]), $v$$ = $a$$inline_19_num$$.join($d$$));
+          "" === $js$$.alg.string($n$$inline_16_part$$, "") ? $v$$ = $n$$inline_16_part$$ : ($n$$inline_16_part$$ = $js$$.alg.number($n$$inline_16_part$$, 0), $attrs$$37_c$$ = $js$$.alg.string($attrs$$37_c$$, ","), $d$$ = $js$$.alg.string($d$$, "."), "undefined" !== typeof $a$$inline_19_num$$ && ($n$$inline_16_part$$ = $n$$inline_16_part$$.toFixed($a$$inline_19_num$$)), $n$$inline_16_part$$ = $js$$.alg.string($n$$inline_16_part$$, "").split("."), $a$$inline_19_num$$ = [], $a$$inline_19_num$$[0] = 
+          ($n$$inline_16_part$$[0] || "").replace(/\B(?=(\d{3})+(?!\d))/g, $attrs$$37_c$$), $n$$inline_16_part$$[1] && $a$$inline_19_num$$.push($n$$inline_16_part$$[1]), $v$$ = $a$$inline_19_num$$.join($d$$));
         }
         this.setValue($v$$);
       });
@@ -3009,10 +3037,10 @@ jspyder.extend.fn("form", function() {
       $$input_cfg2$$.filter("input").on("blur", function($$input$$1_event$$) {
         $$input$$1_event$$ = $js$$.dom(this).setAttrs({"data-focus":null});
         $form$$.setFieldValue($cfg$$.name, $$input$$1_event$$.exportValue());
-      }).on("focus", function($$input$$2_attrs$$37_event$$) {
-        $$input$$2_attrs$$37_event$$ = {readonly:null};
-        $js$$.dom(this).getAttrs($$input$$2_attrs$$37_event$$);
-        $$input$$2_attrs$$37_event$$.readonly || ($$input$$2_attrs$$37_event$$ = $js$$.dom(this).setAttrs({"data-focus":!0}), $form$$.setFieldValue($cfg$$.name, $$input$$2_attrs$$37_event$$.exportValue()));
+      }).on("focus", function($$input$$2_attrs$$38_event$$) {
+        $$input$$2_attrs$$38_event$$ = {readonly:null};
+        $js$$.dom(this).getAttrs($$input$$2_attrs$$38_event$$);
+        $$input$$2_attrs$$38_event$$.readonly || ($$input$$2_attrs$$38_event$$ = $js$$.dom(this).setAttrs({"data-focus":!0}), $form$$.setFieldValue($cfg$$.name, $$input$$2_attrs$$38_event$$.exportValue()));
       });
       return $$input_cfg2$$;
     };
@@ -3037,8 +3065,8 @@ js.extend.fn("sp", function() {
   function $sp$$() {
   }
   function $__successPush$$($listItems$$, $successFn$$, $sender$$, $args$$) {
-    for ($js$$.alg.use(this, $successFn$$, [$sender$$, $args$$, $listItems$$]);this._dirtyRows.pop();) {
-    }
+    $js$$.alg.use(this, $successFn$$, [$sender$$, $args$$, $listItems$$]);
+    this._dirtyRows.length = 0;
     this.pull();
   }
   function $__failurePush$$($listItems$$, $failureFn$$, $sender$$, $args$$) {
@@ -3162,6 +3190,27 @@ js.extend.fn("sp", function() {
       return $__rows$$.join("\r\n");
     }($rows$$0$$, $columns$$0$$)].join("");
   }
+  function $__spUserSuccess$$($config$$, $sender$$, $args$$) {
+    this._email = this._user.get_email();
+    this._username = this._user.get_loginName();
+    this._userid = this._user.get_userId();
+    $js$$.alg.use(this, $config$$.success, [$sender$$, $args$$]);
+  }
+  function $__spUserFailure$$($config$$, $sender$$, $args$$) {
+    $js$$.alg.use(this, $config$$.failure, [$sender$$, $args$$]);
+  }
+  function $__isMemberSuccess$$($successFn$$, $failureFn$$, $sender$$, $args$$) {
+    for (var $userInGroup$$ = !1, $enumerator$$ = this._group.get_users().getEnumerator(), $groupUser$$ = null;$enumerator$$.moveNext();) {
+      if ($groupUser$$ = $enumerator$$.get_current(), $groupUser$$.get_id() === user.get_id()) {
+        $userInGroup$$ = !0;
+        break;
+      }
+    }
+    $js$$.alg.use(this, $userInGroup$$ ? $successFn$$ : $failureFn$$, [$sender$$, $args$$]);
+  }
+  function $__isMemberFailure$$($failureFn$$, $sender$$, $args$$) {
+    $js$$.alg.use(this, $failureFn$$, [$sender$$, $args$$]);
+  }
   var $js$$ = window.jspyder;
   $sp$$.list = function spList($config$$, $fn$$) {
     window.SP || $js$$.log.warn("Ensure that MicrosoftAjax.js, sp.runtime.js, and sp.js have been loaded before using JSpyder SharePoint Interface");
@@ -3188,11 +3237,19 @@ js.extend.fn("sp", function() {
       $list$$.addColumn($name$$, $data$$);
     }, this);
     return this;
-  }, getColumn:function $$sp$$$list$fn$getColumn$($name$$) {
+  }, exportColumn:function $$sp$$$list$fn$exportColumn$($name$$) {
     return this._columns[$name$$] ? this._columns[$name$$] : Object.create($sp$$.column.fn, {list:{value:this}, name:{value:$name$$}});
-  }, getRow:function $$sp$$$list$fn$getRow$($n$$) {
+  }, getColumn:function $$sp$$$list$fn$getColumn$($name$$, $fn$$) {
+    var $col$$ = this._columns[$name$$];
+    $col$$ && $js$$.alg.use(this, $fn$$, [$col$$]);
+    return this;
+  }, exportRow:function $$sp$$$list$fn$exportRow$($n$$) {
     return this._rows[$js$$.alg.number($n$$, 0)] || null;
-  }, getRowById:function $$sp$$$list$fn$getRowById$($id$$) {
+  }, getRow:function $$sp$$$list$fn$getRow$($n$$, $fn$$) {
+    var $row$$ = this.exportRow($n$$);
+    $row$$ && $js$$.alg.use(this, $fn$$, [$row$$]);
+    return this;
+  }, exportRowById:function $$sp$$$list$fn$exportRowById$($id$$) {
     for (var $found$$ = null, $row$$ = null, $i$$ = 0;$row$$ = this.getRow($i$$++);) {
       if ($row$$.ID.value === $id$$) {
         $found$$ = $row$$;
@@ -3200,13 +3257,20 @@ js.extend.fn("sp", function() {
       }
     }
     return $found$$;
+  }, getRowById:function $$sp$$$list$fn$getRowById$($id$$, $fn$$) {
+    var $row$$ = this.exportRowById($id$$);
+    $row$$ && $js$$.alg.use(this, $fn$$, [$row$$]);
+    return this;
   }, eachDirtyRow:function $$sp$$$list$fn$eachDirtyRow$($fn$$, $data$$) {
     var $dirty$$ = this._dirtyRows;
     "function" === typeof $fn$$ && $js$$.alg.each($dirty$$, $fn$$, $data$$);
     return this;
-  }, _createListItem:function $$sp$$$list$fn$_createListItem$() {
-  }, getRowCount:function $$sp$$$list$fn$getRowCount$($n$$) {
+  }, exportRowCount:function $$sp$$$list$fn$exportRowCount$($n$$) {
     return this._rows.length;
+  }, getRowCount:function $$sp$$$list$fn$getRowCount$($n$$, $fn$$) {
+    var $count$$ = this.exportRowCount($n$$);
+    $js$$.alg.use(this, $fn$$, [$count$$]);
+    return this;
   }, pull:function $$sp$$$list$fn$pull$($success$$, $failure$$) {
     var $ctx$$ = new window.SP.ClientContext(this._url), $list$$7_listItems$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $caml$$ = new window.SP.CamlQuery, $successFn$$ = "function" === typeof $success$$ ? $success$$ : this._success, $failureFn$$ = "function" === typeof $failure$$ ? $failure$$ : this._failure;
     $caml$$.set_viewXml(this.caml);
@@ -3242,19 +3306,19 @@ js.extend.fn("sp", function() {
   }, _pushLoopDirtyRowColumns:function $$sp$$$list$fn$_pushLoopDirtyRowColumns$($coldata$$, $colname$$, $columns$$, $data$$) {
     $coldata$$.internal && $coldata$$.dirty && "ID" !== $coldata$$.internal && $data$$.listItem.set_item($coldata$$.internal, $coldata$$.value);
   }, updateRow:function $$sp$$$list$fn$updateRow$($id$$, $values$$) {
-    var $row$$ = this.getRowById($id$$), $data$$ = $js$$.alg.mergeObj({}, $values$$);
-    $row$$ && $js$$.alg.each($row$$, this._updateRowEach, $data$$);
-    return this;
+    return this.getRowById($id$$, function($row$$) {
+      $js$$.alg.each($row$$, this._updateRowEach, $js$$.alg.cloneObj($values$$));
+    });
   }, _updateRowEach:function $$sp$$$list$fn$_updateRowEach$($colData$$, $colName$$1_value$$, $row$$, $data$$) {
     $colName$$1_value$$ = $data$$[$colData$$.name];
     $row$$ = $colName$$1_value$$ !== $colData$$.value;
     "undefined" !== typeof $colName$$1_value$$ && $row$$ && ($colData$$.value = $colName$$1_value$$);
-  }, createRow:function $$sp$$$list$fn$createRow$($data$$104_values$$) {
+  }, createRow:function $$sp$$$list$fn$createRow$($data$$103_values$$) {
     var $columns$$ = this._columns;
-    $data$$104_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$104_values$$)};
-    $js$$.alg.each($columns$$, this._createRowEach, $data$$104_values$$);
-    $data$$104_values$$.row.ID.value = $data$$104_values$$.rowID;
-    this._dirtyRows.push($data$$104_values$$.row);
+    $data$$103_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$103_values$$)};
+    $js$$.alg.each($columns$$, this._createRowEach, $data$$103_values$$);
+    $data$$103_values$$.row.ID.value = $data$$103_values$$.rowID;
+    this._dirtyRows.push($data$$103_values$$.row);
     return this;
   }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$2_value$$, $column$$, $cell$$1_data$$) {
     var $row$$ = $cell$$1_data$$.row;
@@ -3336,7 +3400,10 @@ js.extend.fn("sp", function() {
       default:
         $out$$[$colName$$] = $value$$.value;
     }
-  }, getValues:function $$sp$$$query$fn$getValues$($columns$$0$$, $fn$$) {
+  }, getValues:function $$sp$$$query$fn$getValues$($columns$$, $fn$$) {
+    $js$$.alg.use(this, $fn$$, [this.exportValues($columns$$)]);
+    return this;
+  }, exportValues:function $$sp$$$query$fn$exportValues$($columns$$0$$) {
     function $__copyColumn$$($arr$$, $key$$, $columns$$, $row$$) {
       $arr$$[$row$$[$key$$].value] = !0;
     }
@@ -3349,8 +3416,7 @@ js.extend.fn("sp", function() {
     $js$$.alg.each($columns$$0$$, function($obj$$, $k$$, $columns$$) {
       $columns$$[$k$$] = Object.keys($obj$$).sort();
     });
-    $js$$.alg.use(this, $fn$$, [$columns$$0$$]);
-    return this;
+    return $columns$$0$$;
   }, clone:function $$sp$$$query$fn$clone$() {
     var $clone$$ = $sp$$.query(this._list);
     $clone$$._rows = this._rows.slice(0);
@@ -3364,6 +3430,42 @@ js.extend.fn("sp", function() {
   };
   $sp$$.column.fn = {internal:"", text:"", type:"string", default:"", valueOf:function $$sp$$$column$fn$valueOf$() {
     return this.value;
+  }};
+  $sp$$.user = function $$sp$$$user$($config$$) {
+    var $ctx$$ = new window.SP.ClientContext($config$$.url), $spUser_userCollection$$ = $ctx$$.get_web().get_siteUsers(), $user$$ = null;
+    $config$$ = $config$$ || {};
+    $user$$ = $config$$.userid ? $spUser_userCollection$$.getById($config$$.userid) : $config$$.login ? $spUser_userCollection$$.getByLoginName($config$$.login) : $config$$.email ? $spUser_userCollection$$.getByEmail($config$$.email) : $spUser_userCollection$$.get_currentUser();
+    $spUser_userCollection$$ = Object.create($sp$$.user, {_user:{value:$user$$}});
+    $ctx$$.load($user$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn($spUser_userCollection$$, $__spUserSuccess$$, [$config$$]), $js$$.alg.bindFn($spUser_userCollection$$, $__spUserFailure$$, [$config$$]));
+    return $spUser_userCollection$$;
+  };
+  $sp$$.user.getById = function $$sp$$$user$getById$($userid$$, $url$$) {
+    return $sp$$.user({userid:$userid$$, url:$url$$});
+  };
+  $sp$$.user.getByLogin = function $$sp$$$user$getByLogin$($login$$, $url$$) {
+    return $sp$$.user({login:$login$$, url:$url$$});
+  };
+  $sp$$.user.getByEmail = function $$sp$$$user$getByEmail$($email$$, $url$$) {
+    return $sp$$.user({email:$email$$, url:$url$$});
+  };
+  $sp$$.user.fn = {_user:null, _email:null, _userid:null, _username:null, _url:null, memberOfGroup:function $$sp$$$user$fn$memberOfGroup$($group$$, $fn$$) {
+    var $yes$$ = $js$$.alg.bindFn(this, $fn$$, [!0]), $no$$ = $js$$.alg.bindFn(this, $fn$$, [!1]);
+    $sp$$.group($group$$).isMember(this._user, $yes$$, $no$$);
+    return this;
+  }};
+  $sp$$.group = function $$sp$$$group$($config$$) {
+    var $groups$$ = (new window.SP.ClientContext($config$$.url)).get_web().get_siteGroups(), $group$$ = null, $spGroup$$ = null;
+    $config$$ && $config$$.isPrototypeOf($sp$$.group.fn) ? $spGroup$$ = $config$$ : ($config$$.name ? $group$$ = $groups$$.getByName($config$$.name) : $config$$.groupid && ($group$$ = $groups$$.getById($config$$.groupid)), $spGroup$$ = Object.create($sp$$.group.fn, {_url:{value:$js$$.alg.string($config$$.url, "")}, _group:{value:$group$$}}));
+    return $spGroup$$;
+  };
+  $sp$$.group.fn = {_url:null, _group:null, isMember:function $$sp$$$group$fn$isMember$($user$$, $success$$, $failure$$) {
+    var $ctx$$ = null, $ctx$$ = new window.SP.ClientContext(this._url);
+    $ctx$$.get_web();
+    $ctx$$.load($user$$);
+    $ctx$$.load(this._group, "Users");
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__isMemberSuccess$$, [$success$$, $failure$$]), $js$$.alg.bindFn(this, $__isMemberFailure$$, [$failure$$]));
+    return this;
   }};
   return $sp$$;
 });
@@ -3409,9 +3511,9 @@ jspyder.extend.fn("template", function() {
   }
   var $_templates$$ = $js$$.createRegistry(), $_library$$ = $js$$.createRegistry(), $__master_key$$ = (4294967295 * Math.random() | 0).toString(32), $reFuncArgs$$ = /\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?/i, $reString$$ = /"(?:[^"\\]|\\.)*"/i, $reCommandLiteral$$ = /`(?:[^`\\]|\\.)*`/i, $reNumber$$ = /\d+(?:\.\d+)?/, $reVariable$$ = /\$\{\D[a-z0-9_]*\}/i, $reFuncName$$ = /\@\D[a-z0-9_]*/i, $reFunction$$ = /\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)/i, 
   $reSymbol$$ = /(\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)|\$\{\D[a-z0-9_]*\})/i;
-  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$102_template$$, $data$$, $fn$$) {
-    $name$$102_template$$ = $_templates$$.fetch($name$$102_template$$);
-    return this.compileExplicit($name$$102_template$$, $data$$, $fn$$);
+  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$101_template$$, $data$$, $fn$$) {
+    $name$$101_template$$ = $_templates$$.fetch($name$$101_template$$);
+    return this.compileExplicit($name$$101_template$$, $data$$, $fn$$);
   }, compileExplicit:function $$js_template$$$fn$compileExplicit$($template$$4_tmp$$, $data$$, $fn$$) {
     "function" !== typeof $data$$ || $fn$$ || ($fn$$ = $data$$, $data$$ = null);
     "undefined" === typeof $template$$4_tmp$$ && ($template$$4_tmp$$ = "");
@@ -3530,9 +3632,9 @@ jspyder.extend.fn("template", function() {
     return "";
   }, map_item:function($map$$, $id$$) {
     return ($map$$ = this[$map$$]) ? $map$$[$id$$] : $id$$;
-  }, js_registry:function($data$$120_key$$) {
-    $data$$120_key$$ = $js$$.registry.fetch($data$$120_key$$);
-    return null === $data$$120_key$$ || "undefined" === typeof $data$$120_key$$ ? "" : $data$$120_key$$;
+  }, js_registry:function($data$$119_key$$) {
+    $data$$119_key$$ = $js$$.registry.fetch($data$$119_key$$);
+    return null === $data$$119_key$$ || "undefined" === typeof $data$$119_key$$ ? "" : $data$$119_key$$;
   }, js_log:function($data$$) {
     console.log($data$$);
   }, concat:function($str$$) {
