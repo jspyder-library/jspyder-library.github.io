@@ -951,7 +951,7 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       $js$$.alg.each($obj$$0$$, function($value$$, $key$$, $obj$$) {
         for (var $i$$19_map$$ = 0;$i$$19_map$$ < $depchain$$.length;$i$$19_map$$++) {
           if ($depchain$$[$i$$19_map$$].from === $value$$) {
-            $obj$$[$key$$] = $value$$;
+            $obj$$[$key$$] = $depchain$$[$i$$19_map$$].to;
             return;
           }
         }
