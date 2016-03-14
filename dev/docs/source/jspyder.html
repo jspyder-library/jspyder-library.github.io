@@ -999,13 +999,13 @@
 
                     var map = { &quot;from&quot;: value, &quot;to&quot;: {} };
                     depchain.push(map);
-                    map[&quot;to&quot;] = obj[key] = js.alg.deepCloneObj(value, depchain);
+                    map[&quot;cleanup&quot;] = obj[key] = js.alg.deepCloneObj(value, depchain);
                 });
 
                 js.alg.each(obj, function refill(value, key, obj) {
                     for (var i = 0; i &lt; depchain.length; i++) {
-                        if (value === depchain[i].from) {
-                            value = depchain[i].to;
+                        if (value === depchain[i][&quot;to&quot;]) {
+                            value = depchain[i][&quot;cleanup&quot;];
                             break;
                         }
                         else if (typeof value === &quot;object&quot;) {
