@@ -1008,6 +1008,9 @@
                             value = depchain[i].to;
                             break;
                         }
+                        else if (typeof value === &quot;object&quot;) {
+                            js.alg.each(value, refill);
+                        }
                     }
                 });
                 

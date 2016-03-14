@@ -961,6 +961,7 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       });
       $js$$.alg.each($obj$$0$$, function refill($value$$, $i$$20_key$$, $obj$$) {
         for ($i$$20_key$$ = 0;$i$$20_key$$ < $depchain$$.length && $value$$ !== $depchain$$[$i$$20_key$$].from;$i$$20_key$$++) {
+          "object" === typeof $value$$ && $js$$.alg.each($value$$, refill);
         }
       });
       return $obj$$0$$;
