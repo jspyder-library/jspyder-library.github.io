@@ -992,7 +992,7 @@
                 js.alg.each(obj, function(value, key, obj) {
                     for (var i = 0; i &lt; depchain.length; i++) {
                         if (depchain[i][&quot;from&quot;] === value) {
-                            obj[key] = value;
+                            obj[key] = depchain[i][&quot;to&quot;];
                             return;
                         }
                     }

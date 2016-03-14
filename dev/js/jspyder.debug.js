@@ -957,10 +957,10 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
         }
         $i$$19_map$$ = {from:$value$$, to:{}};
         $depchain$$.push($i$$19_map$$);
-        $i$$19_map$$.to = $obj$$[$key$$] = $js$$.alg.deepCloneObj($value$$, $depchain$$);
+        $i$$19_map$$.cleanup = $obj$$[$key$$] = $js$$.alg.deepCloneObj($value$$, $depchain$$);
       });
       $js$$.alg.each($obj$$0$$, function refill($value$$, $i$$20_key$$, $obj$$) {
-        for ($i$$20_key$$ = 0;$i$$20_key$$ < $depchain$$.length && $value$$ !== $depchain$$[$i$$20_key$$].from;$i$$20_key$$++) {
+        for ($i$$20_key$$ = 0;$i$$20_key$$ < $depchain$$.length && $value$$ !== $depchain$$[$i$$20_key$$].to;$i$$20_key$$++) {
           "object" === typeof $value$$ && $js$$.alg.each($value$$, refill);
         }
       });
