@@ -1004,7 +1004,7 @@
 
                 js.alg.each(obj, function refill(value, key, obj) {
                     for (var i = 0; i &lt; depchain.length; i++) {
-                        if (value === depchain[i][&quot;to&quot;]) {
+                        if (value === depchain[i][&quot;to&quot;] &amp;&amp; depchain[i][&quot;cleanup&quot;]) {
                             obj[key] = depchain[i][&quot;cleanup&quot;];
                             break;
                         }
