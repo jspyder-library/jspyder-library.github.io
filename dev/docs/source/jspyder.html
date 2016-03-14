@@ -992,7 +992,7 @@
                 js.alg.each(obj, function(value, key, obj) {
                     for (var i = 0; i &lt; depchain.length; i++) {
                         if (depchain[i][&quot;from&quot;] === value) {
-                            obj[key] = depchain[i][&quot;to&quot;];
+                            obj[key] = value;
                             return;
                         }
                     }
@@ -1000,6 +1000,15 @@
                     var map = { &quot;from&quot;: value, &quot;to&quot;: {} };
                     depchain.push(map);
                     map[&quot;to&quot;] = obj[key] = js.alg.deepCloneObj(value, depchain);
+                });
+
+                js.alg.each(obj, function refill(value, key, obj) {
+                    for (var i = 0; i &lt; depchain.length; i++) {
+                        if (value === depchain[i].from) {
+                            value = depchain[i].to;
+                            break;
+                        }
+                    }
                 });
                 
                 return obj;
