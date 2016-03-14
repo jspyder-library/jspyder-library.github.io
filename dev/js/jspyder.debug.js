@@ -961,7 +961,7 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       });
       $js$$.alg.each($obj$$0$$, function refill($value$$, $key$$, $obj$$) {
         for (var $i$$ = 0;$i$$ < $depchain$$.length;$i$$++) {
-          if ($value$$ === $depchain$$[$i$$].to) {
+          if ($value$$ === $depchain$$[$i$$].to && $depchain$$[$i$$].cleanup) {
             $obj$$[$key$$] = $depchain$$[$i$$].cleanup;
             break;
           } else {
