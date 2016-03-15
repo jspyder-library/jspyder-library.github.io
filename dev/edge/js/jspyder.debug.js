@@ -2340,7 +2340,7 @@ jspyder.extend.fn("dtype", function() {
     return $_dtypeText__interface$$;
   }
   var $js_alg$$ = js.alg;
-  $js_dtype$$.fn = {"byte":js.alg.run(function bootstrap() {
+  $js_dtype$$.fn = {"byte":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.byte();
     var $byte$$ = $js_alg$$["byte"];
     return function attachInt8($_interface$$1_name$$, $value$$, $strict$$, $constant$$) {
@@ -2349,7 +2349,7 @@ jspyder.extend.fn("dtype", function() {
       Object.defineProperty($_obj$$, $_interface$$1_name$$);
       return this;
     };
-  }), ubyte:js.alg.run(function bootstrap() {
+  }), ubyte:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.ubyte();
     var $ubyte$$ = $js_alg$$.ubyte;
     return function attachUInt8($_interface$$2_name$$, $value$$, $strict$$, $constant$$) {
@@ -2358,7 +2358,7 @@ jspyder.extend.fn("dtype", function() {
       Object.defineProperty($_obj$$, $_interface$$2_name$$);
       return this;
     };
-  }), "short":js.alg.run(function bootstrap() {
+  }), "short":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.short();
     var $short$$ = $js_alg$$["short"];
     return function attachInt16($_interface$$3_name$$, $value$$, $strict$$, $constant$$) {
@@ -2367,7 +2367,7 @@ jspyder.extend.fn("dtype", function() {
       Object.defineProperty($_obj$$, $_interface$$3_name$$);
       return this;
     };
-  }), ushort:js.alg.run(function bootstrap() {
+  }), ushort:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.short();
     return function attachUInt16($_interface$$4_name$$, $value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
@@ -2375,7 +2375,7 @@ jspyder.extend.fn("dtype", function() {
       Object.defineProperty($_obj$$, $_interface$$4_name$$);
       return this;
     };
-  }), "int":js.alg.run(function bootstrap() {
+  }), "int":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.int();
     var $int$$ = $js_alg$$["int"];
     return function attachInt32($_interface$$5_name$$, $value$$, $strict$$, $constant$$) {
@@ -2384,7 +2384,7 @@ jspyder.extend.fn("dtype", function() {
       Object.defineProperty($_obj$$, $_interface$$5_name$$);
       return this;
     };
-  }), uint:js.alg.run(function bootstrap() {
+  }), uint:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.uint();
     return function attachUInt32($_interface$$6_name$$, $value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
@@ -2392,7 +2392,7 @@ jspyder.extend.fn("dtype", function() {
       Object.defineProperty($_obj$$, $_interface$$6_name$$);
       return this;
     };
-  }), "float":js.alg.run(function bootstrap() {
+  }), "float":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.float();
     var $float$$ = $js_alg$$["float"];
     return function attachFloat($_interface$$7_name$$, $value$$, $strict$$, $constant$$) {
@@ -2401,7 +2401,7 @@ jspyder.extend.fn("dtype", function() {
       Object.defineProperty($_obj$$, $_interface$$7_name$$);
       return this;
     };
-  }), "double":js.alg.run(function bootstrap() {
+  }), "double":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.double();
     var $double$$ = $js_alg$$["double"];
     return function attachDouble($_interface$$8_name$$, $value$$, $strict$$, $constant$$) {
@@ -2411,7 +2411,7 @@ jspyder.extend.fn("dtype", function() {
       return this;
     };
   }), fixed:function attachFixed($name$$, $decimal$$, $value$$, $strict$$, $constant$$) {
-  }, "enum":js.alg.run(function bootstrap() {
+  }, "enum":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.makeEnum();
     $js_alg$$.uint();
     var $__enum$$ = $js_alg$$.makeEnum, $__enumInterface$$ = function $$__enumInterface$$$($enumVals$$) {
@@ -2486,6 +2486,14 @@ jspyder.extend.fn("dtype", function() {
     Object.defineProperty($o$$, $name$$, $_interface$$);
     return this;
   }};
+  js.alg.use($js_dtype$$.fn, function() {
+    this.int8 = this["byte"];
+    this.uint8 = this.ubyte;
+    this.int16 = this["short"];
+    this.uint16 = this.ushort;
+    this.int32 = this["int"];
+    this.uint32 = this.uint;
+  });
   return $js_dtype$$;
 });
 jspyder.extend.fn("form", function() {
