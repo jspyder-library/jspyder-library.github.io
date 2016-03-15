@@ -2343,71 +2343,71 @@ jspyder.extend.fn("dtype", function() {
   $js_dtype$$.fn = {"byte":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.byte();
     var $byte$$ = $js_alg$$["byte"];
-    return function attachInt8($_interface$$1_name$$, $value$$, $strict$$, $constant$$) {
+    return function attachInt8($name$$, $_interface$$1_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$1_name$$ = $_createInteface$$($_interface$$1_name$$, "number", "byte", $byte$$, $value$$, $constant$$, $strict$$);
-      Object.defineProperty($_obj$$, $_interface$$1_name$$);
+      $_interface$$1_value$$ = $_createInteface$$($name$$, "number", "byte", $byte$$, $_interface$$1_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$1_value$$);
       return this;
     };
   }), ubyte:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.ubyte();
     var $ubyte$$ = $js_alg$$.ubyte;
-    return function attachUInt8($_interface$$2_name$$, $value$$, $strict$$, $constant$$) {
+    return function attachUInt8($name$$, $_interface$$2_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$2_name$$ = $_createInteface$$($_interface$$2_name$$, "number", "unsigned byte", $ubyte$$, $value$$, $constant$$, $strict$$);
-      Object.defineProperty($_obj$$, $_interface$$2_name$$);
+      $_interface$$2_value$$ = $_createInteface$$($name$$, "number", "unsigned byte", $ubyte$$, $_interface$$2_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$2_value$$);
       return this;
     };
   }), "short":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.short();
     var $short$$ = $js_alg$$["short"];
-    return function attachInt16($_interface$$3_name$$, $value$$, $strict$$, $constant$$) {
+    return function attachInt16($name$$, $_interface$$3_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$3_name$$ = $_createInteface$$($_interface$$3_name$$, "number", "short", $short$$, $value$$, $constant$$, $strict$$);
-      Object.defineProperty($_obj$$, $_interface$$3_name$$);
+      $_interface$$3_value$$ = $_createInteface$$($name$$, "number", "short", $short$$, $_interface$$3_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$3_value$$);
       return this;
     };
   }), ushort:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.short();
-    return function attachUInt16($_interface$$4_name$$, $value$$, $strict$$, $constant$$) {
+    return function attachUInt16($name$$, $_interface$$4_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$4_name$$ = $_createInteface$$($_interface$$4_name$$, "number", "unsigned short", ushort, $value$$, $constant$$, $strict$$);
-      Object.defineProperty($_obj$$, $_interface$$4_name$$);
+      $_interface$$4_value$$ = $_createInteface$$($name$$, "number", "unsigned short", ushort, $_interface$$4_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$4_value$$);
       return this;
     };
   }), "int":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.int();
     var $int$$ = $js_alg$$["int"];
-    return function attachInt32($_interface$$5_name$$, $value$$, $strict$$, $constant$$) {
+    return function attachInt32($name$$, $_interface$$5_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$5_name$$ = $_createInteface$$($_interface$$5_name$$, "number", "integer", $int$$, $value$$, $constant$$, $strict$$);
-      Object.defineProperty($_obj$$, $_interface$$5_name$$);
+      $_interface$$5_value$$ = $_createInteface$$($name$$, "number", "integer", $int$$, $_interface$$5_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$5_value$$);
       return this;
     };
   }), uint:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.uint();
-    return function attachUInt32($_interface$$6_name$$, $value$$, $strict$$, $constant$$) {
+    return function attachUInt32($name$$, $_interface$$6_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$6_name$$ = $_createInteface$$($_interface$$6_name$$, "number", "unsigned integer", uint, $value$$, $constant$$, $strict$$);
-      Object.defineProperty($_obj$$, $_interface$$6_name$$);
+      $_interface$$6_value$$ = $_createInteface$$($name$$, "number", "unsigned integer", uint, $_interface$$6_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$6_value$$);
       return this;
     };
   }), "float":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.float();
     var $float$$ = $js_alg$$["float"];
-    return function attachFloat($_interface$$7_name$$, $value$$, $strict$$, $constant$$) {
+    return function attachFloat($name$$, $_interface$$7_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$7_name$$ = $_createInteface$$($_interface$$7_name$$, "number", "float", $float$$, $value$$, $constant$$, $strict$$);
-      Object.defineProperty($_obj$$, $_interface$$7_name$$);
+      $_interface$$7_value$$ = $_createInteface$$($name$$, "number", "float", $float$$, $_interface$$7_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$7_value$$);
       return this;
     };
   }), "double":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.double();
     var $double$$ = $js_alg$$["double"];
-    return function attachDouble($_interface$$8_name$$, $value$$, $strict$$, $constant$$) {
+    return function attachDouble($name$$, $_interface$$8_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$8_name$$ = $_createInteface$$($_interface$$8_name$$, "number", "double", $double$$, $value$$, $constant$$, $strict$$);
-      Object.defineProperty($_obj$$, $_interface$$8_name$$);
+      $_interface$$8_value$$ = $_createInteface$$($name$$, "number", "double", $double$$, $_interface$$8_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$8_value$$);
       return this;
     };
   }), fixed:function attachFixed($name$$, $decimal$$, $value$$, $strict$$, $constant$$) {
@@ -2425,12 +2425,12 @@ jspyder.extend.fn("dtype", function() {
       });
       return {};
     };
-    return function attachEnum($_interface$$9_name$$, $_enumVals_keys$$, $value$$, $strict$$, $constant$$) {
+    return function attachEnum($name$$, $_enumVals_keys$$, $_interface$$9_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
       $_enumVals_keys$$ = $__enum$$($_enumVals_keys$$);
       $__enumInterface$$($_enumVals_keys$$);
-      $_interface$$9_name$$ = $_createInteface$$($_interface$$9_name$$, "object", "enum", double, $value$$, $constant$$, $strict$$);
-      Object.defineProperty($_obj$$, $_interface$$9_name$$);
+      $_interface$$9_value$$ = $_createInteface$$($name$$, "object", "enum", double, $_interface$$9_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$9_value$$);
       return this;
     };
   }), string:function attachString($name$$, $value$$, $strict$$, $constant$$) {
