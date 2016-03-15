@@ -633,7 +633,7 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
     var $js$$ = $global$$.jspyder = function jspyder() {
     };
     $js$$.extend = function js_extend($name$$, $obj$$) {
-      Object.defineProperty(this, $name$$, {value:$obj$$});
+      this.hasOwnProperty($name$$) || Object.defineProperty(this, $name$$, {value:$obj$$});
       return this;
     };
     $js$$.extend.fn = function js_extend_fn($name$$, $fn$$, $args$$) {
@@ -736,10 +736,10 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       return $js$$;
     }, magnitude:function $$js_alg$$$magnitude$($n$$) {
       $n$$ = $js$$.alg.number($n$$);
-      var $y$$ = Math.pow(10, ($n$$ | 0).toString().length - 1);
-      return Math.ceil($n$$ / $y$$) * $y$$;
+      var $y$$ = Math.pow(10, ((0 > $n$$ ? -$n$$ : $n$$) | 0).toString().length - 1);
+      return Math[0 > $n$$ ? "floor" : "ceil"]($n$$ / $y$$) * $y$$;
     }, escapeString:function $$js_alg$$$escapeString$($str$$) {
-      return $str$$.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+      return $js$$.alg.string($str$$).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     }, use:function $$js_alg$$$use$($_this$$, $fn$$, $args$$) {
       $_this$$ || ($_this$$ = null);
       return "function" === typeof $fn$$ ? $fn$$.apply($_this$$, $args$$) : void 0;
@@ -758,14 +758,16 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       var $_n$$ = +$n$$;
       return $_n$$ == $n$$ || $_n$$ === $_n$$ ? $_n$$ : $d$$ || 0;
     }, string:function $$js_alg$$$string$($s$$, $d$$) {
-      return "string" === typeof $s$$ ? $s$$ : $s$$ || 0 === $s$$ ? "" + $s$$ : $d$$ || "";
+      return "string" === typeof $s$$ ? $s$$ : null !== $s$$ && "object" === typeof $s$$ && $s$$.isPrototypeOf(RegExp) ? $s$$ = ("" + $s$$).match(/^\/(.*)\/[a-z]*$/, "$1") : $s$$ || 0 === $s$$ ? "" + $s$$ : $d$$ || "";
     }, object:function $$js_alg$$$object$($o$$, $d$$) {
       return $o$$ && "object" === typeof $o$$ ? $o$$ : $d$$ || {};
+    }, array:function $$js_alg$$$array$($a$$, $d$$) {
+      return Array.isArray($a$$) ? $a$$ : $d$$ || [];
     }, date:function $$js_alg$$$date$($v$$, $d$$) {
-      return input instanceof Date || "[object Date]" === Object.prototype.toString.call(input) ? $v$$ : new Date;
-    }, byte:function $$js_alg$$$byte$($u$$) {
-      if ("undefined" === typeof Int8Array) {
-        $u$$ = +$u$$;
+      return input instanceof Date || "[object Date]" === Object.prototype.toString.call(input) ? $v$$ : $d$$ || new Date;
+    }, "byte":function $$js_alg$$$byte$($u$$) {
+      $js_alg$$["byte"] = "undefined" === typeof Int8Array ? function($u$$) {
+        $u$$ = $js$$.alg.number($u$$);
         for ($u$$ = ($u$$ === $u$$ ? $u$$ : 0) & 255;-128 > $u$$;) {
           $u$$ += 256;
         }
@@ -773,19 +775,24 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
           $u$$ -= 256;
         }
         return $u$$;
-      }
-      var $buffer$$ = new ArrayBuffer(1), $buffer$$ = new Int8Array($buffer$$);
-      $buffer$$[0] = $u$$;
-      return $buffer$$[0];
-    }, ubyte:function $$js_alg$$$ubyte$($u$$) {
-      if ("undefined" === typeof Uint8Array) {
-        return $u$$ = +$u$$, ($u$$ === $u$$ ? $u$$ : 0) & 255;
-      }
-      var $buffer$$10_byteArray$$ = new ArrayBuffer(1), $buffer$$10_byteArray$$ = new Uint8Array($buffer$$10_byteArray$$);
-      $buffer$$10_byteArray$$[0] = $u$$;
-      return $buffer$$10_byteArray$$[0];
-    }, short:function $$js_alg$$$short$($u$$) {
-      if ("undefined" === typeof Int16Array) {
+      } : function($u$$) {
+        var $buffer$$ = new ArrayBuffer(1), $buffer$$ = new Int8Array($buffer$$);
+        $buffer$$[0] = $u$$;
+        return $buffer$$[0];
+      };
+      return $js_alg$$["byte"]($u$$);
+    }, ubyte:function $$js_alg$$$ubyte$($u$$0$$) {
+      $js_alg$$.ubyte = "undefined" === typeof Uint8Array ? function($u$$) {
+        $u$$ = +$u$$;
+        return ($u$$ === $u$$ ? $u$$ : 0) & 255;
+      } : function($u$$) {
+        var $buffer$$10_byteArray$$ = new ArrayBuffer(1), $buffer$$10_byteArray$$ = new Uint8Array($buffer$$10_byteArray$$);
+        $buffer$$10_byteArray$$[0] = $u$$;
+        return $buffer$$10_byteArray$$[0];
+      };
+      return $js_alg$$.ubyte($u$$0$$);
+    }, "short":function $$js_alg$$$short$($u$$0$$) {
+      $js_alg$$["short"] = "undefined" === typeof Int16Array ? function($u$$) {
         $u$$ = +$u$$;
         for ($u$$ = ($u$$ === $u$$ ? $u$$ : 0) & 65535;-32768 > $u$$;) {
           $u$$ += 65536;
@@ -794,19 +801,24 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
           $u$$ -= 65536;
         }
         return $u$$;
-      }
-      var $buffer$$11_byteArray$$ = new ArrayBuffer(2), $buffer$$11_byteArray$$ = new Int16Array($buffer$$11_byteArray$$);
-      $buffer$$11_byteArray$$[0] = $u$$;
-      return $buffer$$11_byteArray$$[0];
-    }, ushort:function $$js_alg$$$ushort$($u$$) {
-      if ("undefined" === typeof Uint16Array) {
-        return $u$$ = +$u$$, ($u$$ === $u$$ ? $u$$ : 0) & 65535;
-      }
-      var $buffer$$12_byteArray$$ = new ArrayBuffer(2), $buffer$$12_byteArray$$ = new Uint16Array($buffer$$12_byteArray$$);
-      $buffer$$12_byteArray$$[0] = $u$$;
-      return $buffer$$12_byteArray$$[0];
-    }, int:function $$js_alg$$$int$($u$$) {
-      if ("undefined" === typeof Int32Array) {
+      } : function($u$$) {
+        var $buffer$$11_byteArray$$ = new ArrayBuffer(2), $buffer$$11_byteArray$$ = new Int16Array($buffer$$11_byteArray$$);
+        $buffer$$11_byteArray$$[0] = $u$$;
+        return $buffer$$11_byteArray$$[0];
+      };
+      return $js_alg$$["short"]($u$$0$$);
+    }, ushort:function $$js_alg$$$ushort$($u$$0$$) {
+      $js_alg$$.ushort = "undefined" === typeof Uint16Array ? function($u$$) {
+        $u$$ = +$u$$;
+        return ($u$$ === $u$$ ? $u$$ : 0) & 65535;
+      } : function($u$$) {
+        var $buffer$$12_byteArray$$ = new ArrayBuffer(2), $buffer$$12_byteArray$$ = new Uint16Array($buffer$$12_byteArray$$);
+        $buffer$$12_byteArray$$[0] = $u$$;
+        return $buffer$$12_byteArray$$[0];
+      };
+      return $js_alg$$.ushort($u$$0$$);
+    }, "int":function $$js_alg$$$int$($u$$0$$) {
+      $js_alg$$["int"] = "undefined" === typeof Int32Array ? function($u$$) {
         $u$$ = +$u$$;
         for ($u$$ = ($u$$ === $u$$ ? $u$$ : 0) & 4294967295;-2147483648 > $u$$;) {
           $u$$ += 4294967296;
@@ -815,31 +827,48 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
           $u$$ -= 4294967296;
         }
         return $u$$;
-      }
-      var $buffer$$13_byteArray$$ = new ArrayBuffer(4), $buffer$$13_byteArray$$ = new Int32Array($buffer$$13_byteArray$$);
-      $buffer$$13_byteArray$$[0] = $u$$;
-      return $buffer$$13_byteArray$$[0];
-    }, uint:function $$js_alg$$$uint$($u$$) {
-      if ("undefined" === typeof Int32Array) {
-        return $u$$ = +$u$$, $u$$ = ($u$$ === $u$$ ? $u$$ : 0) % 4294967296, 0 > $u$$ ? -1 * $u$$ : $u$$;
-      }
-      var $buffer$$14_byteArray$$ = new ArrayBuffer(4), $buffer$$14_byteArray$$ = new Uint32Array($buffer$$14_byteArray$$);
-      $buffer$$14_byteArray$$[0] = $u$$;
-      return $buffer$$14_byteArray$$[0];
-    }, float:function $$js_alg$$$float$($u$$) {
-      if ("undefined" === typeof Float32Array) {
-        return $u$$ = +(+$u$$).toPrecision(8), $u$$ == $u$$ ? $u$$ : 0;
-      }
-      var $buffer$$15_byteArray$$ = new ArrayBuffer(4), $buffer$$15_byteArray$$ = new Float32Array($buffer$$15_byteArray$$);
-      $buffer$$15_byteArray$$[0] = $u$$;
-      return +$buffer$$15_byteArray$$[0].toPrecision(8);
-    }, double:function $$js_alg$$$double$($u$$) {
-      if ("undefined" === typeof Float64Array) {
-        return $u$$ = +(+$u$$).toPrecision(16), $u$$ == $u$$ ? $u$$ : 0;
-      }
-      var $buffer$$16_byteArray$$ = new ArrayBuffer(8), $buffer$$16_byteArray$$ = new Float64Array($buffer$$16_byteArray$$);
-      $buffer$$16_byteArray$$[0] = $u$$;
-      return $buffer$$16_byteArray$$[0];
+      } : function($u$$) {
+        var $buffer$$13_byteArray$$ = new ArrayBuffer(4), $buffer$$13_byteArray$$ = new Int32Array($buffer$$13_byteArray$$);
+        $buffer$$13_byteArray$$[0] = $u$$;
+        return $buffer$$13_byteArray$$[0];
+      };
+      return $js_alg$$["int"]($u$$0$$);
+    }, uint:function $$js_alg$$$uint$($u$$0$$) {
+      $js_alg$$.uint = "undefined" === typeof Int32Array ? function($u$$) {
+        $u$$ = +$u$$;
+        $u$$ = ($u$$ === $u$$ ? $u$$ : 0) % 4294967296;
+        return 0 > $u$$ ? -1 * $u$$ : $u$$;
+      } : function($u$$) {
+        var $buffer$$14_byteArray$$ = new ArrayBuffer(4), $buffer$$14_byteArray$$ = new Uint32Array($buffer$$14_byteArray$$);
+        $buffer$$14_byteArray$$[0] = $u$$;
+        return $buffer$$14_byteArray$$[0];
+      };
+      return $js_alg$$.uint($u$$0$$);
+    }, "float":function $$js_alg$$$float$($u$$0$$) {
+      $js_alg$$["float"] = "undefined" === typeof window.Float32Array ? function($sign_u$$) {
+        $sign_u$$ = 2 * (0 < x) - 1;
+        for (var $exp$$ = 0, $base$$ = x * $sign_u$$, $frac$$ = 0;2 <= $base$$ || 1 > $base$$;) {
+          2 <= $base$$ && ($base$$ /= 2, $exp$$++), 1 > $base$$ && ($base$$ *= 2, $exp$$--);
+        }
+        $frac$$ = x / Math.pow(2, $exp$$) - 1;
+        $frac$$ = 1 + Math.round(8388608 * $frac$$) / 8388608;
+        return +($sign_u$$ * $frac$$ * Math.pow(2, $exp$$)).toPrecision(8);
+      } : function($u$$) {
+        var $buffer$$15_byteArray$$ = new ArrayBuffer(4), $buffer$$15_byteArray$$ = new Float32Array($buffer$$15_byteArray$$);
+        $buffer$$15_byteArray$$[0] = $u$$;
+        return +$buffer$$15_byteArray$$[0].toPrecision(8);
+      };
+      return $js_alg$$["float"]($u$$0$$);
+    }, "double":function $$js_alg$$$double$($u$$0$$) {
+      $js_alg$$["double"] = "undefined" === typeof Float64Array ? function($u$$) {
+        $u$$ = +(+$u$$).toPrecision(16);
+        return $u$$ == $u$$ ? $u$$ : 0;
+      } : function($u$$) {
+        var $buffer$$16_byteArray$$ = new ArrayBuffer(8), $buffer$$16_byteArray$$ = new Float64Array($buffer$$16_byteArray$$);
+        $buffer$$16_byteArray$$[0] = $u$$;
+        return $buffer$$16_byteArray$$[0];
+      };
+      return $js_alg$$["double"]($u$$0$$);
     }, makeEnum:function $$js_alg$$$makeEnum$($keys$$, $enm$$) {
       $enm$$ = $enm$$ || {};
       var $v$$ = 1;
@@ -849,20 +878,20 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       });
       return $enm$$;
     }, rad2deg:function $$js_alg$$$rad2deg$($n$$, $d$$) {
-      return 180 * $js$$.alg.number($n$$, $d$$) / Math.PI;
+      return $js$$.alg.number($n$$, $d$$) * (180 / Math.PI);
     }, deg2rad:function $$js_alg$$$deg2rad$($n$$, $d$$) {
-      return $js$$.alg.number($n$$, $d$$) * Math.PI / 180;
+      return $js$$.alg.number($n$$, $d$$) * (Math.PI / 180);
     }, sliceArray:function $$js_alg$$$sliceArray$($a$$, $n$$) {
       var $ret$$ = $a$$;
       try {
-        $ret$$ = Array.prototype.slice.call($a$$ || [], $n$$ || 0);
+        $ret$$ = window.Array.prototype.slice.call($a$$ || [], $n$$ || 0);
       } catch ($e$$) {
         $ret$$ = [];
       }
       return $ret$$;
     }, sortArrayObj:function $$js_alg$$$sortArrayObj$($arr$$, $asc$$, $field$$) {
       var $list$$ = $js$$.alg.sliceArray(arguments, 2);
-      $arr$$.sort($js$$.alg.__sortArrayObj($asc$$, $list$$));
+      $js$$.alg.array($arr$$).sort($js$$.alg.__sortArrayObj($asc$$, $list$$));
       return $arr$$;
     }, __sortArrayObj:function $$js_alg$$$__sortArrayObj$($asc$$, $list$$) {
       var $__ret$$;
@@ -871,11 +900,11 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
         ;
         case "Edge":
           $__ret$$ = function $$__ret$$$($left$$, $right$$) {
-            for (var $a$$2_i$$ = 0;$left$$ && $right$$ && $a$$2_i$$ < $list$$.length;$a$$2_i$$++) {
-              $left$$ = $left$$[$list$$[$a$$2_i$$]], $right$$ = $right$$[$list$$[$a$$2_i$$]];
+            for (var $a$$3_i$$ = 0;$left$$ && $right$$ && $a$$3_i$$ < $list$$.length;$a$$3_i$$++) {
+              $left$$ = $left$$[$list$$[$a$$3_i$$]], $right$$ = $right$$[$list$$[$a$$3_i$$]];
             }
-            var $a$$2_i$$ = $asc$$ ? $left$$ : $right$$, $b$$ = $asc$$ ? $right$$ : $left$$;
-            return $a$$2_i$$ > $b$$ ? 1 : $a$$2_i$$ < $b$$ ? -1 : 0;
+            var $a$$3_i$$ = $asc$$ ? $left$$ : $right$$, $b$$ = $asc$$ ? $right$$ : $left$$;
+            return $a$$3_i$$ > $b$$ ? 1 : $a$$3_i$$ < $b$$ ? -1 : 0;
           };
           break;
         default:
@@ -888,7 +917,7 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       }
       return $__ret$$;
     }, sortArrayNum:function $$js_alg$$$sortArrayNum$($arr$$, $asc$$) {
-      $arr$$.sort(function($left$$, $right$$) {
+      $js$$.alg.array($arr$$).sort(function($left$$, $right$$) {
         return $asc$$ ? $js$$.alg.number($left$$) - $js$$.alg.number($right$$) : $js$$.alg.number($right$$) - $js$$.alg.number($left$$);
       });
       return $arr$$;
@@ -1436,13 +1465,10 @@ jspyder.extend.fn("ajax", function() {
   return $js_ajax$$;
 });
 jspyder.extend.fn("canvas", function() {
-  function $js_canvas$$($alt_settings$$) {
-    $alt_settings$$ = $alt_settings$$ || {};
-    var $c$$ = $js$$.dom("<canvas></canvas>"), $attrs$$ = {height:$js$$.alg.number($alt_settings$$.height, 150), width:$js$$.alg.number($alt_settings$$.width, 300)}, $css$$ = $alt_settings$$.css;
-    $alt_settings$$ = $alt_settings$$.alt;
-    $c$$.setAttrs($attrs$$);
-    $c$$.setCss($css$$);
-    $c$$.setHtml($alt_settings$$);
+  function $js_canvas$$($settings$$) {
+    $settings$$ = $settings$$ || {};
+    var $c$$ = $js$$.dom($settings$$.canvas || "<canvas></canvas>"), $css$$ = $settings$$.css, $attrs$$ = {height:$js$$.alg.number($settings$$.height, 150), width:$js$$.alg.number($settings$$.width, 300)};
+    $settings$$.canvas || $c$$.setCss($css$$).setAttrs($attrs$$);
     return Object.create($js_canvas$$.fn, {canvas:{value:$c$$}, queue:{value:[]}, context:{value:$c$$._element[0] && $c$$._element[0].getContext && $c$$._element[0].getContext("2d")}});
   }
   function $__mergeSettings$$($settings$$) {
@@ -1467,18 +1493,30 @@ jspyder.extend.fn("canvas", function() {
   }, remove:function $$js_canvas$$$fn$remove$() {
     this.canvas && this.canvas.remove();
     return this;
-  }, getSize:function $$js_canvas$$$fn$getSize$($o$$, $fn$$) {
-    $o$$ = $o$$ || {};
-    var $element$$ = this.canvas && this.canvas._element && this.canvas._element[0], $rect$$;
-    $element$$ && ($rect$$ = $element$$.getBoundingClientRect(), $o$$.width = $element$$.width, $o$$.height = $element$$.height, $o$$.x = $rect$$.x, $o$$.y = $rect$$.y, $js$$.alg.use(this, $fn$$, [$o$$]));
+  }, getSize:function $$js_canvas$$$fn$getSize$($fn$$) {
+    $js$$.alg.use(this, $fn$$, [this.exportSize()]);
     return this;
   }, exportSize:function $$js_canvas$$$fn$exportSize$() {
-    var $size$$ = {};
-    this.getSize($size$$);
+    var $size$$ = {height:0, width:0, x:0, y:0}, $element$$ = this.canvas && this.canvas._element && this.canvas._element[0], $rect$$;
+    $element$$ && ($rect$$ = $element$$.getBoundingClientRect(), $size$$.width = $element$$.width, $size$$.height = $element$$.height, $size$$.x = $rect$$.x, $size$$.y = $rect$$.y);
     return $size$$;
+  }, exportImageUrl:function $$js_canvas$$$fn$exportImageUrl$($type$$) {
+    var $dataUrl$$ = "";
+    this.canvas && this.canvas.element(0, function() {
+      $dataUrl$$ = this.toDataURL("image/" + $type$$);
+    });
+    return $dataUrl$$;
+  }, getImageUrl:function $$js_canvas$$$fn$getImageUrl$($type$$, $fn$$) {
+    $js$$.alg.use(this, $fn$$, [this.exportImageUrl($type$$)]);
+    return this;
+  }, exportImage:function $$js_canvas$$$fn$exportImage$($type$$) {
+    return $js$$.dom("<img></img>").setAttrs({src:this.exportImageUrl($type$$)});
+  }, getImage:function $$js_canvas$$$fn$getImage$($type$$, $fn$$) {
+    $js$$.alg.use(this, $fn$$, [this.exportImage($type$$)]);
+    return this;
   }, clear:function $$js_canvas$$$fn$clear$() {
     var $self$$ = this;
-    this.getSize({}, function($size$$) {
+    this.getSize(function($size$$) {
       $self$$.context.clearRect(0, 0, $size$$.width, $size$$.height);
     });
     return this;
@@ -1519,25 +1557,7 @@ jspyder.extend.fn("canvas", function() {
   }, circle:function $$js_canvas$$$fn$cmd$circle$($settings$$) {
     $settings$$ = $__mergeSettings$$($settings$$);
     $settings$$.degrees = 360;
-    this.cmd.arc.call(this, $settings$$);
-  }, pie:function $$js_canvas$$$fn$cmd$pie$($settings$$) {
-    $settings$$ = $__mergeSettings$$($settings$$);
-    $settings$$.radius = $js$$.alg.number($settings$$.radius, 0);
-    $settings$$.angle = $js$$.alg.number($settings$$.angle, -90);
-    $settings$$.anticlockwise = $js$$.alg.bool($settings$$.anticlockwise, !1);
-    $settings$$.closepath = !0;
-    var $canvas$$ = this, $total$$ = 0, $angle$$ = 0;
-    $settings$$.degrees = 360;
-    $js$$.alg.use($canvas$$, $canvas$$.cmd.arc, [$settings$$]);
-    $js$$.alg.each($settings$$.sections, function($section$$) {
-      $total$$ += $js$$.alg.number($section$$.value, 0);
-    });
-    $js$$.alg.each($settings$$.sections, function($arc_section$$) {
-      var $deg$$ = $js$$.alg.number($arc_section$$.value, 0) / $total$$ * 360;
-      $arc_section$$ = $js$$.alg.mergeObj({}, $settings$$, {angle:$angle$$ + $settings$$.angle, degrees:$deg$$, fill:$arc_section$$.fill, fromcenter:!0, closepath:!0});
-      $angle$$ += $deg$$;
-      $js$$.alg.use($canvas$$, $canvas$$.cmd.arc, [$arc_section$$]);
-    });
+    $js$$.alg.use(this, this.cmd.arc, [$settings$$]);
   }, text:function $$js_canvas$$$fn$cmd$text$($settings$$) {
     $settings$$ = $settings$$ || {};
     $settings$$.size = $js$$.alg.number($settings$$.size, 16);
@@ -1568,11 +1588,32 @@ jspyder.extend.fn("canvas", function() {
     this.context.moveTo($settings$$.x, $settings$$.y);
     this.context.lineTo($settings$$.x + $settings$$.width, $settings$$.y + $settings$$.height);
     this.context.stroke();
+  }, pie:function $$js_canvas$$$fn$cmd$pie$($settings$$) {
+    $settings$$ = $__mergeSettings$$($settings$$);
+    $settings$$.radius = $js$$.alg.number($settings$$.radius, 0);
+    $settings$$.angle = $js$$.alg.number($settings$$.angle, -90);
+    $settings$$.anticlockwise = $js$$.alg.bool($settings$$.anticlockwise, !1);
+    $settings$$.closepath = !0;
+    $settings$$.degrees = 360;
+    var $canvas$$ = this, $total$$ = 0, $angle$$ = 0;
+    $js$$.alg.use($canvas$$, $canvas$$.cmd.arc, [$settings$$]);
+    $js$$.alg.each($settings$$.sections, function($section$$) {
+      $total$$ += $js$$.alg.number($section$$.value, 0);
+    });
+    $js$$.alg.each($settings$$.sections, function($arc_section$$) {
+      var $deg$$ = $js$$.alg.number($arc_section$$.value, 0) / $total$$ * 360;
+      $arc_section$$ = $js$$.alg.mergeObj({}, $settings$$, {angle:$angle$$ + $settings$$.angle, degrees:$deg$$, fill:$arc_section$$.fill, fromcenter:!0, closepath:!0});
+      $angle$$ += $deg$$;
+      $js$$.alg.use($canvas$$, $canvas$$.cmd.arc, [$arc_section$$]);
+    });
   }, barchart:function $$js_canvas$$$fn$cmd$barchart$($offsetY_settings$$) {
     $offsetY_settings$$ = $offsetY_settings$$ || {};
-    var $sections$$ = $js$$.alg.sliceArray($offsetY_settings$$.sections) || [], $chartY_size$$ = this.exportSize(), $borderWidth$$ = $js$$.alg.number($offsetY_settings$$.borderWidth, 1), $width$$ = $js$$.alg.number($offsetY_settings$$.width, $chartY_size$$.width), $height$$ = $js$$.alg.number($offsetY_settings$$.height, $chartY_size$$.height), $chartX$$ = $js$$.alg.number($offsetY_settings$$.x, 0), $chartY_size$$ = $js$$.alg.number($offsetY_settings$$.y, 0), $fill$$ = $js$$.alg.string($offsetY_settings$$.fill, 
-    "white"), $border$$ = $js$$.alg.string($offsetY_settings$$.border, "black"), $lineColor$$ = $js$$.alg.string($offsetY_settings$$.lineColor, "rgba(0, 0, 0, 0.3)"), $labels$$ = $offsetY_settings$$.labels || [], $labelSize$$ = $js$$.alg.number($offsetY_settings$$.labelSize, 16), $self$$ = this, $min$$ = $js$$.alg.number($offsetY_settings$$.min, Infinity), $max$$ = $js$$.alg.number($offsetY_settings$$.max, -Infinity), $cols$$, $colWidth$$;
-    $offsetY_settings$$ = 1.2 * $labelSize$$;
+    var $sections$$ = $offsetY_settings$$.sections = $offsetY_settings$$.sections || [], $chartY_size$$ = this.exportSize(), $borderWidth$$ = $offsetY_settings$$.borderWidth = $js$$.alg.number($offsetY_settings$$.borderWidth, 1), $width$$ = $offsetY_settings$$.width = $js$$.alg.number($offsetY_settings$$.width, $chartY_size$$.width), $height$$ = $offsetY_settings$$.height = $js$$.alg.number($offsetY_settings$$.height, $chartY_size$$.height), $chartX$$ = $offsetY_settings$$.x = $js$$.alg.number($offsetY_settings$$.x, 
+    0), $chartY_size$$ = $offsetY_settings$$.y = $js$$.alg.number($offsetY_settings$$.y, 0), $fill$$ = $offsetY_settings$$.fill = $js$$.alg.string($offsetY_settings$$.fill, "white"), $border$$ = $offsetY_settings$$.border = $js$$.alg.string($offsetY_settings$$.border, "black"), $lineColor$$ = $offsetY_settings$$.lineColor = $js$$.alg.string($offsetY_settings$$.lineColor, "rgba(0, 0, 0, 0.3)"), $labels$$ = $offsetY_settings$$.labels = $offsetY_settings$$.labels || [], $labelSize$$ = $offsetY_settings$$.labelSize = 
+    $js$$.alg.number($offsetY_settings$$.labelSize, 16), $min$$ = $offsetY_settings$$.min = $js$$.alg.number($offsetY_settings$$.min, Infinity), $max$$ = $offsetY_settings$$.max = $js$$.alg.number($offsetY_settings$$.max, -Infinity), $format$$ = $js$$.alg.bindFn(this, $offsetY_settings$$.format || function($n$$) {
+      return $n$$;
+    }), $self$$ = this, $cols$$, $colWidth$$;
+    $offsetY_settings$$ = 1.5 * $labelSize$$;
     $self$$.cmd.rectangle.call(this, {width:$width$$, height:$height$$, x:$chartX$$, y:$chartY_size$$, fill:$fill$$, borderWidth:$borderWidth$$, border:$border$$});
     $width$$ -= 2 * $borderWidth$$;
     $height$$ -= 2 * $borderWidth$$;
@@ -1591,29 +1632,32 @@ jspyder.extend.fn("canvas", function() {
     $max$$ = 1.1 * $js$$.alg.magnitude($max$$);
     $js$$.alg.iterate(0, 5, function($i$$) {
       $self$$.cmd.line.call($self$$, {x:$chartX$$, y:$height$$ * (5 - $i$$) / 5, width:$width$$ + $chartX$$, height:0, color:$lineColor$$});
-      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$i$$ / 5 * $max$$ | 0, textalign:"left"});
-      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$i$$ / 5 * $max$$ | 0, textalign:"right"});
+      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$ | 0), textalign:"left"});
+      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$ | 0), textalign:"right"});
     });
     $width$$ -= 50;
     $chartX$$ += 50;
     $colWidth$$ = $width$$ / (($sections$$.length + 1) * $cols$$);
-    var $JSCompiler_object_inline_x_42$$ = $chartX$$, $JSCompiler_object_inline_y_43$$ = $chartY_size$$, $JSCompiler_object_inline_height_44$$ = $height$$ - $chartY_size$$, $JSCompiler_object_inline_vertWidth_46$$ = ($width$$ - $chartX$$) / $cols$$;
+    var $workArea$$ = {x:$chartX$$, y:$chartY_size$$, height:$height$$ - $chartY_size$$, width:$width$$ - $chartX$$, vertWidth:($width$$ - $chartX$$) / $cols$$};
     $js$$.alg.iterate(0, $cols$$ + 1, function($i$$) {
-      $self$$.cmd.line.call($self$$, {x:$JSCompiler_object_inline_x_42$$ + $JSCompiler_object_inline_vertWidth_46$$ * $i$$, y:$JSCompiler_object_inline_y_43$$, width:0, height:$JSCompiler_object_inline_height_44$$, color:$lineColor$$});
-      $self$$.cmd.text.call($self$$, {text:$labels$$[$i$$], font:"Arial", size:$labelSize$$, x:$JSCompiler_object_inline_x_42$$ + $JSCompiler_object_inline_vertWidth_46$$ * ($i$$ + $i$$ + 1) / 2, y:$JSCompiler_object_inline_height_44$$ + $labelSize$$, textalign:"center"});
+      $self$$.cmd.line.call($self$$, {x:$workArea$$.x + $workArea$$.vertWidth * $i$$, y:$workArea$$.y, width:0, height:$workArea$$.height, color:$lineColor$$});
+      $self$$.cmd.text.call($self$$, {text:$labels$$[$i$$], font:"Arial", size:$labelSize$$, x:$workArea$$.x + $workArea$$.vertWidth * ($i$$ + $i$$ + 1) / 2, y:$workArea$$.height + $labelSize$$, textalign:"center"});
     });
     $js$$.alg.arrEach($sections$$, function($group$$, $g$$) {
-      var $barColor$$ = $js$$.alg.string($group$$.fill, "black"), $barOutline$$ = $js$$.alg.string($group$$.border, $barColor$$), $barOutlineWidth$$ = $js$$.alg.number($group$$.borderWidth, 1);
+      var $barColor$$ = $group$$.fill = $js$$.alg.string($group$$.fill, "black"), $barOutline$$ = $group$$.border = $js$$.alg.string($group$$.border, $barColor$$), $barOutlineWidth$$ = $group$$.borderWidth = $js$$.alg.number($group$$.borderWidth, 1);
       $js$$.alg.arrEach($group$$ && $group$$.values, function($bar$$, $b$$) {
         var $value$$ = $height$$ * ($js$$.alg.number($bar$$) / ($max$$ || 1));
-        $self$$.cmd.rectangle.call($self$$, {x:$JSCompiler_object_inline_x_42$$ + ($colWidth$$ / $sections$$.length + $g$$ * $colWidth$$ + $b$$ * $JSCompiler_object_inline_vertWidth_46$$), y:$JSCompiler_object_inline_y_43$$ + ($JSCompiler_object_inline_height_44$$ - $JSCompiler_object_inline_y_43$$ - $value$$), width:$colWidth$$, height:$value$$, fill:$barColor$$, border:$barOutline$$, borderWidth:$barOutlineWidth$$});
+        $self$$.cmd.rectangle.call($self$$, {x:$workArea$$.x + ($colWidth$$ / $sections$$.length + $g$$ * $colWidth$$ + $b$$ * $workArea$$.vertWidth), y:$workArea$$.y + ($workArea$$.height - $workArea$$.y - $value$$), width:$colWidth$$, height:$value$$, fill:$barColor$$, border:$barOutline$$, borderWidth:$barOutlineWidth$$});
       });
     });
   }, linechart:function $$js_canvas$$$fn$cmd$linechart$($offsetY$$1_settings$$) {
     $offsetY$$1_settings$$ = $offsetY$$1_settings$$ || {};
-    var $sections$$ = $js$$.alg.sliceArray($offsetY$$1_settings$$.sections) || [], $chartY$$1_size$$ = this.exportSize(), $borderWidth$$ = $js$$.alg.number($offsetY$$1_settings$$.borderWidth, 1), $width$$ = $js$$.alg.number($offsetY$$1_settings$$.width, $chartY$$1_size$$.width), $height$$ = $js$$.alg.number($offsetY$$1_settings$$.height, $chartY$$1_size$$.height), $chartX$$ = $js$$.alg.number($offsetY$$1_settings$$.x, 0), $chartY$$1_size$$ = $js$$.alg.number($offsetY$$1_settings$$.y, 0), $fill$$ = 
-    $js$$.alg.string($offsetY$$1_settings$$.fill, "white"), $border$$ = $js$$.alg.string($offsetY$$1_settings$$.border, "black"), $labels$$ = $offsetY$$1_settings$$.labels || [], $labelSize$$ = $js$$.alg.number($offsetY$$1_settings$$.labelSize, 16), $lineColor$$0$$ = $js$$.alg.string($offsetY$$1_settings$$.linecolor, "rgba(0, 0, 0, 0.3)"), $self$$ = this, $min$$ = $js$$.alg.number($offsetY$$1_settings$$.min, Infinity), $max$$ = $js$$.alg.number($offsetY$$1_settings$$.max, -Infinity), $cols$$;
-    $offsetY$$1_settings$$ = 1.2 * $labelSize$$;
+    var $sections$$ = $offsetY$$1_settings$$.sections = $offsetY$$1_settings$$.sections || [], $chartY$$1_size$$ = this.exportSize(), $borderWidth$$ = $offsetY$$1_settings$$.borderWidth = $js$$.alg.number($offsetY$$1_settings$$.borderWidth, 1), $width$$ = $offsetY$$1_settings$$.width = $js$$.alg.number($offsetY$$1_settings$$.width, $chartY$$1_size$$.width), $height$$ = $offsetY$$1_settings$$.height = $js$$.alg.number($offsetY$$1_settings$$.height, $chartY$$1_size$$.height), $chartX$$ = $offsetY$$1_settings$$.x = 
+    $js$$.alg.number($offsetY$$1_settings$$.x, 0), $chartY$$1_size$$ = $offsetY$$1_settings$$.y = $js$$.alg.number($offsetY$$1_settings$$.y, 0), $fill$$ = $offsetY$$1_settings$$.fill = $js$$.alg.string($offsetY$$1_settings$$.fill, "white"), $border$$ = $offsetY$$1_settings$$.border = $js$$.alg.string($offsetY$$1_settings$$.border, "black"), $labels$$ = $offsetY$$1_settings$$.labels = $offsetY$$1_settings$$.labels || [], $labelSize$$ = $offsetY$$1_settings$$.labelSize = $js$$.alg.number($offsetY$$1_settings$$.labelSize, 
+    16), $lineColor$$0$$ = $offsetY$$1_settings$$.linecolor = $js$$.alg.string($offsetY$$1_settings$$.linecolor, "rgba(0, 0, 0, 0.3)"), $min$$ = $js$$.alg.number($offsetY$$1_settings$$.min, Infinity), $max$$ = $js$$.alg.number($offsetY$$1_settings$$.max, -Infinity), $format$$ = $js$$.alg.bindFn(this, $offsetY$$1_settings$$.format || function($n$$) {
+      return $n$$;
+    }), $self$$ = this, $cols$$;
+    $offsetY$$1_settings$$ = 1.5 * $labelSize$$;
     $self$$.cmd.rectangle.call(this, {width:$width$$, height:$height$$, x:$chartX$$, y:$chartY$$1_size$$, fill:$fill$$, borderWidth:$borderWidth$$, border:$border$$});
     $width$$ -= 2 * $borderWidth$$;
     $height$$ -= 2 * $borderWidth$$;
@@ -1632,25 +1676,25 @@ jspyder.extend.fn("canvas", function() {
     $max$$ = 1.1 * $js$$.alg.magnitude($max$$);
     $js$$.alg.iterate(0, 5, function($i$$) {
       $self$$.cmd.line.call($self$$, {x:$chartX$$, y:$height$$ * (5 - $i$$) / 5, width:$width$$ + $chartX$$, height:0, color:$lineColor$$0$$});
-      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$i$$ / 5 * $max$$ | 0, textalign:"left"});
-      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$i$$ / 5 * $max$$ | 0, textalign:"right"});
+      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$ | 0), textalign:"left"});
+      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$ | 0), textalign:"right"});
     });
-    var $width$$ = $width$$ - 50, $JSCompiler_object_inline_x_47$$ = $chartX$$ += 50, $JSCompiler_object_inline_y_48$$ = $chartY$$1_size$$, $JSCompiler_object_inline_height_49$$ = $height$$ - $chartY$$1_size$$, $JSCompiler_object_inline_vertWidth_51$$ = ($width$$ - $chartX$$) / ($cols$$ - 1);
+    var $width$$ = $width$$ - 50, $chartX$$ = $chartX$$ + 50, $workArea$$ = {x:$chartX$$, y:$chartY$$1_size$$, height:$height$$ - $chartY$$1_size$$, width:$width$$ - $chartX$$, vertWidth:($width$$ - $chartX$$) / ($cols$$ - 1)};
     $js$$.alg.iterate(0, $cols$$, function($i$$) {
-      var $x$$ = $JSCompiler_object_inline_x_47$$ + $JSCompiler_object_inline_vertWidth_51$$ * $i$$;
-      $self$$.cmd.line.call($self$$, {x:$x$$, y:$JSCompiler_object_inline_y_48$$, width:0, height:$JSCompiler_object_inline_height_49$$, color:$lineColor$$0$$});
-      $self$$.cmd.text.call($self$$, {text:$labels$$[$i$$], font:"Arial", size:$labelSize$$, x:$x$$, y:$JSCompiler_object_inline_height_49$$ + $labelSize$$, textalign:"center"});
+      var $x$$ = $workArea$$.x + $workArea$$.vertWidth * $i$$;
+      $self$$.cmd.line.call($self$$, {x:$x$$, y:$workArea$$.y, width:0, height:$workArea$$.height, color:$lineColor$$0$$});
+      $self$$.cmd.text.call($self$$, {text:$labels$$[$i$$], font:"Arial", size:$labelSize$$, x:$x$$, y:$workArea$$.height + $labelSize$$, textalign:"center"});
     });
     $js$$.alg.arrEach($sections$$, function($group$$, $g$$) {
-      var $lineColor$$ = $js$$.alg.string($group$$.fill, "transparent"), $lineOutline$$ = $js$$.alg.string($group$$.border, "black"), $lineOutlineWidth$$ = $js$$.alg.number($group$$.borderWidth, 1), $dotColor$$ = $js$$.alg.string($group$$.dotfill, $lineColor$$), $dotOutline$$ = $js$$.alg.string($group$$.dotBorder, $lineOutline$$), $dotOutlineWidth$$ = $js$$.alg.string($group$$.dotBorderWidth, $lineOutlineWidth$$);
-      $js$$.alg.number($group$$.dotRadius, 4);
+      var $lineColor$$ = $group$$.fill = $js$$.alg.string($group$$.fill, "transparent"), $lineOutline$$ = $group$$.border = $js$$.alg.string($group$$.border, "black"), $lineOutlineWidth$$ = $group$$.borderWidth = $js$$.alg.number($group$$.borderWidth, 1), $dotColor$$ = $group$$.dotfill = $js$$.alg.string($group$$.dotfill, $lineColor$$), $dotOutline$$ = $group$$.dotBorder = $js$$.alg.string($group$$.dotBorder, $lineOutline$$), $dotOutlineWidth$$ = $group$$.dotBorderWidth = $js$$.alg.string($group$$.dotBorderWidth, 
+      $lineOutlineWidth$$), $dotRadius$$ = $group$$.dotRadius = $js$$.alg.number($group$$.dotRadius, 4);
       $js$$.alg.arrEach($group$$ && $group$$.values, function($v2_val$$, $b$$, $v1_values$$) {
-        $v1_values$$ = $JSCompiler_object_inline_height_49$$ - ($JSCompiler_object_inline_y_48$$ + $JSCompiler_object_inline_height_49$$ * $js$$.alg.number($v1_values$$[$b$$ - 1]) / ($max$$ || 1));
-        $v2_val$$ = $JSCompiler_object_inline_height_49$$ - ($JSCompiler_object_inline_y_48$$ + $JSCompiler_object_inline_height_49$$ * $js$$.alg.number($v2_val$$) / ($max$$ || 1));
-        var $x$$ = $JSCompiler_object_inline_x_47$$ + $JSCompiler_object_inline_vertWidth_51$$ * ($b$$ - 1), $dotX$$ = $JSCompiler_object_inline_x_47$$ + $JSCompiler_object_inline_vertWidth_51$$ * $b$$;
-        $b$$ && $self$$.cmd.line.call($self$$, {x:$x$$, y:$v1_values$$, width:$JSCompiler_object_inline_vertWidth_51$$, height:$v2_val$$ - $v1_values$$, color:$lineOutline$$, thickness:$lineOutlineWidth$$});
-        $self$$.cmd.circle.call($self$$, {y:$v2_val$$, x:$dotX$$, radius:4, fill:$dotColor$$, border:$dotOutline$$, thickness:$dotOutlineWidth$$});
-        $self$$.cmd.circle.call($self$$, {y:$v1_values$$, x:$x$$, radius:4, fill:$dotColor$$, border:$dotOutline$$, thickness:$dotOutlineWidth$$});
+        $v1_values$$ = $workArea$$.height - ($workArea$$.y + $workArea$$.height * $js$$.alg.number($v1_values$$[$b$$ - 1]) / ($max$$ || 1));
+        $v2_val$$ = $workArea$$.height - ($workArea$$.y + $workArea$$.height * $js$$.alg.number($v2_val$$) / ($max$$ || 1));
+        var $x$$ = $workArea$$.x + $workArea$$.vertWidth * ($b$$ - 1), $dotX$$ = $workArea$$.x + $workArea$$.vertWidth * $b$$;
+        $b$$ && $self$$.cmd.line.call($self$$, {x:$x$$, y:$v1_values$$, width:$workArea$$.vertWidth, height:$v2_val$$ - $v1_values$$, color:$lineOutline$$, thickness:$lineOutlineWidth$$});
+        $self$$.cmd.circle.call($self$$, {y:$v2_val$$, x:$dotX$$, radius:$dotRadius$$, fill:$dotColor$$, border:$dotOutline$$, thickness:$dotOutlineWidth$$});
+        $self$$.cmd.circle.call($self$$, {y:$v1_values$$, x:$x$$, radius:$dotRadius$$, fill:$dotColor$$, border:$dotOutline$$, thickness:$dotOutlineWidth$$});
       });
     });
   }}};
@@ -1756,8 +1800,8 @@ jspyder.extend.fn("date", function() {
     return new Date($d$$.y, $d$$.m, $d$$.d, $d$$.h + $d$$.a, $d$$.n, $d$$.s, $d$$.x);
   }
   function $__formatDate$$($date$$, $format$$, $useUTC$$) {
-    var $JSCompiler_object_inline_y_52$$ = $useUTC$$ ? $date$$.getUTCFullYear() : $date$$.getFullYear(), $JSCompiler_object_inline_m_53$$ = $useUTC$$ ? $date$$.getUTCMonth() : $date$$.getMonth(), $JSCompiler_object_inline_d_54$$ = $useUTC$$ ? $date$$.getUTCDate() : $date$$.getDate(), $JSCompiler_object_inline_h_55$$ = $useUTC$$ ? $date$$.getUTCHours() : $date$$.getHours(), $JSCompiler_object_inline_n_56$$ = $useUTC$$ ? $date$$.getUTCMinutes() : $date$$.getMinutes(), $JSCompiler_object_inline_s_57$$ = 
-    $useUTC$$ ? $date$$.getUTCSeconds() : $date$$.getSeconds(), $JSCompiler_object_inline_w_58$$ = $useUTC$$ ? $date$$.getUTCDay() : $date$$.getDay(), $JSCompiler_object_inline_x_59$$ = $useUTC$$ ? $date$$.getUTCMilliseconds() : $date$$.getMilliseconds(), $left$$ = "", $right$$ = $format$$;
+    var $JSCompiler_object_inline_y_42$$ = $useUTC$$ ? $date$$.getUTCFullYear() : $date$$.getFullYear(), $JSCompiler_object_inline_m_43$$ = $useUTC$$ ? $date$$.getUTCMonth() : $date$$.getMonth(), $JSCompiler_object_inline_d_44$$ = $useUTC$$ ? $date$$.getUTCDate() : $date$$.getDate(), $JSCompiler_object_inline_h_45$$ = $useUTC$$ ? $date$$.getUTCHours() : $date$$.getHours(), $JSCompiler_object_inline_n_46$$ = $useUTC$$ ? $date$$.getUTCMinutes() : $date$$.getMinutes(), $JSCompiler_object_inline_s_47$$ = 
+    $useUTC$$ ? $date$$.getUTCSeconds() : $date$$.getSeconds(), $JSCompiler_object_inline_w_48$$ = $useUTC$$ ? $date$$.getUTCDay() : $date$$.getDay(), $JSCompiler_object_inline_x_49$$ = $useUTC$$ ? $date$$.getUTCMilliseconds() : $date$$.getMilliseconds(), $left$$ = "", $right$$ = $format$$;
     $js$$.alg.arrEach($format$$.match($__reSearch$$), function($match$$) {
       var $collection$$ = $__formatCollection$$[$match$$] || /\[[^\\]*\]/g.test($match$$);
       if (!$collection$$) {
@@ -1770,12 +1814,12 @@ jspyder.extend.fn("date", function() {
         case "YY":
         ;
         case "yy":
-          $value$$ = $js$$.alg.string($JSCompiler_object_inline_y_52$$ % 100);
+          $value$$ = $js$$.alg.string($JSCompiler_object_inline_y_42$$ % 100);
           break;
         case "YYYY":
         ;
         case "yyyy":
-          $value$$ = $js$$.alg.string($JSCompiler_object_inline_y_52$$, "");
+          $value$$ = $js$$.alg.string($JSCompiler_object_inline_y_42$$, "");
           break;
         case "MMMM":
         ;
@@ -1792,7 +1836,7 @@ jspyder.extend.fn("date", function() {
         case "M":
         ;
         case "m":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_m_53$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_m_43$$];
           break;
         case "dth":
         ;
@@ -1801,7 +1845,7 @@ jspyder.extend.fn("date", function() {
         case "dd":
         ;
         case "d":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_d_54$$ - 1];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_d_44$$ - 1];
           break;
         case "DDDD":
         ;
@@ -1814,12 +1858,12 @@ jspyder.extend.fn("date", function() {
         case "DD":
         ;
         case "D":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_w_58$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_w_48$$];
           break;
         case "am":
         ;
         case "AM":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_h_55$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_h_45$$];
           break;
         case "HH":
         ;
@@ -1828,26 +1872,26 @@ jspyder.extend.fn("date", function() {
         case "hh":
         ;
         case "h":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_h_55$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_h_45$$];
           break;
         case "nn":
         ;
         case "n":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_n_56$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_n_46$$];
           break;
         case "ss":
         ;
         case "s":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_s_57$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_s_47$$];
           break;
         case "xxx":
-          $value$$ = ($js$$.alg.string($JSCompiler_object_inline_x_59$$) + "00").substr(0, 3);
+          $value$$ = ($js$$.alg.string($JSCompiler_object_inline_x_49$$) + "00").substr(0, 3);
           break;
         case "xx":
-          $value$$ = ($js$$.alg.string($JSCompiler_object_inline_x_59$$) + "0").substr(0, 2);
+          $value$$ = ($js$$.alg.string($JSCompiler_object_inline_x_49$$) + "0").substr(0, 2);
           break;
         case "x":
-          $value$$ = $js$$.alg.string($JSCompiler_object_inline_x_59$$).substr(0, 1);
+          $value$$ = $js$$.alg.string($JSCompiler_object_inline_x_49$$).substr(0, 1);
           break;
         default:
           $value$$ = $match$$.substring(1, $match$$.length - 1);
@@ -2126,27 +2170,27 @@ js.extend.fn("download", function() {
     $dl$$.setName($def$$.name).setType($def$$.type).setData($def$$.data).setCharset($def$$.charset);
     return $dl$$;
   }
-  function $__save$$($filereader_name$$, $type$$, $blob$$) {
-    $type$$ = $js$$.alg.string($type$$, $safeType$$);
-    $filereader_name$$ = $js$$.alg.string($filereader_name$$, "download.txt");
+  function $__save$$($name$$, $filereader_type$$, $blob$$) {
+    $filereader_type$$ = $js$$.alg.string($filereader_type$$, $safeType$$);
+    $name$$ = $js$$.alg.string($name$$, "download.txt");
     if ($__reDataUrl$$.test($blob$$)) {
-      return $saveBlob$$ ? $saveBlob$$($__encode$$($blob$$), $filereader_name$$) : $__triggerSave$$($blob$$);
+      return $saveBlob$$ ? $saveBlob$$($__encode$$($blob$$), $name$$) : $__triggerSave$$($name$$, $blob$$);
     }
-    $blob$$ = $blob$$ instanceof $Blob$$ ? $blob$$ : new $Blob$$([$blob$$], {type:$type$$});
+    $blob$$ = $blob$$ instanceof $Blob$$ ? $blob$$ : new $Blob$$([$blob$$], {type:$filereader_type$$});
     if ($saveBlob$$) {
-      return $saveBlob$$($blob$$, $filereader_name$$);
+      return $saveBlob$$($blob$$, $name$$);
     }
     if ($URL$$) {
-      return "Chrome" === $js$$.env.browser.name && $type$$ !== $safeType$$ && ($blob$$ = $sliceBlob$$.call($blob$$, 0, $blob$$.size, $safeType$$)), $__triggerSave$$($filereader_name$$, $URL$$.createObjectURL($blob$$));
+      return "Chrome" === $js$$.env.browser.name && $filereader_type$$ !== $safeType$$ && ($blob$$ = $sliceBlob$$.call($blob$$, 0, $blob$$.size, $safeType$$)), $__triggerSave$$($name$$, $URL$$.createObjectURL($blob$$));
     }
     if ("string" === typeof $blob$$ || $blob$$ instanceof String) {
-      return $__triggerSave$$("data:" + $type$$ + $__decode$$($blob$$));
+      return $__triggerSave$$($name$$, "data:" + $filereader_type$$ + $__decode$$($blob$$));
     }
-    $filereader_name$$ = new FileReader;
-    $filereader_name$$.onload = function $$filereader_name$$$onload$($e$$) {
-      $__triggerSave$$(this.result);
+    $filereader_type$$ = new FileReader;
+    $filereader_type$$.onload = function $$filereader_type$$$onload$($e$$) {
+      $__triggerSave$$($name$$, this.result);
     };
-    $filereader_name$$.readAsDataURL($blob$$);
+    $filereader_type$$.readAsDataURL($blob$$);
     return !0;
   }
   function $__triggerSave$$($filename$$, $url$$) {
@@ -2266,6 +2310,184 @@ js.extend.fn("download", function() {
   };
   return $download$$;
 });
+jspyder.extend.fn("dtype", function() {
+  function $js_dtype$$($obj$$, $fn$$) {
+    var $dtype$$ = Object.create($js_dtype$$.fn);
+    $dtype$$.obj = $obj$$;
+    js.alg.use($dtype$$, $obj$$);
+    return $dtype$$;
+  }
+  function $_typeError$$($name$$, $val$$, $eType$$) {
+    return new TypeError("Attempted to assign " + typeof $val$$ + "(" + $val$$ + ") to " + $eType$$ + ' "' + $name$$ + '"');
+  }
+  function $_constError$$($name$$, $eType$$) {
+    return new TypeError("Attempted to set a value to a constant " + $eType$$ + ' "' + $name$$ + '"');
+  }
+  function $_createInteface$$($_name$$, $_jstype$$, $_dtypeText__interface$$, $_dtype$$, $_value$$, $_constant$$, $_strict$$) {
+    $_dtypeText__interface$$ = {get:function $$_dtypeText__interface$$$get$() {
+      return $_dtype$$($_value$$);
+    }};
+    var $_baseSet$$ = function $$_baseSet$$$($v$$) {
+      $_value$$ = $_dtype$$($v$$);
+    }, $_strictSet$$ = function $$_strictSet$$$($v$$) {
+      typeof $v$$ !== $_jstype$$ && $v$$ !== $v$$ && $_typeError$$($_name$$, $v$$, $_jstype$$);
+      $_baseSet$$($v$$);
+    }, $_constSet$$ = function $$_constSet$$$($v$$) {
+      $_constError$$($_name$$, $_jstype$$);
+    };
+    $_baseSet$$($_value$$);
+    $_dtypeText__interface$$.set = $_constant$$ ? $_constSet$$ : $_strict$$ ? $_strictSet$$ : $_baseSet$$;
+    return $_dtypeText__interface$$;
+  }
+  var $js_alg$$ = js.alg;
+  $js_dtype$$.fn = {"byte":js.alg.run(function bootstrap() {
+    $js_alg$$.byte();
+    var $byte$$ = $js_alg$$["byte"];
+    return function attachInt8($_interface$$1_name$$, $value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$1_name$$ = $_createInteface$$($_interface$$1_name$$, "number", "byte", $byte$$, $value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $_interface$$1_name$$);
+      return this;
+    };
+  }), ubyte:js.alg.run(function bootstrap() {
+    $js_alg$$.ubyte();
+    var $ubyte$$ = $js_alg$$.ubyte;
+    return function attachUInt8($_interface$$2_name$$, $value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$2_name$$ = $_createInteface$$($_interface$$2_name$$, "number", "unsigned byte", $ubyte$$, $value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $_interface$$2_name$$);
+      return this;
+    };
+  }), "short":js.alg.run(function bootstrap() {
+    $js_alg$$.short();
+    var $short$$ = $js_alg$$["short"];
+    return function attachInt16($_interface$$3_name$$, $value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$3_name$$ = $_createInteface$$($_interface$$3_name$$, "number", "short", $short$$, $value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $_interface$$3_name$$);
+      return this;
+    };
+  }), ushort:js.alg.run(function bootstrap() {
+    $js_alg$$.short();
+    return function attachUInt16($_interface$$4_name$$, $value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$4_name$$ = $_createInteface$$($_interface$$4_name$$, "number", "unsigned short", ushort, $value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $_interface$$4_name$$);
+      return this;
+    };
+  }), "int":js.alg.run(function bootstrap() {
+    $js_alg$$.int();
+    var $int$$ = $js_alg$$["int"];
+    return function attachInt32($_interface$$5_name$$, $value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$5_name$$ = $_createInteface$$($_interface$$5_name$$, "number", "integer", $int$$, $value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $_interface$$5_name$$);
+      return this;
+    };
+  }), uint:js.alg.run(function bootstrap() {
+    $js_alg$$.uint();
+    return function attachUInt32($_interface$$6_name$$, $value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$6_name$$ = $_createInteface$$($_interface$$6_name$$, "number", "unsigned integer", uint, $value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $_interface$$6_name$$);
+      return this;
+    };
+  }), "float":js.alg.run(function bootstrap() {
+    $js_alg$$.float();
+    var $float$$ = $js_alg$$["float"];
+    return function attachFloat($_interface$$7_name$$, $value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$7_name$$ = $_createInteface$$($_interface$$7_name$$, "number", "float", $float$$, $value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $_interface$$7_name$$);
+      return this;
+    };
+  }), "double":js.alg.run(function bootstrap() {
+    $js_alg$$.double();
+    var $double$$ = $js_alg$$["double"];
+    return function attachDouble($_interface$$8_name$$, $value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$8_name$$ = $_createInteface$$($_interface$$8_name$$, "number", "double", $double$$, $value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $_interface$$8_name$$);
+      return this;
+    };
+  }), fixed:function attachFixed($name$$, $decimal$$, $value$$, $strict$$, $constant$$) {
+  }, "enum":js.alg.run(function bootstrap() {
+    $js_alg$$.makeEnum();
+    $js_alg$$.uint();
+    var $__enum$$ = $js_alg$$.makeEnum, $__enumInterface$$ = function $$__enumInterface$$$($enumVals$$) {
+      var $enumValue$$;
+      js.alg.each($enumVals$$, function($value$$, $key$$) {
+        enumObj[$key$$] = {get:function $enumObj$$key$$$get$() {
+          return ($value$$ & $enumValue$$) === $value$$;
+        }, set:function $enumObj$$key$$$set$($b$$) {
+          $enumValue$$ |= $b$$ * $value$$;
+        }};
+      });
+      return {};
+    };
+    return function attachEnum($_interface$$9_name$$, $_enumVals_keys$$, $value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_enumVals_keys$$ = $__enum$$($_enumVals_keys$$);
+      $__enumInterface$$($_enumVals_keys$$);
+      $_interface$$9_name$$ = $_createInteface$$($_interface$$9_name$$, "object", "enum", double, $value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $_interface$$9_name$$);
+      return this;
+    };
+  }), string:function attachString($name$$, $value$$, $strict$$, $constant$$) {
+    var $data$$ = String($value$$), $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
+      return $data$$;
+    }, set:function($v$$) {
+      if ($_constant$$) {
+        throw $_constError$$($name$$, "string");
+      }
+      if ($strict$$ && "string" !== typeof $v$$) {
+        throw $_typeError$$($name$$, $v$$, "string");
+      }
+      return $data$$ = String($v$$);
+    }, enumerable:!0};
+    $_interface$$.set($value$$);
+    $_constant$$ = $constant$$;
+    Object.defineProperty($o$$, $name$$, $_interface$$);
+    return this;
+  }, uchar:function attachChar($name$$, $value$$, $strict$$, $constant$$) {
+    var $data$$ = new Uint16Array(new ArrayBuffer(2)), $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
+      return String.fromCharCode($data$$[0]);
+    }, set:function($v$$) {
+      if ($_constant$$) {
+        throw $_constError$$($name$$, "uchar");
+      }
+      var $str$$ = "string" === typeof $v$$ && 1 === $v$$.length;
+      if ($strict$$ && !$str$$ && ("number" !== typeof $v$$ || $v$$ !== $v$$)) {
+        throw $_typeError$$($name$$, $v$$, "uchar");
+      }
+      $data$$[0] = "string" === typeof $v$$ ? $v$$.charCodeAt(0) : +$v$$;
+    }, enumerable:!0};
+    $_interface$$.set($value$$);
+    $_constant$$ = $constant$$;
+    Object.defineProperty($o$$, $name$$, $_interface$$);
+    return this;
+  }, jsstring:function attachJsString($name$$, $value$$, $strict$$, $constant$$) {
+    var $data$$ = "", $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
+      return $data$$.join("");
+    }, set:function($v$$) {
+      if ($_constant$$) {
+        throw $_constError$$($name$$, "jsstring");
+      }
+      if ($strict$$ && "string" !== typeof $v$$) {
+        throw $_typeError$$($name$$, $v$$, "jsstring");
+      }
+      if ("undefined" === typeof $v$$ || null === $v$$) {
+        $v$$ = "";
+      }
+      $data$$ = $v$$;
+    }, enumerable:!0};
+    $_interface$$.set($value$$);
+    $_constant$$ = $constant$$;
+    Object.defineProperty($o$$, $name$$, $_interface$$);
+    return this;
+  }};
+  return $js_dtype$$;
+});
 jspyder.extend.fn("form", function() {
   function $js_form$$($config$$, $fn$$) {
     var $form$$ = Object.create($js_form$$.fn, {_dom:{value:$js$$.dom("<form></form>")}, _template:{value:{}}});
@@ -2323,8 +2545,8 @@ jspyder.extend.fn("form", function() {
     var $field$$ = this.exportField($name$$);
     $js$$.alg.use(this, $fn$$, [$field$$]);
     return this;
-  }, exportField:function $$js_form$$$fn$exportField$($data$$50_name$$) {
-    return ($data$$50_name$$ = this.exportFieldData($data$$50_name$$)) ? $data$$50_name$$.field : null;
+  }, exportField:function $$js_form$$$fn$exportField$($data$$53_name$$) {
+    return ($data$$53_name$$ = this.exportFieldData($data$$53_name$$)) ? $data$$53_name$$.field : null;
   }, getFieldData:function $$js_form$$$fn$getFieldData$($name$$, $fn$$) {
     var $data$$ = this.exportFieldData($name$$);
     $js$$.alg.use(this, $fn$$, [$data$$]);
@@ -2332,8 +2554,8 @@ jspyder.extend.fn("form", function() {
   }, exportFieldData:function $$js_form$$$fn$exportFieldData$($name$$) {
     return this._fields[$name$$] || null;
   }, resetFieldValue:function $$js_form$$$fn$resetFieldValue$($name$$) {
-    var $data$$52_val$$ = this.exportFieldData($name$$), $dval$$ = $data$$52_val$$.config.default, $data$$52_val$$ = $data$$52_val$$.config.value;
-    this.setFieldValue($name$$, "undefined" !== typeof $data$$52_val$$ ? $data$$52_val$$ : $dval$$);
+    var $data$$55_val$$ = this.exportFieldData($name$$), $dval$$ = $data$$55_val$$.config.default, $data$$55_val$$ = $data$$55_val$$.config.value;
+    this.setFieldValue($name$$, "undefined" !== typeof $data$$55_val$$ ? $data$$55_val$$ : $dval$$);
     return this;
   }, resetFieldValues:function $$js_form$$$fn$resetFieldValues$() {
     this.each(this._resetFieldValues, this);
@@ -2739,11 +2961,11 @@ jspyder.extend.fn("form", function() {
       return $$radio$$;
     };
   }).registerControlFn("checkbox", function() {
-    function $exportValue$$($data$$72_values$$) {
+    function $exportValue$$($data$$75_values$$) {
       var $keys$$ = [], $key$$;
-      $data$$72_values$$ = $data$$72_values$$.config["data-values"] = $data$$72_values$$.config["data-values"] || {};
-      for ($key$$ in $data$$72_values$$) {
-        $data$$72_values$$[$key$$] && $keys$$.push($key$$.substring(4));
+      $data$$75_values$$ = $data$$75_values$$.config["data-values"] = $data$$75_values$$.config["data-values"] || {};
+      for ($key$$ in $data$$75_values$$) {
+        $data$$75_values$$[$key$$] && $keys$$.push($key$$.substring(4));
       }
       return $keys$$;
     }
@@ -2967,10 +3189,10 @@ jspyder.extend.fn("form", function() {
       $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$45_value$$);
       $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$45_value$$) && ($data$$.match = {value:$i$$45_value$$, text:$text$$24_valObj$$}, this.stop());
     }
-    function $searchValue$$($config$$, $data$$86_value$$, $searchText$$) {
-      $data$$86_value$$ = {match:null, find:new RegExp("^" + $data$$86_value$$ + "$"), searchText:$searchText$$};
-      $js$$.alg.arrEach($config$$.values, $__searchValue$$, $data$$86_value$$);
-      return $data$$86_value$$.match;
+    function $searchValue$$($config$$, $data$$89_value$$, $searchText$$) {
+      $data$$89_value$$ = {match:null, find:new RegExp("^" + $data$$89_value$$ + "$"), searchText:$searchText$$};
+      $js$$.alg.arrEach($config$$.values, $__searchValue$$, $data$$89_value$$);
+      return $data$$89_value$$.match;
     }
     function $setValue$$($data$$, $value$$) {
       var $field$$ = $data$$.field, $strict$$ = $js$$.alg.bool($data$$.config.strict), $match$$3_text$$ = "", $attrs$$ = {};
@@ -3065,8 +3287,8 @@ js.extend.fn("sp", function() {
   function $sp$$() {
   }
   function $__successPush$$($listItems$$, $successFn$$, $sender$$, $args$$) {
-    for ($js$$.alg.use(this, $successFn$$, [$sender$$, $args$$, $listItems$$]);this._dirtyRows.pop();) {
-    }
+    $js$$.alg.use(this, $successFn$$, [$sender$$, $args$$, $listItems$$]);
+    this._dirtyRows.length = 0;
     this.pull();
   }
   function $__failurePush$$($listItems$$, $failureFn$$, $sender$$, $args$$) {
@@ -3190,7 +3412,46 @@ js.extend.fn("sp", function() {
       return $__rows$$.join("\r\n");
     }($rows$$0$$, $columns$$0$$)].join("");
   }
+  function $__spUserSuccess$$($config$$, $success$$, $sender$$, $args$$) {
+    this._email = this._user.get_email();
+    this._username = this._user.get_loginName();
+    this._userid = this._user.get_id();
+    $js$$.alg.use(this, $success$$, [$sender$$, $args$$]);
+  }
+  function $__spUserFailure$$($config$$, $failure$$, $sender$$, $args$$) {
+    $js$$.alg.use(this, $failure$$, [$sender$$, $args$$]);
+  }
+  function $__getGroupByFn$$($testFn$$, $e$$, $name$$, $success$$, $failure$$, $sender$$, $args$$) {
+    $e$$ = $e$$.getEnumerator();
+    for (var $group$$ = null;$e$$.moveNext();) {
+      if ($group$$ = $e$$.get_current(), $group$$[$testFn$$]() === $name$$) {
+        Object.defineProperties(this, {_group:{value:$group$$}, _id:{value:$group$$.get_id()}, _name:{value:$group$$.get_title()}});
+        $js$$.alg.use(this, $success$$, [$group$$]);
+        return;
+      }
+    }
+    $js$$.alg.use(this, $failure$$, [$sender$$, $args$$]);
+  }
+  function $__isMemberSuccess$$($user$$, $successFn$$, $failureFn$$, $sender$$, $args$$) {
+    for (var $userInGroup$$ = !1, $enumerator$$ = this._group.get_users().getEnumerator(), $groupUser$$ = null;$enumerator$$.moveNext();) {
+      if ($groupUser$$ = $enumerator$$.get_current(), $groupUser$$.get_id() === $user$$.get_id()) {
+        $userInGroup$$ = !0;
+        break;
+      }
+    }
+    $js$$.alg.use(this, $userInGroup$$ ? $successFn$$ : $failureFn$$, [$sender$$, $args$$]);
+  }
+  function $__isMemberFailure$$($user$$, $failureFn$$, $sender$$, $args$$) {
+    $js$$.alg.use(this, $failureFn$$, [$sender$$, $args$$]);
+  }
   var $js$$ = window.jspyder;
+  $sp$$.getContext = function $$sp$$$getContext$($url$$, $fn$$) {
+    $js$$.alg.use($sp$$.exportContext($url$$), $fn$$);
+    return $sp$$;
+  };
+  $sp$$.exportContext = function $$sp$$$exportContext$($url$$) {
+    return $url$$ ? new window.SP.ClientContext($url$$) : window.SP.ClientContext.get_current();
+  };
   $sp$$.list = function spList($config$$, $fn$$) {
     window.SP || $js$$.log.warn("Ensure that MicrosoftAjax.js, sp.runtime.js, and sp.js have been loaded before using JSpyder SharePoint Interface");
     var $list$$ = Object.create($sp$$.list.fn);
@@ -3216,27 +3477,42 @@ js.extend.fn("sp", function() {
       $list$$.addColumn($name$$, $data$$);
     }, this);
     return this;
-  }, getColumn:function $$sp$$$list$fn$getColumn$($name$$) {
+  }, exportColumn:function $$sp$$$list$fn$exportColumn$($name$$) {
     return this._columns[$name$$] ? this._columns[$name$$] : Object.create($sp$$.column.fn, {list:{value:this}, name:{value:$name$$}});
-  }, getRow:function $$sp$$$list$fn$getRow$($n$$) {
+  }, getColumn:function $$sp$$$list$fn$getColumn$($name$$, $fn$$) {
+    var $col$$ = this._columns[$name$$];
+    $col$$ && $js$$.alg.use(this, $fn$$, [$col$$]);
+    return this;
+  }, exportRow:function $$sp$$$list$fn$exportRow$($n$$) {
     return this._rows[$js$$.alg.number($n$$, 0)] || null;
-  }, getRowById:function $$sp$$$list$fn$getRowById$($id$$) {
-    for (var $found$$ = null, $row$$ = null, $i$$ = 0;$row$$ = this.getRow($i$$++);) {
+  }, getRow:function $$sp$$$list$fn$getRow$($n$$, $fn$$) {
+    var $row$$ = this.exportRow($n$$);
+    $row$$ && $js$$.alg.use(this, $fn$$, [$row$$]);
+    return this;
+  }, exportRowById:function $$sp$$$list$fn$exportRowById$($id$$) {
+    for (var $found$$ = null, $row$$ = null, $i$$ = 0;$row$$ = this.exportRow($i$$++);) {
       if ($row$$.ID.value === $id$$) {
         $found$$ = $row$$;
         break;
       }
     }
     return $found$$;
+  }, getRowById:function $$sp$$$list$fn$getRowById$($id$$, $fn$$) {
+    var $row$$ = this.exportRowById($id$$);
+    $row$$ && $js$$.alg.use(this, $fn$$, [$row$$]);
+    return this;
   }, eachDirtyRow:function $$sp$$$list$fn$eachDirtyRow$($fn$$, $data$$) {
     var $dirty$$ = this._dirtyRows;
     "function" === typeof $fn$$ && $js$$.alg.each($dirty$$, $fn$$, $data$$);
     return this;
-  }, _createListItem:function $$sp$$$list$fn$_createListItem$() {
-  }, getRowCount:function $$sp$$$list$fn$getRowCount$($n$$) {
+  }, exportRowCount:function $$sp$$$list$fn$exportRowCount$($n$$) {
     return this._rows.length;
+  }, getRowCount:function $$sp$$$list$fn$getRowCount$($n$$, $fn$$) {
+    var $count$$ = this.exportRowCount($n$$);
+    $js$$.alg.use(this, $fn$$, [$count$$]);
+    return this;
   }, pull:function $$sp$$$list$fn$pull$($success$$, $failure$$) {
-    var $ctx$$ = new window.SP.ClientContext(this._url), $list$$7_listItems$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $caml$$ = new window.SP.CamlQuery, $successFn$$ = "function" === typeof $success$$ ? $success$$ : this._success, $failureFn$$ = "function" === typeof $failure$$ ? $failure$$ : this._failure;
+    var $ctx$$ = $sp$$.exportContext(this._url), $list$$7_listItems$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $caml$$ = new window.SP.CamlQuery, $successFn$$ = "function" === typeof $success$$ ? $success$$ : this._success, $failureFn$$ = "function" === typeof $failure$$ ? $failure$$ : this._failure;
     $caml$$.set_viewXml(this.caml);
     $list$$7_listItems$$ = $list$$7_listItems$$.getItems($caml$$);
     $ctx$$.load($list$$7_listItems$$);
@@ -3254,14 +3530,14 @@ js.extend.fn("sp", function() {
     });
     return this;
   }, push:function $$sp$$$list$fn$push$($success$$, $failure$$) {
-    var $ctx$$ = new window.SP.ClientContext(this._url), $data$$99_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$99_list$$ = {clientContext:$ctx$$, items:[], list:$data$$99_list$$, self:this};
-    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$99_list$$);
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$99_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$99_list$$.items, $failure$$]));
+    var $ctx$$ = $sp$$.exportContext(this._url), $data$$102_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$102_list$$ = {clientContext:$ctx$$, items:[], list:$data$$102_list$$, self:this};
+    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$102_list$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$102_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$102_list$$.items, $failure$$]));
     return this;
   }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$51_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
-    $i$$51_rowID$$ = $row$$.ID.value;
+    $i$$51_rowID$$ = $row$$._columns && $row$$._columns.ID.value;
     $itemInfo_listItem_rows$$ = $itemInfo_listItem_rows$$ = null;
-    0 > $row$$.ID.value ? ($itemInfo_listItem_rows$$ = new SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$51_rowID$$), $data$$.newrow = !1);
+    0 > $i$$51_rowID$$ ? ($itemInfo_listItem_rows$$ = new window.SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$51_rowID$$), $data$$.newrow = !1);
     $data$$.listItem = $itemInfo_listItem_rows$$;
     $js$$.alg.each($row$$, $data$$.self._pushLoopDirtyRowColumns, $data$$);
     $data$$.items.push($itemInfo_listItem_rows$$);
@@ -3270,19 +3546,19 @@ js.extend.fn("sp", function() {
   }, _pushLoopDirtyRowColumns:function $$sp$$$list$fn$_pushLoopDirtyRowColumns$($coldata$$, $colname$$, $columns$$, $data$$) {
     $coldata$$.internal && $coldata$$.dirty && "ID" !== $coldata$$.internal && $data$$.listItem.set_item($coldata$$.internal, $coldata$$.value);
   }, updateRow:function $$sp$$$list$fn$updateRow$($id$$, $values$$) {
-    var $row$$ = this.getRowById($id$$), $data$$ = $js$$.alg.mergeObj({}, $values$$);
-    $row$$ && $js$$.alg.each($row$$, this._updateRowEach, $data$$);
-    return this;
+    return this.getRowById($id$$, function($row$$) {
+      $js$$.alg.each($row$$, this._updateRowEach, $js$$.alg.cloneObj($values$$));
+    });
   }, _updateRowEach:function $$sp$$$list$fn$_updateRowEach$($colData$$, $colName$$1_value$$, $row$$, $data$$) {
     $colName$$1_value$$ = $data$$[$colData$$.name];
     $row$$ = $colName$$1_value$$ !== $colData$$.value;
     "undefined" !== typeof $colName$$1_value$$ && $row$$ && ($colData$$.value = $colName$$1_value$$);
-  }, createRow:function $$sp$$$list$fn$createRow$($data$$104_values$$) {
+  }, createRow:function $$sp$$$list$fn$createRow$($data$$106_values$$) {
     var $columns$$ = this._columns;
-    $data$$104_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$104_values$$)};
-    $js$$.alg.each($columns$$, this._createRowEach, $data$$104_values$$);
-    $data$$104_values$$.row.ID.value = $data$$104_values$$.rowID;
-    this._dirtyRows.push($data$$104_values$$.row);
+    $data$$106_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$106_values$$)};
+    $js$$.alg.each($columns$$, this._createRowEach, $data$$106_values$$);
+    $data$$106_values$$.row.ID.value = $data$$106_values$$.rowID;
+    this._dirtyRows.push($data$$106_values$$.row);
     return this;
   }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$2_value$$, $column$$, $cell$$1_data$$) {
     var $row$$ = $cell$$1_data$$.row;
@@ -3297,7 +3573,7 @@ js.extend.fn("sp", function() {
     var $colValue$$ = "undefined" !== typeof $colName$$2_value$$ ? $colName$$2_value$$ : $colData$$.default || null;
     $row$$[$colData$$.name] = $cell$$1_data$$;
   }, getPermissions:function $$sp$$$list$fn$getPermissions$($success$$, $failure$$) {
-    var $ctx$$ = new window.SP.ClientContext(this._url), $web$$ = $ctx$$.get_web(), $data$$ = {currentUser:$web$$.get_currentUser(), web:$web$$};
+    var $ctx$$ = $sp$$.exportContext(this._url), $web$$ = $ctx$$.get_web(), $data$$ = {currentUser:$web$$.get_currentUser(), web:$web$$};
     $ctx$$.load($data$$.currentUser);
     $ctx$$.load($web$$, "EffectiveBasePermissions");
     $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, this._getPermissionsSuccess, [$data$$, $success$$]), $js$$.alg.bindFn(this, this._getPermissionsSuccess, [null, $failure$$]));
@@ -3355,16 +3631,25 @@ js.extend.fn("sp", function() {
   }, _sum:function $$sp$$$query$fn$_sum$($column$$, $key$$, $columns$$) {
     $columns$$[$key$$] = $column$$.value || $column$$.default;
   }, _sumRows:function $$sp$$$query$fn$_sumRows$($row$$, $_$$, $rows$$, $columns$$) {
-    $js$$.alg.each($row$$, $sp$$.query.fn._sumColumns, $columns$$);
-  }, _sumColumns:function $$sp$$$query$fn$_sumColumns$($value$$, $colName$$, $_$$, $out$$) {
-    switch($value$$.type) {
-      case "number":
-        $out$$[$colName$$] = $js$$.alg.number($out$$[$colName$$]) + $js$$.alg.number($value$$.value);
-        break;
-      default:
-        $out$$[$colName$$] = $value$$.value;
+    $js$$.alg.each($columns$$, $sp$$.query.fn._sumColumns, $row$$);
+  }, _sumColumns:function $$sp$$$query$fn$_sumColumns$($sumValue$$, $colName$$, $out$$, $column$$4_row$$) {
+    if ($column$$4_row$$ = $column$$4_row$$[$colName$$]) {
+      var $rowValue$$ = $column$$4_row$$ && $column$$4_row$$.value;
+      switch($column$$4_row$$.type) {
+        case "number":
+          $out$$[$colName$$] = $js$$.alg.number($rowValue$$) + $js$$.alg.number($sumValue$$);
+          break;
+        case "bitflag":
+          $out$$[$colName$$] = $sumValue$$ & $js$$.alg.number($rowValue$$);
+          break;
+        default:
+          $out$$[$colName$$] = $rowValue$$;
+      }
     }
-  }, getValues:function $$sp$$$query$fn$getValues$($columns$$0$$, $fn$$) {
+  }, getValues:function $$sp$$$query$fn$getValues$($columns$$, $fn$$) {
+    $js$$.alg.use(this, $fn$$, [this.exportValues($columns$$)]);
+    return this;
+  }, exportValues:function $$sp$$$query$fn$exportValues$($columns$$0$$) {
     function $__copyColumn$$($arr$$, $key$$, $columns$$, $row$$) {
       $arr$$[$row$$[$key$$].value] = !0;
     }
@@ -3377,8 +3662,7 @@ js.extend.fn("sp", function() {
     $js$$.alg.each($columns$$0$$, function($obj$$, $k$$, $columns$$) {
       $columns$$[$k$$] = Object.keys($obj$$).sort();
     });
-    $js$$.alg.use(this, $fn$$, [$columns$$0$$]);
-    return this;
+    return $columns$$0$$;
   }, clone:function $$sp$$$query$fn$clone$() {
     var $clone$$ = $sp$$.query(this._list);
     $clone$$._rows = this._rows.slice(0);
@@ -3392,6 +3676,50 @@ js.extend.fn("sp", function() {
   };
   $sp$$.column.fn = {internal:"", text:"", type:"string", default:"", valueOf:function $$sp$$$column$fn$valueOf$() {
     return this.value;
+  }};
+  $sp$$.user = function $$sp$$$user$($config$$, $success$$, $failure$$) {
+    $config$$ = $config$$ || {};
+    var $ctx$$ = $sp$$.exportContext($config$$.url), $spUser_web$$ = $ctx$$.get_web(), $userCollection$$ = $spUser_web$$.get_siteUserInfoList(), $user$$ = null, $user$$ = $config$$.userid ? $userCollection$$.getById($config$$.userid) : $config$$.login ? $userCollection$$.getByLoginName($config$$.login) : $config$$.email ? $userCollection$$.getByEmail($config$$.email) : $spUser_web$$.get_currentUser(), $spUser_web$$ = Object.create($js$$.sp.user.fn, {_user:{value:$user$$}});
+    $ctx$$.load($user$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn($spUser_web$$, $__spUserSuccess$$, [$config$$, $success$$]), $js$$.alg.bindFn($spUser_web$$, $__spUserFailure$$, [$config$$, $failure$$]));
+    return $spUser_web$$;
+  };
+  $sp$$.user.getById = function $$sp$$$user$getById$($userid$$, $url$$) {
+    return $sp$$.user({userid:$userid$$, url:$url$$});
+  };
+  $sp$$.user.getByLogin = function $$sp$$$user$getByLogin$($login$$, $url$$) {
+    return $sp$$.user({login:$login$$, url:$url$$});
+  };
+  $sp$$.user.getByEmail = function $$sp$$$user$getByEmail$($email$$, $url$$) {
+    return $sp$$.user({email:$email$$, url:$url$$});
+  };
+  $sp$$.user.fn = {_user:null, _email:null, _userid:null, _username:null, _url:null, isMemberOfGroup:function $$sp$$$user$fn$isMemberOfGroup$($group$$, $fn$$) {
+    var $yes$$ = $js$$.alg.bindFn(this, $fn$$, [!0]), $no$$ = $js$$.alg.bindFn(this, $fn$$, [!1]), $user$$ = this._user;
+    $sp$$.group($group$$, function() {
+      this.isMember($user$$, $yes$$, $no$$);
+    }, $no$$);
+    return this;
+  }};
+  $sp$$.group = function $$sp$$$group$($config$$14_successFn$$, $success$$, $failure$$) {
+    $config$$14_successFn$$ = $config$$14_successFn$$ || {};
+    var $ctx$$ = $sp$$.exportContext($config$$14_successFn$$.url), $groups$$ = $ctx$$.get_web().get_siteGroups(), $spGroup$$ = null;
+    if ($config$$14_successFn$$ && $config$$14_successFn$$.isPrototypeOf($sp$$.group.fn)) {
+      $spGroup$$ = $config$$14_successFn$$;
+    } else {
+      $ctx$$.load($groups$$);
+      var $spGroup$$ = Object.create($sp$$.group.fn, {_url:{value:$js$$.alg.string($config$$14_successFn$$.url, "")}}), $failureFn$$ = $js$$.alg.bindFn($spGroup$$, $failure$$);
+      $config$$14_successFn$$ = $config$$14_successFn$$.name ? $js$$.alg.bindFn($spGroup$$, $__getGroupByFn$$, ["get_title", $groups$$, $config$$14_successFn$$.name, $success$$, $failure$$]) : $config$$14_successFn$$.groupid ? $js$$.alg.bindFn($spGroup$$, $__getGroupByFn$$, ["get_id", $groups$$, $config$$14_successFn$$.groupid, $success$$, $failure$$]) : $failureFn$$;
+      $ctx$$.executeQueryAsync($config$$14_successFn$$, $failureFn$$);
+    }
+    return $spGroup$$;
+  };
+  $sp$$.group.fn = {_url:null, _group:null, isMember:function $$sp$$$group$fn$isMember$($user$$, $success$$, $failure$$) {
+    var $ctx$$ = null, $ctx$$ = $sp$$.exportContext(this._url);
+    $ctx$$.get_web();
+    $ctx$$.load($user$$);
+    $ctx$$.load(this._group, "Users");
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__isMemberSuccess$$, [$user$$, $success$$, $failure$$]), $js$$.alg.bindFn(this, $__isMemberFailure$$, [$user$$, $failure$$]));
+    return this;
   }};
   return $sp$$;
 });
@@ -3437,9 +3765,9 @@ jspyder.extend.fn("template", function() {
   }
   var $_templates$$ = $js$$.createRegistry(), $_library$$ = $js$$.createRegistry(), $__master_key$$ = (4294967295 * Math.random() | 0).toString(32), $reFuncArgs$$ = /\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?/i, $reString$$ = /"(?:[^"\\]|\\.)*"/i, $reCommandLiteral$$ = /`(?:[^`\\]|\\.)*`/i, $reNumber$$ = /\d+(?:\.\d+)?/, $reVariable$$ = /\$\{\D[a-z0-9_]*\}/i, $reFuncName$$ = /\@\D[a-z0-9_]*/i, $reFunction$$ = /\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)/i, 
   $reSymbol$$ = /(\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)|\$\{\D[a-z0-9_]*\})/i;
-  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$100_template$$, $data$$, $fn$$) {
-    $name$$100_template$$ = $_templates$$.fetch($name$$100_template$$);
-    return this.compileExplicit($name$$100_template$$, $data$$, $fn$$);
+  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$117_template$$, $data$$, $fn$$) {
+    $name$$117_template$$ = $_templates$$.fetch($name$$117_template$$);
+    return this.compileExplicit($name$$117_template$$, $data$$, $fn$$);
   }, compileExplicit:function $$js_template$$$fn$compileExplicit$($template$$4_tmp$$, $data$$, $fn$$) {
     "function" !== typeof $data$$ || $fn$$ || ($fn$$ = $data$$, $data$$ = null);
     "undefined" === typeof $template$$4_tmp$$ && ($template$$4_tmp$$ = "");
@@ -3558,9 +3886,9 @@ jspyder.extend.fn("template", function() {
     return "";
   }, map_item:function($map$$, $id$$) {
     return ($map$$ = this[$map$$]) ? $map$$[$id$$] : $id$$;
-  }, js_registry:function($data$$120_key$$) {
-    $data$$120_key$$ = $js$$.registry.fetch($data$$120_key$$);
-    return null === $data$$120_key$$ || "undefined" === typeof $data$$120_key$$ ? "" : $data$$120_key$$;
+  }, js_registry:function($data$$122_key$$) {
+    $data$$122_key$$ = $js$$.registry.fetch($data$$122_key$$);
+    return null === $data$$122_key$$ || "undefined" === typeof $data$$122_key$$ ? "" : $data$$122_key$$;
   }, js_log:function($data$$) {
     console.log($data$$);
   }, concat:function($str$$) {
