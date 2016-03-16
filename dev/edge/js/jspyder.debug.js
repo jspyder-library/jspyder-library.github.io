@@ -2480,8 +2480,10 @@ jspyder.extend.fn("dtype", function() {
     }, $validate$$ = function $$validate$$$($v$$) {
       return "string" === typeof $v$$ && 1 === $v$$.length || "number" === typeof $v$$;
     };
-    return function attachUChar($name$$, $value$$, $strict$$, $constant$$) {
-      $_createInterface$$($name$$, null, "uchar", $uchar$$, $value$$, $constant$$, $strict$$, null, null, $validate$$);
+    return function attachUChar($name$$, $_interface$$13_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$13_value$$ = $_createInterface$$($name$$, null, "uchar", $uchar$$, $_interface$$13_value$$, $constant$$, $strict$$, null, null, $validate$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$13_value$$);
     };
   }), _uchar:function attachChar($name$$, $value$$, $strict$$, $constant$$) {
     var $data$$ = new Uint16Array(new ArrayBuffer(2)), $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
