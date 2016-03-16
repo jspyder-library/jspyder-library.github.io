@@ -2484,6 +2484,9 @@ jspyder.extend.fn("dtype", function() {
       $n$$.toString = function $$n$$$toString$() {
         return String.fromCharCode($v$$);
       };
+      $n$$.valueOf = function $$n$$$valueOf$() {
+        return $v$$;
+      };
       return $n$$;
     };
     return function attachUChar($name$$, $_interface$$13_value$$, $strict$$, $constant$$) {
