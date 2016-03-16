@@ -2337,6 +2337,7 @@ jspyder.extend.fn("dtype", function() {
     };
     $_baseSet$$($_value$$);
     $_dtypeText__interface$$.set = $_constant$$ ? $_constSet$$ : $_strict$$ ? $_strictSet$$ : $_baseSet$$;
+    $_dtypeText__interface$$.enumerable = !0;
     return $_dtypeText__interface$$;
   }
   var $js_alg$$ = js.alg;
@@ -2427,25 +2428,35 @@ jspyder.extend.fn("dtype", function() {
       Object.defineProperty($_obj$$8_decimals$$, $name$$, $_interface$$9_value$$);
       return this;
     };
+  }), ufixed:js.alg.use($js_dtype$$, function bootstrap() {
+    function $fixed$$($decimals$$) {
+      $decimals$$ = $js_alg$$.int($decimals$$);
+      $decimals$$ = Math.pow(10, $decimals$$);
+      return function($value$$) {
+        return $uint$$($value$$ * $decimals$$) / $decimals$$;
+      };
+    }
+    $js_alg$$.int();
+    var $uint$$ = $js_alg$$.int;
+    return function attachFixed($name$$, $_interface$$10_value$$, $_obj$$9_decimals$$, $strict$$, $constant$$) {
+      var $_fixed$$ = $fixed$$($_obj$$9_decimals$$);
+      $_obj$$9_decimals$$ = this.obj;
+      $_interface$$10_value$$ = $_createInterface$$($name$$, "number", "fixed", $_fixed$$, $_interface$$10_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$9_decimals$$, $name$$, $_interface$$10_value$$);
+      return this;
+    };
   }), currency:function $$js_dtype$$$fn$currency$($name$$, $value$$, $strict$$, $constant$$) {
     return this.fixed($name$$, $value$$, 2, $strict$$, $constant$$);
-  }, string:function attachString($name$$, $value$$, $strict$$, $constant$$) {
-    var $data$$ = String($value$$), $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
-      return $data$$;
-    }, set:function($v$$) {
-      if ($_constant$$) {
-        throw $_constError$$($name$$, "string");
-      }
-      if ($strict$$ && "string" !== typeof $v$$) {
-        throw $_typeError$$($name$$, $v$$, "string");
-      }
-      return $data$$ = String($v$$);
-    }, enumerable:!0};
-    $_interface$$.set($value$$);
-    $_constant$$ = $constant$$;
-    Object.defineProperty($o$$, $name$$, $_interface$$);
-    return this;
-  }, uchar:function attachChar($name$$, $value$$, $strict$$, $constant$$) {
+  }, string:js.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.string();
+    var $string$$ = $js_alg$$.string;
+    return function attachDouble($name$$, $_interface$$11_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$11_value$$ = $_createInterface$$($name$$, "string", "string", $string$$, $_interface$$11_value$$, $constant$$, $strict$$);
+      Object.defineProperty($_obj$$, $name$$, $_interface$$11_value$$);
+      return this;
+    };
+  }), uchar:function attachChar($name$$, $value$$, $strict$$, $constant$$) {
     var $data$$ = new Uint16Array(new ArrayBuffer(2)), $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
       return String.fromCharCode($data$$[0]);
     }, set:function($v$$) {
@@ -2549,8 +2560,8 @@ jspyder.extend.fn("form", function() {
     var $field$$ = this.exportField($name$$);
     $js$$.alg.use(this, $fn$$, [$field$$]);
     return this;
-  }, exportField:function $$js_form$$$fn$exportField$($data$$53_name$$) {
-    return ($data$$53_name$$ = this.exportFieldData($data$$53_name$$)) ? $data$$53_name$$.field : null;
+  }, exportField:function $$js_form$$$fn$exportField$($data$$52_name$$) {
+    return ($data$$52_name$$ = this.exportFieldData($data$$52_name$$)) ? $data$$52_name$$.field : null;
   }, getFieldData:function $$js_form$$$fn$getFieldData$($name$$, $fn$$) {
     var $data$$ = this.exportFieldData($name$$);
     $js$$.alg.use(this, $fn$$, [$data$$]);
@@ -2558,8 +2569,8 @@ jspyder.extend.fn("form", function() {
   }, exportFieldData:function $$js_form$$$fn$exportFieldData$($name$$) {
     return this._fields[$name$$] || null;
   }, resetFieldValue:function $$js_form$$$fn$resetFieldValue$($name$$) {
-    var $data$$55_val$$ = this.exportFieldData($name$$), $dval$$ = $data$$55_val$$.config.default, $data$$55_val$$ = $data$$55_val$$.config.value;
-    this.setFieldValue($name$$, "undefined" !== typeof $data$$55_val$$ ? $data$$55_val$$ : $dval$$);
+    var $data$$54_val$$ = this.exportFieldData($name$$), $dval$$ = $data$$54_val$$.config.default, $data$$54_val$$ = $data$$54_val$$.config.value;
+    this.setFieldValue($name$$, "undefined" !== typeof $data$$54_val$$ ? $data$$54_val$$ : $dval$$);
     return this;
   }, resetFieldValues:function $$js_form$$$fn$resetFieldValues$() {
     this.each(this._resetFieldValues, this);
@@ -2965,11 +2976,11 @@ jspyder.extend.fn("form", function() {
       return $$radio$$;
     };
   }).registerControlFn("checkbox", function() {
-    function $exportValue$$($data$$75_values$$) {
+    function $exportValue$$($data$$74_values$$) {
       var $keys$$ = [], $key$$;
-      $data$$75_values$$ = $data$$75_values$$.config["data-values"] = $data$$75_values$$.config["data-values"] || {};
-      for ($key$$ in $data$$75_values$$) {
-        $data$$75_values$$[$key$$] && $keys$$.push($key$$.substring(4));
+      $data$$74_values$$ = $data$$74_values$$.config["data-values"] = $data$$74_values$$.config["data-values"] || {};
+      for ($key$$ in $data$$74_values$$) {
+        $data$$74_values$$[$key$$] && $keys$$.push($key$$.substring(4));
       }
       return $keys$$;
     }
@@ -3193,10 +3204,10 @@ jspyder.extend.fn("form", function() {
       $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$45_value$$);
       $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$45_value$$) && ($data$$.match = {value:$i$$45_value$$, text:$text$$24_valObj$$}, this.stop());
     }
-    function $searchValue$$($config$$, $data$$89_value$$, $searchText$$) {
-      $data$$89_value$$ = {match:null, find:new RegExp("^" + $data$$89_value$$ + "$"), searchText:$searchText$$};
-      $js$$.alg.arrEach($config$$.values, $__searchValue$$, $data$$89_value$$);
-      return $data$$89_value$$.match;
+    function $searchValue$$($config$$, $data$$88_value$$, $searchText$$) {
+      $data$$88_value$$ = {match:null, find:new RegExp("^" + $data$$88_value$$ + "$"), searchText:$searchText$$};
+      $js$$.alg.arrEach($config$$.values, $__searchValue$$, $data$$88_value$$);
+      return $data$$88_value$$.match;
     }
     function $setValue$$($data$$, $value$$) {
       var $field$$ = $data$$.field, $strict$$ = $js$$.alg.bool($data$$.config.strict), $match$$3_text$$ = "", $attrs$$ = {};
@@ -3534,9 +3545,9 @@ js.extend.fn("sp", function() {
     });
     return this;
   }, push:function $$sp$$$list$fn$push$($success$$, $failure$$) {
-    var $ctx$$ = $sp$$.exportContext(this._url), $data$$102_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$102_list$$ = {clientContext:$ctx$$, items:[], list:$data$$102_list$$, self:this};
-    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$102_list$$);
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$102_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$102_list$$.items, $failure$$]));
+    var $ctx$$ = $sp$$.exportContext(this._url), $data$$101_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$101_list$$ = {clientContext:$ctx$$, items:[], list:$data$$101_list$$, self:this};
+    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$101_list$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$101_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$101_list$$.items, $failure$$]));
     return this;
   }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$51_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
     $i$$51_rowID$$ = $row$$._columns && $row$$._columns.ID.value;
@@ -3557,12 +3568,12 @@ js.extend.fn("sp", function() {
     $colName$$1_value$$ = $data$$[$colData$$.name];
     $row$$ = $colName$$1_value$$ !== $colData$$.value;
     "undefined" !== typeof $colName$$1_value$$ && $row$$ && ($colData$$.value = $colName$$1_value$$);
-  }, createRow:function $$sp$$$list$fn$createRow$($data$$106_values$$) {
+  }, createRow:function $$sp$$$list$fn$createRow$($data$$105_values$$) {
     var $columns$$ = this._columns;
-    $data$$106_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$106_values$$)};
-    $js$$.alg.each($columns$$, this._createRowEach, $data$$106_values$$);
-    $data$$106_values$$.row.ID.value = $data$$106_values$$.rowID;
-    this._dirtyRows.push($data$$106_values$$.row);
+    $data$$105_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$105_values$$)};
+    $js$$.alg.each($columns$$, this._createRowEach, $data$$105_values$$);
+    $data$$105_values$$.row.ID.value = $data$$105_values$$.rowID;
+    this._dirtyRows.push($data$$105_values$$.row);
     return this;
   }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$2_value$$, $column$$, $cell$$1_data$$) {
     var $row$$ = $cell$$1_data$$.row;
@@ -3769,9 +3780,9 @@ jspyder.extend.fn("template", function() {
   }
   var $_templates$$ = $js$$.createRegistry(), $_library$$ = $js$$.createRegistry(), $__master_key$$ = (4294967295 * Math.random() | 0).toString(32), $reFuncArgs$$ = /\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?/i, $reString$$ = /"(?:[^"\\]|\\.)*"/i, $reCommandLiteral$$ = /`(?:[^`\\]|\\.)*`/i, $reNumber$$ = /\d+(?:\.\d+)?/, $reVariable$$ = /\$\{\D[a-z0-9_]*\}/i, $reFuncName$$ = /\@\D[a-z0-9_]*/i, $reFunction$$ = /\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)/i, 
   $reSymbol$$ = /(\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)|\$\{\D[a-z0-9_]*\})/i;
-  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$117_template$$, $data$$, $fn$$) {
-    $name$$117_template$$ = $_templates$$.fetch($name$$117_template$$);
-    return this.compileExplicit($name$$117_template$$, $data$$, $fn$$);
+  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$118_template$$, $data$$, $fn$$) {
+    $name$$118_template$$ = $_templates$$.fetch($name$$118_template$$);
+    return this.compileExplicit($name$$118_template$$, $data$$, $fn$$);
   }, compileExplicit:function $$js_template$$$fn$compileExplicit$($template$$4_tmp$$, $data$$, $fn$$) {
     "function" !== typeof $data$$ || $fn$$ || ($fn$$ = $data$$, $data$$ = null);
     "undefined" === typeof $template$$4_tmp$$ && ($template$$4_tmp$$ = "");
@@ -3890,9 +3901,9 @@ jspyder.extend.fn("template", function() {
     return "";
   }, map_item:function($map$$, $id$$) {
     return ($map$$ = this[$map$$]) ? $map$$[$id$$] : $id$$;
-  }, js_registry:function($data$$122_key$$) {
-    $data$$122_key$$ = $js$$.registry.fetch($data$$122_key$$);
-    return null === $data$$122_key$$ || "undefined" === typeof $data$$122_key$$ ? "" : $data$$122_key$$;
+  }, js_registry:function($data$$121_key$$) {
+    $data$$121_key$$ = $js$$.registry.fetch($data$$121_key$$);
+    return null === $data$$121_key$$ || "undefined" === typeof $data$$121_key$$ ? "" : $data$$121_key$$;
   }, js_log:function($data$$) {
     console.log($data$$);
   }, concat:function($str$$) {
