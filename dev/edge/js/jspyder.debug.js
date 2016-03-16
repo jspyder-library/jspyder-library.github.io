@@ -2326,7 +2326,7 @@ jspyder.extend.fn("dtype", function() {
   function $_createInterface$$($_name$$, $_jstype$$, $_dtypeText__interface$$, $_dtype$$, $_value$$, $_constant$$, $_strict$$, $_setFn$$, $_getFn$$, $_validateFn$$) {
     $_dtypeText__interface$$ = {};
     var $_baseSet$$ = "function" === typeof $_setFn$$ ? function($v$$) {
-      $_value$$ = _dType($_setFn$$($v$$));
+      $_value$$ = $_dtype$$($_setFn$$($v$$));
     } : function($v$$) {
       $_value$$ = $_dtype$$($v$$);
     }, $_strictSet$$ = "function" === typeof $_validateFn$$ ? function($v$$) {
@@ -2338,7 +2338,7 @@ jspyder.extend.fn("dtype", function() {
     }, $_constSet$$ = function $$_constSet$$$($v$$) {
       $_constError$$($_name$$, $_jstype$$);
     }, $_baseGet$$ = "function" === typeof $_getFn$$ ? function() {
-      return $_getFn$$(_dType($_value$$));
+      return $_getFn$$($_dtype$$($_value$$));
     } : function() {
       return $_dtype$$($_value$$);
     };
