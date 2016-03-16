@@ -2413,8 +2413,8 @@ jspyder.extend.fn("dtype", function() {
   }), fixed:js.alg.use($js_dtype$$, function bootstrap() {
     function $fixed$$($decimals$$) {
       $decimals$$ = $js_alg$$.int($decimals$$);
+      $decimals$$ = Math.pow(10, $decimals$$);
       return function($value$$) {
-        $decimals$$ = Math.pow(10, $decimals$$);
         return $int$$($value$$ * $decimals$$) / $decimals$$;
       };
     }
