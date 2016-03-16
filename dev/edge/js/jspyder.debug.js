@@ -2471,9 +2471,9 @@ jspyder.extend.fn("dtype", function() {
   }), uchar:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.string();
     $js_alg$$.ushort();
-    var $string$$ = $js_alg$$.string, $uchar$$ = function $$uchar$$$($v$$) {
+    var $string$$ = $js_alg$$.string, $uint16$$ = $js_alg$$["short"], $uchar$$ = function $$uchar$$$($v$$) {
       if ("number" === typeof $v$$) {
-        return $v$$;
+        return $uint16$$($v$$);
       }
       $v$$ = $string$$($v$$);
       return $v$$.length ? $v$$.charCodeAt(0) : 0;
