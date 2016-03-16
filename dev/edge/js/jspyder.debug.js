@@ -3214,16 +3214,16 @@ jspyder.extend.fn("form", function() {
       }};
       return $fns$$;
     }
-    function $__searchLoop$$($text$$23_valObj$$, $i$$44_value$$, $values$$, $data$$) {
-      $i$$44_value$$ = $js$$.alg.string($text$$23_valObj$$.value);
-      $text$$23_valObj$$ = $js$$.alg.string($text$$23_valObj$$.text, $i$$44_value$$);
-      $data$$.regexp.test($text$$23_valObj$$) && $data$$.match.push('<li class="search-item" data-value="' + $i$$44_value$$ + '" title="' + $text$$23_valObj$$ + '">' + $text$$23_valObj$$ + "</li>");
+    function $__searchLoop$$($text$$23_valObj$$, $i$$45_value$$, $values$$, $data$$) {
+      $i$$45_value$$ = $js$$.alg.string($text$$23_valObj$$.value);
+      $text$$23_valObj$$ = $js$$.alg.string($text$$23_valObj$$.text, $i$$45_value$$);
+      $data$$.regexp.test($text$$23_valObj$$) && $data$$.match.push('<li class="search-item" data-value="' + $i$$45_value$$ + '" title="' + $text$$23_valObj$$ + '">' + $text$$23_valObj$$ + "</li>");
       $data$$.match.length >= $data$$.depth && this.stop();
     }
-    function $__searchValue$$($text$$24_valObj$$, $i$$45_value$$, $values$$, $data$$) {
-      $i$$45_value$$ = $js$$.alg.string($text$$24_valObj$$.value);
-      $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$45_value$$);
-      $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$45_value$$) && ($data$$.match = {value:$i$$45_value$$, text:$text$$24_valObj$$}, this.stop());
+    function $__searchValue$$($text$$24_valObj$$, $i$$46_value$$, $values$$, $data$$) {
+      $i$$46_value$$ = $js$$.alg.string($text$$24_valObj$$.value);
+      $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$46_value$$);
+      $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$46_value$$) && ($data$$.match = {value:$i$$46_value$$, text:$text$$24_valObj$$}, this.stop());
     }
     function $searchValue$$($config$$, $data$$87_value$$, $searchText$$) {
       $data$$87_value$$ = {match:null, find:new RegExp("^" + $data$$87_value$$ + "$"), searchText:$searchText$$};
@@ -3570,10 +3570,10 @@ js.extend.fn("sp", function() {
     this.eachDirtyRow(this._pushLoopDirtyRows, $data$$100_list$$);
     $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$100_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$100_list$$.items, $failure$$]));
     return this;
-  }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$51_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
-    $i$$51_rowID$$ = $row$$._columns && $row$$._columns.ID.value;
+  }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$52_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
+    $i$$52_rowID$$ = $row$$._columns && $row$$._columns.ID.value;
     $itemInfo_listItem_rows$$ = $itemInfo_listItem_rows$$ = null;
-    0 > $i$$51_rowID$$ ? ($itemInfo_listItem_rows$$ = new window.SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$51_rowID$$), $data$$.newrow = !1);
+    0 > $i$$52_rowID$$ ? ($itemInfo_listItem_rows$$ = new window.SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$52_rowID$$), $data$$.newrow = !1);
     $data$$.listItem = $itemInfo_listItem_rows$$;
     $js$$.alg.each($row$$, $data$$.self._pushLoopDirtyRowColumns, $data$$);
     $data$$.items.push($itemInfo_listItem_rows$$);
