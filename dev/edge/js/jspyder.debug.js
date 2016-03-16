@@ -2318,10 +2318,10 @@ jspyder.extend.fn("dtype", function() {
     return $dtype$$;
   }
   function $_typeError$$($name$$, $val$$, $eType$$) {
-    return new TypeError("Attempted to assign " + typeof $val$$ + "(" + $val$$ + ") to " + $eType$$ + ' "' + $name$$ + '"');
+    throw new TypeError("Attempted to assign " + typeof $val$$ + "(" + $val$$ + ") to " + $eType$$ + ' "' + $name$$ + '"');
   }
   function $_constError$$($name$$, $eType$$) {
-    return new TypeError("Attempted to set a value to a constant " + $eType$$ + ' "' + $name$$ + '"');
+    throw new TypeError("Attempted to set a value to a constant " + $eType$$ + ' "' + $name$$ + '"');
   }
   function $_createInterface$$($_name$$, $_jstype$$, $_dtypeText__interface$$, $_dtype$$, $_value$$, $_constant$$, $_strict$$) {
     $_dtypeText__interface$$ = {get:function $$_dtypeText__interface$$$get$() {
