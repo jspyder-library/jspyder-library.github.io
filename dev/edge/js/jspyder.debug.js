@@ -2427,7 +2427,9 @@ jspyder.extend.fn("dtype", function() {
       Object.defineProperty($_obj$$8_decimals$$, $name$$, $_interface$$9_value$$);
       return this;
     };
-  }), string:function attachString($name$$, $value$$, $strict$$, $constant$$) {
+  }), currency:function $$js_dtype$$$fn$currency$($name$$, $value$$, $strict$$, $constant$$) {
+    return this.fixed($name$$, $value$$, 2, $strict$$, $constant$$);
+  }, string:function attachString($name$$, $value$$, $strict$$, $constant$$) {
     var $data$$ = String($value$$), $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
       return $data$$;
     }, set:function($v$$) {
@@ -3767,9 +3769,9 @@ jspyder.extend.fn("template", function() {
   }
   var $_templates$$ = $js$$.createRegistry(), $_library$$ = $js$$.createRegistry(), $__master_key$$ = (4294967295 * Math.random() | 0).toString(32), $reFuncArgs$$ = /\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?/i, $reString$$ = /"(?:[^"\\]|\\.)*"/i, $reCommandLiteral$$ = /`(?:[^`\\]|\\.)*`/i, $reNumber$$ = /\d+(?:\.\d+)?/, $reVariable$$ = /\$\{\D[a-z0-9_]*\}/i, $reFuncName$$ = /\@\D[a-z0-9_]*/i, $reFunction$$ = /\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)/i, 
   $reSymbol$$ = /(\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)|\$\{\D[a-z0-9_]*\})/i;
-  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$116_template$$, $data$$, $fn$$) {
-    $name$$116_template$$ = $_templates$$.fetch($name$$116_template$$);
-    return this.compileExplicit($name$$116_template$$, $data$$, $fn$$);
+  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$117_template$$, $data$$, $fn$$) {
+    $name$$117_template$$ = $_templates$$.fetch($name$$117_template$$);
+    return this.compileExplicit($name$$117_template$$, $data$$, $fn$$);
   }, compileExplicit:function $$js_template$$$fn$compileExplicit$($template$$4_tmp$$, $data$$, $fn$$) {
     "function" !== typeof $data$$ || $fn$$ || ($fn$$ = $data$$, $data$$ = null);
     "undefined" === typeof $template$$4_tmp$$ && ($template$$4_tmp$$ = "");
