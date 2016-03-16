@@ -2414,7 +2414,7 @@ jspyder.extend.fn("dtype", function() {
   }, "enum":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.makeEnum();
     $js_alg$$.uint();
-    var $__enum$$ = $js_alg$$.makeEnum, $__enumInterface$$ = function $$__enumInterface$$$($enumVals$$) {
+    var $__enum$$ = $js_alg$$.makeEnum, $_enum$$ = $js_alg$$.uint, $__enumInterface$$ = function $$__enumInterface$$$($enumVals$$) {
       var $enumInterface$$ = {}, $enumValue$$;
       js.alg.each($enumVals$$, function($value$$, $key$$) {
         $enumInterface$$[$key$$] = {get:function $$enumInterface$$$$key$$$get$() {
@@ -2429,7 +2429,7 @@ jspyder.extend.fn("dtype", function() {
       var $_obj$$ = this.obj;
       $_enumVals_keys$$ = $__enum$$($_enumVals_keys$$);
       $__enumInterface$$($_enumVals_keys$$);
-      $_interface$$9_value$$ = $_createInteface$$($name$$, "object", "enum", double, $_interface$$9_value$$, $constant$$, $strict$$);
+      $_interface$$9_value$$ = $_createInteface$$($name$$, "object", "enum", $_enum$$, $_interface$$9_value$$, $constant$$, $strict$$);
       Object.defineProperty($_obj$$, $name$$, $_interface$$9_value$$);
       return this;
     };
