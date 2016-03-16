@@ -2471,7 +2471,7 @@ jspyder.extend.fn("dtype", function() {
   }), uchar:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.string();
     $js_alg$$.ushort();
-    var $string$$ = $js_alg$$.string, $uint16$$ = $js_alg$$["short"], $uchar$$ = function $$uchar$$$($v$$) {
+    var $string$$ = $js_alg$$.string, $uint16$$ = $js_alg$$.ushort, $uchar$$ = function $$uchar$$$($v$$) {
       if ("number" === typeof $v$$) {
         return $uint16$$($v$$);
       }
@@ -2479,39 +2479,22 @@ jspyder.extend.fn("dtype", function() {
       return $v$$.length ? $v$$.charCodeAt(0) : 0;
     }, $validate$$ = function $$validate$$$($v$$) {
       return "string" === typeof $v$$ && 1 === $v$$.length || "number" === typeof $v$$;
-    }, $getFn$$ = function $$getFn$$$($v$$) {
-      var $n$$ = Object($v$$);
-      $n$$.toString = function $$n$$$toString$() {
-        return String.fromCharCode($v$$);
-      };
-      $n$$.valueOf = function $$n$$$valueOf$() {
-        return $v$$;
-      };
-      return $n$$;
     };
     return function attachUChar($name$$, $_interface$$13_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$13_value$$ = $_createInterface$$($name$$, null, "uchar", $uchar$$, $_interface$$13_value$$, $constant$$, $strict$$, null, $getFn$$, $validate$$);
+      $_interface$$13_value$$ = $_createInterface$$($name$$, null, "uchar", $uchar$$, $_interface$$13_value$$, $constant$$, $strict$$, null, null, $validate$$);
       $_createBinding$$($_obj$$, $name$$, $_interface$$13_value$$);
+      return this;
     };
-  }), _uchar:function attachChar($name$$, $value$$, $strict$$, $constant$$) {
-    var $data$$ = new Uint16Array(new ArrayBuffer(2)), $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
-      return String.fromCharCode($data$$[0]);
-    }, set:function($v$$) {
-      if ($_constant$$) {
-        throw $_constError$$($name$$, "uchar");
-      }
-      var $str$$ = "string" === typeof $v$$ && 1 === $v$$.length;
-      if ($strict$$ && !$str$$ && ("number" !== typeof $v$$ || $v$$ !== $v$$)) {
-        throw $_typeError$$($name$$, $v$$, "uchar");
-      }
-      $data$$[0] = "string" === typeof $v$$ ? $v$$.charCodeAt(0) : +$v$$;
-    }, enumerable:!0};
-    $_interface$$.set($value$$);
-    $_constant$$ = $constant$$;
-    Object.defineProperty($o$$, $name$$, $_interface$$);
-    return this;
-  }, jsstring:function attachJsString($name$$, $value$$, $strict$$, $constant$$) {
+  }), jsstring:js.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.string();
+    return function jsstring($name$$, $_interface$$14_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$14_value$$ = $_createInterface$$($name$$, null, "jsstring", jsstring, $_interface$$14_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$14_value$$);
+      return this;
+    };
+  }), _jsstring:function attachJsString($name$$, $value$$, $strict$$, $constant$$) {
     var $data$$ = "", $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
       return $data$$.join("");
     }, set:function($v$$) {
@@ -2598,8 +2581,8 @@ jspyder.extend.fn("form", function() {
     var $field$$ = this.exportField($name$$);
     $js$$.alg.use(this, $fn$$, [$field$$]);
     return this;
-  }, exportField:function $$js_form$$$fn$exportField$($data$$52_name$$) {
-    return ($data$$52_name$$ = this.exportFieldData($data$$52_name$$)) ? $data$$52_name$$.field : null;
+  }, exportField:function $$js_form$$$fn$exportField$($data$$51_name$$) {
+    return ($data$$51_name$$ = this.exportFieldData($data$$51_name$$)) ? $data$$51_name$$.field : null;
   }, getFieldData:function $$js_form$$$fn$getFieldData$($name$$, $fn$$) {
     var $data$$ = this.exportFieldData($name$$);
     $js$$.alg.use(this, $fn$$, [$data$$]);
@@ -2607,8 +2590,8 @@ jspyder.extend.fn("form", function() {
   }, exportFieldData:function $$js_form$$$fn$exportFieldData$($name$$) {
     return this._fields[$name$$] || null;
   }, resetFieldValue:function $$js_form$$$fn$resetFieldValue$($name$$) {
-    var $data$$54_val$$ = this.exportFieldData($name$$), $dval$$ = $data$$54_val$$.config.default, $data$$54_val$$ = $data$$54_val$$.config.value;
-    this.setFieldValue($name$$, "undefined" !== typeof $data$$54_val$$ ? $data$$54_val$$ : $dval$$);
+    var $data$$53_val$$ = this.exportFieldData($name$$), $dval$$ = $data$$53_val$$.config.default, $data$$53_val$$ = $data$$53_val$$.config.value;
+    this.setFieldValue($name$$, "undefined" !== typeof $data$$53_val$$ ? $data$$53_val$$ : $dval$$);
     return this;
   }, resetFieldValues:function $$js_form$$$fn$resetFieldValues$() {
     this.each(this._resetFieldValues, this);
@@ -3014,11 +2997,11 @@ jspyder.extend.fn("form", function() {
       return $$radio$$;
     };
   }).registerControlFn("checkbox", function() {
-    function $exportValue$$($data$$74_values$$) {
+    function $exportValue$$($data$$73_values$$) {
       var $keys$$ = [], $key$$;
-      $data$$74_values$$ = $data$$74_values$$.config["data-values"] = $data$$74_values$$.config["data-values"] || {};
-      for ($key$$ in $data$$74_values$$) {
-        $data$$74_values$$[$key$$] && $keys$$.push($key$$.substring(4));
+      $data$$73_values$$ = $data$$73_values$$.config["data-values"] = $data$$73_values$$.config["data-values"] || {};
+      for ($key$$ in $data$$73_values$$) {
+        $data$$73_values$$[$key$$] && $keys$$.push($key$$.substring(4));
       }
       return $keys$$;
     }
@@ -3242,10 +3225,10 @@ jspyder.extend.fn("form", function() {
       $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$45_value$$);
       $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$45_value$$) && ($data$$.match = {value:$i$$45_value$$, text:$text$$24_valObj$$}, this.stop());
     }
-    function $searchValue$$($config$$, $data$$88_value$$, $searchText$$) {
-      $data$$88_value$$ = {match:null, find:new RegExp("^" + $data$$88_value$$ + "$"), searchText:$searchText$$};
-      $js$$.alg.arrEach($config$$.values, $__searchValue$$, $data$$88_value$$);
-      return $data$$88_value$$.match;
+    function $searchValue$$($config$$, $data$$87_value$$, $searchText$$) {
+      $data$$87_value$$ = {match:null, find:new RegExp("^" + $data$$87_value$$ + "$"), searchText:$searchText$$};
+      $js$$.alg.arrEach($config$$.values, $__searchValue$$, $data$$87_value$$);
+      return $data$$87_value$$.match;
     }
     function $setValue$$($data$$, $value$$) {
       var $field$$ = $data$$.field, $strict$$ = $js$$.alg.bool($data$$.config.strict), $match$$3_text$$ = "", $attrs$$ = {};
@@ -3583,9 +3566,9 @@ js.extend.fn("sp", function() {
     });
     return this;
   }, push:function $$sp$$$list$fn$push$($success$$, $failure$$) {
-    var $ctx$$ = $sp$$.exportContext(this._url), $data$$101_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$101_list$$ = {clientContext:$ctx$$, items:[], list:$data$$101_list$$, self:this};
-    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$101_list$$);
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$101_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$101_list$$.items, $failure$$]));
+    var $ctx$$ = $sp$$.exportContext(this._url), $data$$100_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$100_list$$ = {clientContext:$ctx$$, items:[], list:$data$$100_list$$, self:this};
+    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$100_list$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$100_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$100_list$$.items, $failure$$]));
     return this;
   }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$51_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
     $i$$51_rowID$$ = $row$$._columns && $row$$._columns.ID.value;
@@ -3606,12 +3589,12 @@ js.extend.fn("sp", function() {
     $colName$$1_value$$ = $data$$[$colData$$.name];
     $row$$ = $colName$$1_value$$ !== $colData$$.value;
     "undefined" !== typeof $colName$$1_value$$ && $row$$ && ($colData$$.value = $colName$$1_value$$);
-  }, createRow:function $$sp$$$list$fn$createRow$($data$$105_values$$) {
+  }, createRow:function $$sp$$$list$fn$createRow$($data$$104_values$$) {
     var $columns$$ = this._columns;
-    $data$$105_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$105_values$$)};
-    $js$$.alg.each($columns$$, this._createRowEach, $data$$105_values$$);
-    $data$$105_values$$.row.ID.value = $data$$105_values$$.rowID;
-    this._dirtyRows.push($data$$105_values$$.row);
+    $data$$104_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$104_values$$)};
+    $js$$.alg.each($columns$$, this._createRowEach, $data$$104_values$$);
+    $data$$104_values$$.row.ID.value = $data$$104_values$$.rowID;
+    this._dirtyRows.push($data$$104_values$$.row);
     return this;
   }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$2_value$$, $column$$, $cell$$1_data$$) {
     var $row$$ = $cell$$1_data$$.row;
@@ -3939,9 +3922,9 @@ jspyder.extend.fn("template", function() {
     return "";
   }, map_item:function($map$$, $id$$) {
     return ($map$$ = this[$map$$]) ? $map$$[$id$$] : $id$$;
-  }, js_registry:function($data$$121_key$$) {
-    $data$$121_key$$ = $js$$.registry.fetch($data$$121_key$$);
-    return null === $data$$121_key$$ || "undefined" === typeof $data$$121_key$$ ? "" : $data$$121_key$$;
+  }, js_registry:function($data$$120_key$$) {
+    $data$$120_key$$ = $js$$.registry.fetch($data$$120_key$$);
+    return null === $data$$120_key$$ || "undefined" === typeof $data$$120_key$$ ? "" : $data$$120_key$$;
   }, js_log:function($data$$) {
     console.log($data$$);
   }, concat:function($str$$) {
