@@ -2415,15 +2415,15 @@ jspyder.extend.fn("dtype", function() {
     $js_alg$$.makeEnum();
     $js_alg$$.uint();
     var $__enum$$ = $js_alg$$.makeEnum, $__enumInterface$$ = function $$__enumInterface$$$($enumVals$$) {
-      var $enumValue$$;
+      var $enumInterface$$ = {}, $enumValue$$;
       js.alg.each($enumVals$$, function($value$$, $key$$) {
-        enumObj[$key$$] = {get:function $enumObj$$key$$$get$() {
+        $enumInterface$$[$key$$] = {get:function $$enumInterface$$$$key$$$get$() {
           return ($value$$ & $enumValue$$) === $value$$;
-        }, set:function $enumObj$$key$$$set$($b$$) {
+        }, set:function $$enumInterface$$$$key$$$set$($b$$) {
           $enumValue$$ |= $b$$ * $value$$;
         }};
       });
-      return {};
+      return $enumInterface$$;
     };
     return function attachEnum($name$$, $_enumVals_keys$$, $_interface$$9_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
