@@ -2330,7 +2330,7 @@ jspyder.extend.fn("dtype", function() {
     var $_baseSet$$ = function $$_baseSet$$$($v$$) {
       $_value$$ = $_dtype$$($v$$);
     }, $_strictSet$$ = function $$_strictSet$$$($v$$) {
-      typeof $v$$ !== $_jstype$$ && $v$$ !== $v$$ && $_typeError$$($_name$$, $v$$, $_jstype$$);
+      typeof $v$$ === $_jstype$$ && $v$$ === $v$$ || $_typeError$$($_name$$, $v$$, $_jstype$$);
       $_baseSet$$($v$$);
     }, $_constSet$$ = function $$_constSet$$$($v$$) {
       $_constError$$($_name$$, $_jstype$$);
