@@ -2512,15 +2512,24 @@ jspyder.extend.fn("dtype", function() {
         return $value$$;
       }};
       $value$$ = js.alg.number($value$$);
+      bitValues = [];
       js.alg.each($values$$, function($bits$$, $key$$) {
-        "valueOf" !== $key$$ && ($_proxy$$[$key$$] = {get:function $$_proxy$$$$key$$$get$() {
+        "valueOf" !== $key$$ && (bitValues.push($bits$$), $_proxy$$[$key$$] = {get:function $$_proxy$$$$key$$$get$() {
           return js.alg.number($value$$ & $bits$$) | 0;
         }, set:function $$_proxy$$$$key$$$set$($v$$) {
           $value$$ = js.alg.number($v$$ ? $value$$ | $bits$$ : $value$$ - ($value$$ & $bits$$)) | 0;
         }});
       });
       Object.defineProperties($_interface$$, $_proxy$$);
-      return $_interface$$;
+      return {get:function() {
+        return $_interface$$;
+      }, set:function($v$$) {
+        var $val$$ = 0;
+        js.alg.arrEach(bitValues, function($bit$$) {
+          $v$$ & bitValues === bitValues && ($val$$ |= $v$$);
+        });
+        $value$$ = $val$$;
+      }};
     };
     return function attachEnum($name$$, $_interface$$17_value$$, $values$$, $_obj$$14_strict$$, $constant$$) {
       $_obj$$14_strict$$ = this.obj;
