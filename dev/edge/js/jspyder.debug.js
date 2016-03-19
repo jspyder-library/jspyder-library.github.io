@@ -2526,7 +2526,7 @@ jspyder.extend.fn("dtype", function() {
       }, set:function($v$$) {
         var $val$$ = 0;
         js.alg.arrEach(bitValues, function($bit$$) {
-          $v$$ & $bit$$ === $bit$$ && ($val$$ |= $bit$$);
+          ($v$$ & $bit$$) === $bit$$ && ($val$$ |= $bit$$);
         });
         $value$$ = $val$$;
       }};
