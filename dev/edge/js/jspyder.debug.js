@@ -2514,14 +2514,14 @@ jspyder.extend.fn("dtype", function() {
       $value$$ = js.alg.number($value$$);
       bitValues = [];
       js.alg.each($values$$, function($bits$$, $key$$) {
-        "valueOf" !== $key$$ && (bitValues.push($bits$$), $_proxy$$[$key$$] = {get:function $$_proxy$$$$key$$$get$() {
+        "valueOf" !== $key$$ && (bitValues.push($bits$$), $_proxy$$[$key$$] = {enumerable:!0, get:function $$_proxy$$$$key$$$get$() {
           return js.alg.number($value$$ & $bits$$) | 0;
         }, set:function $$_proxy$$$$key$$$set$($v$$) {
           $value$$ = js.alg.number($v$$ ? $value$$ | $bits$$ : $value$$ - ($value$$ & $bits$$)) | 0;
         }});
       });
       Object.defineProperties($_interface$$, $_proxy$$);
-      return {get:function() {
+      return {enumerable:!0, get:function() {
         return $_interface$$;
       }, set:function($v$$) {
         var $val$$ = 0;
