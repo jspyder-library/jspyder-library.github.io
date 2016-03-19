@@ -2508,15 +2508,18 @@ jspyder.extend.fn("dtype", function() {
   }), "enum":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.makeEnum();
     var $makeEnum$$ = $js_alg$$.makeEnum, $enumFactory$$ = function $$enumFactory$$$($values$$, $value$$) {
-      var $_interface$$ = {};
+      var $_proxy$$ = {}, $_interface$$ = {valueOf:function() {
+        return $value$$;
+      }};
       $value$$ = js.alg.number($value$$);
       js.alg.each($values$$, function($bits$$, $key$$) {
-        $_interface$$[$key$$] = {get:function $$_interface$$$$key$$$get$() {
+        "valueOf" !== $key$$ && ($_proxy$$[$key$$] = {get:function $$_proxy$$$$key$$$get$() {
           return js.alg.number($value$$ & $bits$$) | 0;
-        }, set:function $$_interface$$$$key$$$set$($v$$) {
+        }, set:function $$_proxy$$$$key$$$set$($v$$) {
           $value$$ = js.alg.number($v$$ ? $value$$ | $bits$$ : $value$$ - ($value$$ & $bits$$)) | 0;
-        }};
+        }});
       });
+      Object.defineProperties($_interface$$, $_proxy$$);
       return $_interface$$;
     };
     return function attachEnum($name$$, $_interface$$17_value$$, $values$$, $_obj$$14_strict$$, $constant$$) {
