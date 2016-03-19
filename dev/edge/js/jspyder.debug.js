@@ -1800,8 +1800,8 @@ jspyder.extend.fn("date", function() {
     return new Date($d$$.y, $d$$.m, $d$$.d, $d$$.h + $d$$.a, $d$$.n, $d$$.s, $d$$.x);
   }
   function $__formatDate$$($date$$, $format$$, $useUTC$$) {
-    var $JSCompiler_object_inline_y_42$$ = $useUTC$$ ? $date$$.getUTCFullYear() : $date$$.getFullYear(), $JSCompiler_object_inline_m_43$$ = $useUTC$$ ? $date$$.getUTCMonth() : $date$$.getMonth(), $JSCompiler_object_inline_d_44$$ = $useUTC$$ ? $date$$.getUTCDate() : $date$$.getDate(), $JSCompiler_object_inline_h_45$$ = $useUTC$$ ? $date$$.getUTCHours() : $date$$.getHours(), $JSCompiler_object_inline_n_46$$ = $useUTC$$ ? $date$$.getUTCMinutes() : $date$$.getMinutes(), $JSCompiler_object_inline_s_47$$ = 
-    $useUTC$$ ? $date$$.getUTCSeconds() : $date$$.getSeconds(), $JSCompiler_object_inline_w_48$$ = $useUTC$$ ? $date$$.getUTCDay() : $date$$.getDay(), $JSCompiler_object_inline_x_49$$ = $useUTC$$ ? $date$$.getUTCMilliseconds() : $date$$.getMilliseconds(), $left$$ = "", $right$$ = $format$$;
+    var $JSCompiler_object_inline_y_45$$ = $useUTC$$ ? $date$$.getUTCFullYear() : $date$$.getFullYear(), $JSCompiler_object_inline_m_46$$ = $useUTC$$ ? $date$$.getUTCMonth() : $date$$.getMonth(), $JSCompiler_object_inline_d_47$$ = $useUTC$$ ? $date$$.getUTCDate() : $date$$.getDate(), $JSCompiler_object_inline_h_48$$ = $useUTC$$ ? $date$$.getUTCHours() : $date$$.getHours(), $JSCompiler_object_inline_n_49$$ = $useUTC$$ ? $date$$.getUTCMinutes() : $date$$.getMinutes(), $JSCompiler_object_inline_s_50$$ = 
+    $useUTC$$ ? $date$$.getUTCSeconds() : $date$$.getSeconds(), $JSCompiler_object_inline_w_51$$ = $useUTC$$ ? $date$$.getUTCDay() : $date$$.getDay(), $JSCompiler_object_inline_x_52$$ = $useUTC$$ ? $date$$.getUTCMilliseconds() : $date$$.getMilliseconds(), $left$$ = "", $right$$ = $format$$;
     $js$$.alg.arrEach($format$$.match($__reSearch$$), function($match$$) {
       var $collection$$ = $__formatCollection$$[$match$$] || /\[[^\\]*\]/g.test($match$$);
       if (!$collection$$) {
@@ -1814,12 +1814,12 @@ jspyder.extend.fn("date", function() {
         case "YY":
         ;
         case "yy":
-          $value$$ = $js$$.alg.string($JSCompiler_object_inline_y_42$$ % 100);
+          $value$$ = $js$$.alg.string($JSCompiler_object_inline_y_45$$ % 100);
           break;
         case "YYYY":
         ;
         case "yyyy":
-          $value$$ = $js$$.alg.string($JSCompiler_object_inline_y_42$$, "");
+          $value$$ = $js$$.alg.string($JSCompiler_object_inline_y_45$$, "");
           break;
         case "MMMM":
         ;
@@ -1836,7 +1836,7 @@ jspyder.extend.fn("date", function() {
         case "M":
         ;
         case "m":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_m_43$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_m_46$$];
           break;
         case "dth":
         ;
@@ -1845,7 +1845,7 @@ jspyder.extend.fn("date", function() {
         case "dd":
         ;
         case "d":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_d_44$$ - 1];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_d_47$$ - 1];
           break;
         case "DDDD":
         ;
@@ -1858,12 +1858,12 @@ jspyder.extend.fn("date", function() {
         case "DD":
         ;
         case "D":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_w_48$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_w_51$$];
           break;
         case "am":
         ;
         case "AM":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_h_45$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_h_48$$];
           break;
         case "HH":
         ;
@@ -1872,26 +1872,26 @@ jspyder.extend.fn("date", function() {
         case "hh":
         ;
         case "h":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_h_45$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_h_48$$];
           break;
         case "nn":
         ;
         case "n":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_n_46$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_n_49$$];
           break;
         case "ss":
         ;
         case "s":
-          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_s_47$$];
+          $value$$ = $collection$$.lookup[$JSCompiler_object_inline_s_50$$];
           break;
         case "xxx":
-          $value$$ = ($js$$.alg.string($JSCompiler_object_inline_x_49$$) + "00").substr(0, 3);
+          $value$$ = ($js$$.alg.string($JSCompiler_object_inline_x_52$$) + "00").substr(0, 3);
           break;
         case "xx":
-          $value$$ = ($js$$.alg.string($JSCompiler_object_inline_x_49$$) + "0").substr(0, 2);
+          $value$$ = ($js$$.alg.string($JSCompiler_object_inline_x_52$$) + "0").substr(0, 2);
           break;
         case "x":
-          $value$$ = $js$$.alg.string($JSCompiler_object_inline_x_49$$).substr(0, 1);
+          $value$$ = $js$$.alg.string($JSCompiler_object_inline_x_52$$).substr(0, 1);
           break;
         default:
           $value$$ = $match$$.substring(1, $match$$.length - 1);
@@ -2320,9 +2320,6 @@ jspyder.extend.fn("dtype", function() {
   function $_typeError$$($name$$, $val$$, $eType$$) {
     throw new TypeError("Attempted to assign " + typeof $val$$ + "(" + $val$$ + ") to " + $eType$$ + ' "' + $name$$ + '"');
   }
-  function $_constError$$($name$$, $eType$$) {
-    throw new TypeError("Attempted to set a value to a constant " + $eType$$ + ' "' + $name$$ + '"');
-  }
   function $_createInterface$$($_name$$, $_jstype$$, $_dtypeText__interface$$, $_dtype$$, $_value$$, $_constant$$, $_strict$$, $_setFn$$, $_getFn$$, $_validateFn$$) {
     $_dtypeText__interface$$ = {};
     var $_baseSet$$ = "function" === typeof $_setFn$$ ? function($v$$) {
@@ -2336,7 +2333,7 @@ jspyder.extend.fn("dtype", function() {
       $_validateFn$$($v$$) || $_typeError$$($_name$$, $v$$, _jsType);
       $_baseSet$$($v$$);
     }, $_constSet$$ = function $$_constSet$$$($v$$) {
-      $_constError$$($_name$$, $_jstype$$);
+      throw new TypeError("Attempted to set a value to a constant " + $_jstype$$ + ' "' + $_name$$ + '"');
     }, $_baseGet$$ = "function" === typeof $_getFn$$ ? function() {
       return $_getFn$$($_dtype$$($_value$$));
     } : function() {
@@ -2356,71 +2353,71 @@ jspyder.extend.fn("dtype", function() {
   $js_dtype$$.fn = {"byte":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.byte();
     var $byte$$ = $js_alg$$["byte"];
-    return function attachInt8($name$$, $_interface$$2_value$$, $strict$$, $constant$$) {
+    return function attachInt8($name$$, $_interface$$3_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$2_value$$ = $_createInterface$$($name$$, "number", "byte", $byte$$, $_interface$$2_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$2_value$$);
+      $_interface$$3_value$$ = $_createInterface$$($name$$, "number", "byte", $byte$$, $_interface$$3_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$3_value$$);
       return this;
     };
   }), ubyte:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.ubyte();
     var $ubyte$$ = $js_alg$$.ubyte;
-    return function attachUInt8($name$$, $_interface$$3_value$$, $strict$$, $constant$$) {
+    return function attachUInt8($name$$, $_interface$$4_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$3_value$$ = $_createInterface$$($name$$, "number", "unsigned byte", $ubyte$$, $_interface$$3_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$3_value$$);
+      $_interface$$4_value$$ = $_createInterface$$($name$$, "number", "unsigned byte", $ubyte$$, $_interface$$4_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$4_value$$);
       return this;
     };
   }), "short":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.short();
     var $short$$ = $js_alg$$["short"];
-    return function attachInt16($name$$, $_interface$$4_value$$, $strict$$, $constant$$) {
+    return function attachInt16($name$$, $_interface$$5_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$4_value$$ = $_createInterface$$($name$$, "number", "short", $short$$, $_interface$$4_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$4_value$$);
+      $_interface$$5_value$$ = $_createInterface$$($name$$, "number", "short", $short$$, $_interface$$5_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$5_value$$);
       return this;
     };
   }), ushort:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.short();
-    return function attachUInt16($name$$, $_interface$$5_value$$, $strict$$, $constant$$) {
+    return function attachUInt16($name$$, $_interface$$6_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$5_value$$ = $_createInterface$$($name$$, "number", "unsigned short", ushort, $_interface$$5_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$5_value$$);
+      $_interface$$6_value$$ = $_createInterface$$($name$$, "number", "unsigned short", ushort, $_interface$$6_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$6_value$$);
       return this;
     };
   }), "int":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.int();
     var $int$$ = $js_alg$$["int"];
-    return function attachInt32($name$$, $_interface$$6_value$$, $strict$$, $constant$$) {
+    return function attachInt32($name$$, $_interface$$7_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$6_value$$ = $_createInterface$$($name$$, "number", "integer", $int$$, $_interface$$6_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$6_value$$);
+      $_interface$$7_value$$ = $_createInterface$$($name$$, "number", "integer", $int$$, $_interface$$7_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$7_value$$);
       return this;
     };
   }), uint:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.uint();
-    return function attachUInt32($name$$, $_interface$$7_value$$, $strict$$, $constant$$) {
+    return function attachUInt32($name$$, $_interface$$8_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$7_value$$ = $_createInterface$$($name$$, "number", "unsigned integer", uint, $_interface$$7_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$7_value$$);
+      $_interface$$8_value$$ = $_createInterface$$($name$$, "number", "unsigned integer", uint, $_interface$$8_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$8_value$$);
       return this;
     };
   }), "float":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.float();
     var $float$$ = $js_alg$$["float"];
-    return function attachFloat($name$$, $_interface$$8_value$$, $strict$$, $constant$$) {
+    return function attachFloat($name$$, $_interface$$9_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$8_value$$ = $_createInterface$$($name$$, "number", "float", $float$$, $_interface$$8_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$8_value$$);
+      $_interface$$9_value$$ = $_createInterface$$($name$$, "number", "float", $float$$, $_interface$$9_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$9_value$$);
       return this;
     };
   }), "double":js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.double();
     var $double$$ = $js_alg$$["double"];
-    return function attachDouble($name$$, $_interface$$9_value$$, $strict$$, $constant$$) {
+    return function attachDouble($name$$, $_interface$$10_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$9_value$$ = $_createInterface$$($name$$, "number", "double", $double$$, $_interface$$9_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$9_value$$);
+      $_interface$$10_value$$ = $_createInterface$$($name$$, "number", "double", $double$$, $_interface$$10_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$10_value$$);
       return this;
     };
   }), fixed:js.alg.use($js_dtype$$, function bootstrap() {
@@ -2433,11 +2430,11 @@ jspyder.extend.fn("dtype", function() {
     }
     $js_alg$$.int();
     var $int$$ = $js_alg$$.int;
-    return function attachFixed($name$$, $_interface$$10_value$$, $_obj$$8_decimals$$, $strict$$, $constant$$) {
+    return function attachFixed($name$$, $_interface$$11_value$$, $_obj$$8_decimals$$, $strict$$, $constant$$) {
       var $_fixed$$ = $fixed$$($_obj$$8_decimals$$);
       $_obj$$8_decimals$$ = this.obj;
-      $_interface$$10_value$$ = $_createInterface$$($name$$, "number", "fixed", $_fixed$$, $_interface$$10_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$8_decimals$$, $name$$, $_interface$$10_value$$);
+      $_interface$$11_value$$ = $_createInterface$$($name$$, "number", "fixed", $_fixed$$, $_interface$$11_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$8_decimals$$, $name$$, $_interface$$11_value$$);
       return this;
     };
   }), ufixed:js.alg.use($js_dtype$$, function bootstrap() {
@@ -2450,11 +2447,11 @@ jspyder.extend.fn("dtype", function() {
     }
     $js_alg$$.int();
     var $uint$$ = $js_alg$$.int;
-    return function attachFixed($name$$, $_interface$$11_value$$, $_obj$$9_decimals$$, $strict$$, $constant$$) {
+    return function attachFixed($name$$, $_interface$$12_value$$, $_obj$$9_decimals$$, $strict$$, $constant$$) {
       var $_fixed$$ = $fixed$$($_obj$$9_decimals$$);
       $_obj$$9_decimals$$ = this.obj;
-      $_interface$$11_value$$ = $_createInterface$$($name$$, "number", "fixed", $_fixed$$, $_interface$$11_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$9_decimals$$, $name$$, $_interface$$11_value$$);
+      $_interface$$12_value$$ = $_createInterface$$($name$$, "number", "fixed", $_fixed$$, $_interface$$12_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$9_decimals$$, $name$$, $_interface$$12_value$$);
       return this;
     };
   }), currency:function $$js_dtype$$$fn$currency$($name$$, $value$$, $strict$$, $constant$$) {
@@ -2462,10 +2459,10 @@ jspyder.extend.fn("dtype", function() {
   }, string:js.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.string();
     var $string$$ = $js_alg$$.string;
-    return function attachDouble($name$$, $_interface$$12_value$$, $strict$$, $constant$$) {
+    return function attachDouble($name$$, $_interface$$13_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$12_value$$ = $_createInterface$$($name$$, "string", "string", $string$$, $_interface$$12_value$$, $constant$$, $strict$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$12_value$$);
+      $_interface$$13_value$$ = $_createInterface$$($name$$, "string", "string", $string$$, $_interface$$13_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$13_value$$);
       return this;
     };
   }), uchar:js.alg.use($js_dtype$$, function bootstrap() {
@@ -2480,40 +2477,50 @@ jspyder.extend.fn("dtype", function() {
     }, $validate$$ = function $$validate$$$($v$$) {
       return "string" === typeof $v$$ && 1 === $v$$.length || "number" === typeof $v$$;
     };
-    return function attachUChar($name$$, $_interface$$13_value$$, $strict$$, $constant$$) {
+    return function attachUChar($name$$, $_interface$$14_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
-      $_interface$$13_value$$ = $_createInterface$$($name$$, null, "uchar", $uchar$$, $_interface$$13_value$$, $constant$$, $strict$$, null, null, $validate$$);
-      $_createBinding$$($_obj$$, $name$$, $_interface$$13_value$$);
-      return this;
-    };
-  }), jsstring:js.alg.use($js_dtype$$, function bootstrap() {
-    $js_alg$$.string();
-    return function jsstring($name$$, $_interface$$14_value$$, $strict$$, $constant$$) {
-      var $_obj$$ = this.obj;
-      $_interface$$14_value$$ = $_createInterface$$($name$$, null, "jsstring", jsstring, $_interface$$14_value$$, $constant$$, $strict$$);
+      $_interface$$14_value$$ = $_createInterface$$($name$$, null, "uchar", $uchar$$, $_interface$$14_value$$, $constant$$, $strict$$, null, null, $validate$$);
       $_createBinding$$($_obj$$, $name$$, $_interface$$14_value$$);
       return this;
     };
-  }), _jsstring:function attachJsString($name$$, $value$$, $strict$$, $constant$$) {
-    var $data$$ = "", $_constant$$ = !1, $o$$ = this.obj, $_interface$$ = {get:function() {
-      return $data$$.join("");
-    }, set:function($v$$) {
-      if ($_constant$$) {
-        throw $_constError$$($name$$, "jsstring");
-      }
-      if ($strict$$ && "string" !== typeof $v$$) {
-        throw $_typeError$$($name$$, $v$$, "jsstring");
-      }
-      if ("undefined" === typeof $v$$ || null === $v$$) {
-        $v$$ = "";
-      }
-      $data$$ = $v$$;
-    }, enumerable:!0};
-    $_interface$$.set($value$$);
-    $_constant$$ = $constant$$;
-    Object.defineProperty($o$$, $name$$, $_interface$$);
-    return this;
-  }};
+  }), bool:js.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.bool();
+    var $bool$$ = $js_alg$$.bool;
+    return function attachBoolean($name$$, $_interface$$15_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$15_value$$ = $_createInterface$$($name$$, "boolean", "bool", $bool$$, $_interface$$15_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$15_value$$);
+      return this;
+    };
+  }), bit:js.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.bool();
+    var $bool$$ = $js_alg$$.bool, $bit$$ = function $$bit$$$($v$$) {
+      return +$bool$$($v$$);
+    }, $test$$ = function $$test$$$($v$$) {
+      return "number" === typeof $v$$ && (1 === $v$$ || 0 === $v$$) || "boolean" === typeof $v$$;
+    };
+    return function attachBit($name$$, $_interface$$16_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$16_value$$ = $_createInterface$$($name$$, "number", "bit", $bit$$, $_interface$$16_value$$, $constant$$, $strict$$, null, null, $test$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$16_value$$);
+      return this;
+    };
+  }), "enum":js.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.makeEnum();
+    var $makeEnum$$ = $js_alg$$.makeEnum, $enumFactory$$ = function $$enumFactory$$$($values$$, $value$$) {
+      $value$$ = js.alg.number($value$$);
+      js.alg.each($values$$, function($bits$$, $key$$) {
+      });
+      return _interface;
+    };
+    return function attachEnum($name$$, $_interface$$17_value$$, $values$$, $_obj$$14_strict$$, $constant$$) {
+      $_obj$$14_strict$$ = this.obj;
+      $_interface$$17_value$$ = $enumFactory$$($values$$, $_interface$$17_value$$);
+      Array.isArray($values$$) || $makeEnum$$($values$$);
+      $_createBinding$$($_obj$$14_strict$$, $name$$, $_interface$$17_value$$);
+      return this;
+    };
+  })};
   js.alg.use($js_dtype$$.fn, function() {
     this.int8 = this["byte"];
     this.uint8 = this.ubyte;
@@ -2581,8 +2588,8 @@ jspyder.extend.fn("form", function() {
     var $field$$ = this.exportField($name$$);
     $js$$.alg.use(this, $fn$$, [$field$$]);
     return this;
-  }, exportField:function $$js_form$$$fn$exportField$($data$$51_name$$) {
-    return ($data$$51_name$$ = this.exportFieldData($data$$51_name$$)) ? $data$$51_name$$.field : null;
+  }, exportField:function $$js_form$$$fn$exportField$($data$$50_name$$) {
+    return ($data$$50_name$$ = this.exportFieldData($data$$50_name$$)) ? $data$$50_name$$.field : null;
   }, getFieldData:function $$js_form$$$fn$getFieldData$($name$$, $fn$$) {
     var $data$$ = this.exportFieldData($name$$);
     $js$$.alg.use(this, $fn$$, [$data$$]);
@@ -2590,8 +2597,8 @@ jspyder.extend.fn("form", function() {
   }, exportFieldData:function $$js_form$$$fn$exportFieldData$($name$$) {
     return this._fields[$name$$] || null;
   }, resetFieldValue:function $$js_form$$$fn$resetFieldValue$($name$$) {
-    var $data$$53_val$$ = this.exportFieldData($name$$), $dval$$ = $data$$53_val$$.config.default, $data$$53_val$$ = $data$$53_val$$.config.value;
-    this.setFieldValue($name$$, "undefined" !== typeof $data$$53_val$$ ? $data$$53_val$$ : $dval$$);
+    var $data$$52_val$$ = this.exportFieldData($name$$), $dval$$ = $data$$52_val$$.config.default, $data$$52_val$$ = $data$$52_val$$.config.value;
+    this.setFieldValue($name$$, "undefined" !== typeof $data$$52_val$$ ? $data$$52_val$$ : $dval$$);
     return this;
   }, resetFieldValues:function $$js_form$$$fn$resetFieldValues$() {
     this.each(this._resetFieldValues, this);
@@ -2997,11 +3004,11 @@ jspyder.extend.fn("form", function() {
       return $$radio$$;
     };
   }).registerControlFn("checkbox", function() {
-    function $exportValue$$($data$$73_values$$) {
+    function $exportValue$$($data$$72_values$$) {
       var $keys$$ = [], $key$$;
-      $data$$73_values$$ = $data$$73_values$$.config["data-values"] = $data$$73_values$$.config["data-values"] || {};
-      for ($key$$ in $data$$73_values$$) {
-        $data$$73_values$$[$key$$] && $keys$$.push($key$$.substring(4));
+      $data$$72_values$$ = $data$$72_values$$.config["data-values"] = $data$$72_values$$.config["data-values"] || {};
+      for ($key$$ in $data$$72_values$$) {
+        $data$$72_values$$[$key$$] && $keys$$.push($key$$.substring(4));
       }
       return $keys$$;
     }
@@ -3214,21 +3221,21 @@ jspyder.extend.fn("form", function() {
       }};
       return $fns$$;
     }
-    function $__searchLoop$$($text$$23_valObj$$, $i$$45_value$$, $values$$, $data$$) {
-      $i$$45_value$$ = $js$$.alg.string($text$$23_valObj$$.value);
-      $text$$23_valObj$$ = $js$$.alg.string($text$$23_valObj$$.text, $i$$45_value$$);
-      $data$$.regexp.test($text$$23_valObj$$) && $data$$.match.push('<li class="search-item" data-value="' + $i$$45_value$$ + '" title="' + $text$$23_valObj$$ + '">' + $text$$23_valObj$$ + "</li>");
+    function $__searchLoop$$($text$$23_valObj$$, $i$$44_value$$, $values$$, $data$$) {
+      $i$$44_value$$ = $js$$.alg.string($text$$23_valObj$$.value);
+      $text$$23_valObj$$ = $js$$.alg.string($text$$23_valObj$$.text, $i$$44_value$$);
+      $data$$.regexp.test($text$$23_valObj$$) && $data$$.match.push('<li class="search-item" data-value="' + $i$$44_value$$ + '" title="' + $text$$23_valObj$$ + '">' + $text$$23_valObj$$ + "</li>");
       $data$$.match.length >= $data$$.depth && this.stop();
     }
-    function $__searchValue$$($text$$24_valObj$$, $i$$46_value$$, $values$$, $data$$) {
-      $i$$46_value$$ = $js$$.alg.string($text$$24_valObj$$.value);
-      $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$46_value$$);
-      $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$46_value$$) && ($data$$.match = {value:$i$$46_value$$, text:$text$$24_valObj$$}, this.stop());
+    function $__searchValue$$($text$$24_valObj$$, $i$$45_value$$, $values$$, $data$$) {
+      $i$$45_value$$ = $js$$.alg.string($text$$24_valObj$$.value);
+      $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$45_value$$);
+      $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$45_value$$) && ($data$$.match = {value:$i$$45_value$$, text:$text$$24_valObj$$}, this.stop());
     }
-    function $searchValue$$($config$$, $data$$87_value$$, $searchText$$) {
-      $data$$87_value$$ = {match:null, find:new RegExp("^" + $data$$87_value$$ + "$"), searchText:$searchText$$};
-      $js$$.alg.arrEach($config$$.values, $__searchValue$$, $data$$87_value$$);
-      return $data$$87_value$$.match;
+    function $searchValue$$($config$$, $data$$86_value$$, $searchText$$) {
+      $data$$86_value$$ = {match:null, find:new RegExp("^" + $data$$86_value$$ + "$"), searchText:$searchText$$};
+      $js$$.alg.arrEach($config$$.values, $__searchValue$$, $data$$86_value$$);
+      return $data$$86_value$$.match;
     }
     function $setValue$$($data$$, $value$$) {
       var $field$$ = $data$$.field, $strict$$ = $js$$.alg.bool($data$$.config.strict), $match$$3_text$$ = "", $attrs$$ = {};
@@ -3265,11 +3272,11 @@ jspyder.extend.fn("form", function() {
         if ($attrs$$37_c$$["data-focus"]) {
           $v$$ = $toNumber$$($v$$, $data$$.config.acc);
         } else {
-          var $n$$inline_16_part$$ = $v$$;
+          var $n$$inline_19_part$$ = $v$$;
           $attrs$$37_c$$ = $data$$.config.tsep;
-          var $d$$ = $data$$.config.dec, $a$$inline_19_num$$ = $data$$.config.acc;
-          "" === $js$$.alg.string($n$$inline_16_part$$, "") ? $v$$ = $n$$inline_16_part$$ : ($n$$inline_16_part$$ = $js$$.alg.number($n$$inline_16_part$$, 0), $attrs$$37_c$$ = $js$$.alg.string($attrs$$37_c$$, ","), $d$$ = $js$$.alg.string($d$$, "."), "undefined" !== typeof $a$$inline_19_num$$ && ($n$$inline_16_part$$ = $n$$inline_16_part$$.toFixed($a$$inline_19_num$$)), $n$$inline_16_part$$ = $js$$.alg.string($n$$inline_16_part$$, "").split("."), $a$$inline_19_num$$ = [], $a$$inline_19_num$$[0] = 
-          ($n$$inline_16_part$$[0] || "").replace(/\B(?=(\d{3})+(?!\d))/g, $attrs$$37_c$$), $n$$inline_16_part$$[1] && $a$$inline_19_num$$.push($n$$inline_16_part$$[1]), $v$$ = $a$$inline_19_num$$.join($d$$));
+          var $d$$ = $data$$.config.dec, $a$$inline_22_num$$ = $data$$.config.acc;
+          "" === $js$$.alg.string($n$$inline_19_part$$, "") ? $v$$ = $n$$inline_19_part$$ : ($n$$inline_19_part$$ = $js$$.alg.number($n$$inline_19_part$$, 0), $attrs$$37_c$$ = $js$$.alg.string($attrs$$37_c$$, ","), $d$$ = $js$$.alg.string($d$$, "."), "undefined" !== typeof $a$$inline_22_num$$ && ($n$$inline_19_part$$ = $n$$inline_19_part$$.toFixed($a$$inline_22_num$$)), $n$$inline_19_part$$ = $js$$.alg.string($n$$inline_19_part$$, "").split("."), $a$$inline_22_num$$ = [], $a$$inline_22_num$$[0] = 
+          ($n$$inline_19_part$$[0] || "").replace(/\B(?=(\d{3})+(?!\d))/g, $attrs$$37_c$$), $n$$inline_19_part$$[1] && $a$$inline_22_num$$.push($n$$inline_19_part$$[1]), $v$$ = $a$$inline_22_num$$.join($d$$));
         }
         this.setValue($v$$);
       });
@@ -3566,14 +3573,14 @@ js.extend.fn("sp", function() {
     });
     return this;
   }, push:function $$sp$$$list$fn$push$($success$$, $failure$$) {
-    var $ctx$$ = $sp$$.exportContext(this._url), $data$$100_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$100_list$$ = {clientContext:$ctx$$, items:[], list:$data$$100_list$$, self:this};
-    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$100_list$$);
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$100_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$100_list$$.items, $failure$$]));
+    var $ctx$$ = $sp$$.exportContext(this._url), $data$$99_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$99_list$$ = {clientContext:$ctx$$, items:[], list:$data$$99_list$$, self:this};
+    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$99_list$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$99_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$99_list$$.items, $failure$$]));
     return this;
-  }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$52_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
-    $i$$52_rowID$$ = $row$$._columns && $row$$._columns.ID.value;
+  }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$51_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
+    $i$$51_rowID$$ = $row$$._columns && $row$$._columns.ID.value;
     $itemInfo_listItem_rows$$ = $itemInfo_listItem_rows$$ = null;
-    0 > $i$$52_rowID$$ ? ($itemInfo_listItem_rows$$ = new window.SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$52_rowID$$), $data$$.newrow = !1);
+    0 > $i$$51_rowID$$ ? ($itemInfo_listItem_rows$$ = new window.SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$51_rowID$$), $data$$.newrow = !1);
     $data$$.listItem = $itemInfo_listItem_rows$$;
     $js$$.alg.each($row$$, $data$$.self._pushLoopDirtyRowColumns, $data$$);
     $data$$.items.push($itemInfo_listItem_rows$$);
@@ -3589,12 +3596,12 @@ js.extend.fn("sp", function() {
     $colName$$1_value$$ = $data$$[$colData$$.name];
     $row$$ = $colName$$1_value$$ !== $colData$$.value;
     "undefined" !== typeof $colName$$1_value$$ && $row$$ && ($colData$$.value = $colName$$1_value$$);
-  }, createRow:function $$sp$$$list$fn$createRow$($data$$104_values$$) {
+  }, createRow:function $$sp$$$list$fn$createRow$($data$$103_values$$) {
     var $columns$$ = this._columns;
-    $data$$104_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$104_values$$)};
-    $js$$.alg.each($columns$$, this._createRowEach, $data$$104_values$$);
-    $data$$104_values$$.row.ID.value = $data$$104_values$$.rowID;
-    this._dirtyRows.push($data$$104_values$$.row);
+    $data$$103_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$103_values$$)};
+    $js$$.alg.each($columns$$, this._createRowEach, $data$$103_values$$);
+    $data$$103_values$$.row.ID.value = $data$$103_values$$.rowID;
+    this._dirtyRows.push($data$$103_values$$.row);
     return this;
   }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$2_value$$, $column$$, $cell$$1_data$$) {
     var $row$$ = $cell$$1_data$$.row;
@@ -3774,24 +3781,24 @@ jspyder.extend.fn("template", function() {
     }}});
   }
   function $__parse$$($tmp$$, $data$$) {
-    for (var $ctx$$ = {data:$data$$, tmp:$tmp$$, lib:$_library$$}, $found$$2_name$$inline_36_tmp$$ = null, $str$$ = "", $ctx$$inline_26_index$$54_value$$ = 0, $args$$inline_28_length$$;$found$$2_name$$inline_36_tmp$$ = $reSymbol$$.exec($ctx$$.tmp);) {
-      $ctx$$inline_26_index$$54_value$$ = $found$$2_name$$inline_36_tmp$$.index;
-      $found$$2_name$$inline_36_tmp$$ = $found$$2_name$$inline_36_tmp$$[0];
-      $args$$inline_28_length$$ = $found$$2_name$$inline_36_tmp$$.length;
-      $str$$ += $ctx$$.tmp.substring(0, $ctx$$inline_26_index$$54_value$$);
-      $ctx$$.tmp = $ctx$$.tmp.substring($ctx$$inline_26_index$$54_value$$ + $args$$inline_28_length$$);
-      if ($reFunction$$.test($found$$2_name$$inline_36_tmp$$)) {
-        var $ctx$$inline_26_index$$54_value$$ = $ctx$$, $name$$inline_27_result$$ = void 0;
-        $args$$inline_28_length$$ = [];
-        for (var $arg$$inline_29_fn$$ = void 0, $len$$ = $name$$inline_27_result$$ = void 0, $cut$$ = void 0, $name$$inline_27_result$$ = $found$$2_name$$inline_36_tmp$$.match($reFuncName$$)[0].substring(1), $found$$2_name$$inline_36_tmp$$ = $found$$2_name$$inline_36_tmp$$.substring($found$$2_name$$inline_36_tmp$$.indexOf("(") + 1, $found$$2_name$$inline_36_tmp$$.lastIndexOf(")"));$arg$$inline_29_fn$$ = $reFuncArgs$$.exec($found$$2_name$$inline_36_tmp$$);) {
-          $cut$$ = $arg$$inline_29_fn$$[0].length, $len$$ = $arg$$inline_29_fn$$.length, $arg$$inline_29_fn$$ = $arg$$inline_29_fn$$[$len$$ - 1], $found$$2_name$$inline_36_tmp$$ = $found$$2_name$$inline_36_tmp$$.substring($cut$$), $arg$$inline_29_fn$$.search($reFunction$$) ? $arg$$inline_29_fn$$.search($reCommandLiteral$$) ? $arg$$inline_29_fn$$.search($reString$$) ? $arg$$inline_29_fn$$.search($reVariable$$) ? $arg$$inline_29_fn$$.search($reNumber$$) ? $args$$inline_28_length$$.push($__parse$$($arg$$inline_29_fn$$, 
-          $ctx$$inline_26_index$$54_value$$.data)) : $args$$inline_28_length$$.push(+$arg$$inline_29_fn$$) : $args$$inline_28_length$$.push($__parse$$($arg$$inline_29_fn$$, $ctx$$inline_26_index$$54_value$$.data)) : $args$$inline_28_length$$.push($arg$$inline_29_fn$$.substring(1, $arg$$inline_29_fn$$.length - 1)) : $args$$inline_28_length$$.push($__parse$$($arg$$inline_29_fn$$.substring(1, $arg$$inline_29_fn$$.length - 1), $ctx$$inline_26_index$$54_value$$.data)) : $args$$inline_28_length$$.push($__parse$$($arg$$inline_29_fn$$, 
-          $ctx$$inline_26_index$$54_value$$.data));
+    for (var $ctx$$ = {data:$data$$, tmp:$tmp$$, lib:$_library$$}, $found$$2_name$$inline_39_tmp$$ = null, $str$$ = "", $ctx$$inline_29_index$$54_value$$ = 0, $args$$inline_31_length$$;$found$$2_name$$inline_39_tmp$$ = $reSymbol$$.exec($ctx$$.tmp);) {
+      $ctx$$inline_29_index$$54_value$$ = $found$$2_name$$inline_39_tmp$$.index;
+      $found$$2_name$$inline_39_tmp$$ = $found$$2_name$$inline_39_tmp$$[0];
+      $args$$inline_31_length$$ = $found$$2_name$$inline_39_tmp$$.length;
+      $str$$ += $ctx$$.tmp.substring(0, $ctx$$inline_29_index$$54_value$$);
+      $ctx$$.tmp = $ctx$$.tmp.substring($ctx$$inline_29_index$$54_value$$ + $args$$inline_31_length$$);
+      if ($reFunction$$.test($found$$2_name$$inline_39_tmp$$)) {
+        var $ctx$$inline_29_index$$54_value$$ = $ctx$$, $name$$inline_30_result$$ = void 0;
+        $args$$inline_31_length$$ = [];
+        for (var $arg$$inline_32_fn$$ = void 0, $len$$ = $name$$inline_30_result$$ = void 0, $cut$$ = void 0, $name$$inline_30_result$$ = $found$$2_name$$inline_39_tmp$$.match($reFuncName$$)[0].substring(1), $found$$2_name$$inline_39_tmp$$ = $found$$2_name$$inline_39_tmp$$.substring($found$$2_name$$inline_39_tmp$$.indexOf("(") + 1, $found$$2_name$$inline_39_tmp$$.lastIndexOf(")"));$arg$$inline_32_fn$$ = $reFuncArgs$$.exec($found$$2_name$$inline_39_tmp$$);) {
+          $cut$$ = $arg$$inline_32_fn$$[0].length, $len$$ = $arg$$inline_32_fn$$.length, $arg$$inline_32_fn$$ = $arg$$inline_32_fn$$[$len$$ - 1], $found$$2_name$$inline_39_tmp$$ = $found$$2_name$$inline_39_tmp$$.substring($cut$$), $arg$$inline_32_fn$$.search($reFunction$$) ? $arg$$inline_32_fn$$.search($reCommandLiteral$$) ? $arg$$inline_32_fn$$.search($reString$$) ? $arg$$inline_32_fn$$.search($reVariable$$) ? $arg$$inline_32_fn$$.search($reNumber$$) ? $args$$inline_31_length$$.push($__parse$$($arg$$inline_32_fn$$, 
+          $ctx$$inline_29_index$$54_value$$.data)) : $args$$inline_31_length$$.push(+$arg$$inline_32_fn$$) : $args$$inline_31_length$$.push($__parse$$($arg$$inline_32_fn$$, $ctx$$inline_29_index$$54_value$$.data)) : $args$$inline_31_length$$.push($arg$$inline_32_fn$$.substring(1, $arg$$inline_32_fn$$.length - 1)) : $args$$inline_31_length$$.push($__parse$$($arg$$inline_32_fn$$.substring(1, $arg$$inline_32_fn$$.length - 1), $ctx$$inline_29_index$$54_value$$.data)) : $args$$inline_31_length$$.push($__parse$$($arg$$inline_32_fn$$, 
+          $ctx$$inline_29_index$$54_value$$.data));
         }
-        ($arg$$inline_29_fn$$ = $ctx$$inline_26_index$$54_value$$.lib.fetch($name$$inline_27_result$$)) ? ($name$$inline_27_result$$ = $arg$$inline_29_fn$$.apply($ctx$$inline_26_index$$54_value$$.data, $args$$inline_28_length$$), "undefined" !== typeof $name$$inline_27_result$$ && null !== $name$$inline_27_result$$ && ($found$$2_name$$inline_36_tmp$$ = $name$$inline_27_result$$)) : $found$$2_name$$inline_36_tmp$$ = "@" + $name$$inline_27_result$$ + "(" + $args$$inline_28_length$$.join(", ") + ")";
+        ($arg$$inline_32_fn$$ = $ctx$$inline_29_index$$54_value$$.lib.fetch($name$$inline_30_result$$)) ? ($name$$inline_30_result$$ = $arg$$inline_32_fn$$.apply($ctx$$inline_29_index$$54_value$$.data, $args$$inline_31_length$$), "undefined" !== typeof $name$$inline_30_result$$ && null !== $name$$inline_30_result$$ && ($found$$2_name$$inline_39_tmp$$ = $name$$inline_30_result$$)) : $found$$2_name$$inline_39_tmp$$ = "@" + $name$$inline_30_result$$ + "(" + $args$$inline_31_length$$.join(", ") + ")";
       }
-      $reVariable$$.test($found$$2_name$$inline_36_tmp$$) && ($ctx$$inline_26_index$$54_value$$ = $ctx$$.data[$found$$2_name$$inline_36_tmp$$.substring(2, $found$$2_name$$inline_36_tmp$$.length - 1)], $found$$2_name$$inline_36_tmp$$ = "undefined" === typeof $ctx$$inline_26_index$$54_value$$ ? $found$$2_name$$inline_36_tmp$$ : null !== $ctx$$inline_26_index$$54_value$$ ? $ctx$$inline_26_index$$54_value$$ : "");
-      $str$$ += $found$$2_name$$inline_36_tmp$$;
+      $reVariable$$.test($found$$2_name$$inline_39_tmp$$) && ($ctx$$inline_29_index$$54_value$$ = $ctx$$.data[$found$$2_name$$inline_39_tmp$$.substring(2, $found$$2_name$$inline_39_tmp$$.length - 1)], $found$$2_name$$inline_39_tmp$$ = "undefined" === typeof $ctx$$inline_29_index$$54_value$$ ? $found$$2_name$$inline_39_tmp$$ : null !== $ctx$$inline_29_index$$54_value$$ ? $ctx$$inline_29_index$$54_value$$ : "");
+      $str$$ += $found$$2_name$$inline_39_tmp$$;
     }
     return $str$$ += $ctx$$.tmp;
   }
@@ -3801,9 +3808,9 @@ jspyder.extend.fn("template", function() {
   }
   var $_templates$$ = $js$$.createRegistry(), $_library$$ = $js$$.createRegistry(), $__master_key$$ = (4294967295 * Math.random() | 0).toString(32), $reFuncArgs$$ = /\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?/i, $reString$$ = /"(?:[^"\\]|\\.)*"/i, $reCommandLiteral$$ = /`(?:[^`\\]|\\.)*`/i, $reNumber$$ = /\d+(?:\.\d+)?/, $reVariable$$ = /\$\{\D[a-z0-9_]*\}/i, $reFuncName$$ = /\@\D[a-z0-9_]*/i, $reFunction$$ = /\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)/i, 
   $reSymbol$$ = /(\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)|\$\{\D[a-z0-9_]*\})/i;
-  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$120_template$$, $data$$, $fn$$) {
-    $name$$120_template$$ = $_templates$$.fetch($name$$120_template$$);
-    return this.compileExplicit($name$$120_template$$, $data$$, $fn$$);
+  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$121_template$$, $data$$, $fn$$) {
+    $name$$121_template$$ = $_templates$$.fetch($name$$121_template$$);
+    return this.compileExplicit($name$$121_template$$, $data$$, $fn$$);
   }, compileExplicit:function $$js_template$$$fn$compileExplicit$($template$$4_tmp$$, $data$$, $fn$$) {
     "function" !== typeof $data$$ || $fn$$ || ($fn$$ = $data$$, $data$$ = null);
     "undefined" === typeof $template$$4_tmp$$ && ($template$$4_tmp$$ = "");
@@ -3922,9 +3929,9 @@ jspyder.extend.fn("template", function() {
     return "";
   }, map_item:function($map$$, $id$$) {
     return ($map$$ = this[$map$$]) ? $map$$[$id$$] : $id$$;
-  }, js_registry:function($data$$120_key$$) {
-    $data$$120_key$$ = $js$$.registry.fetch($data$$120_key$$);
-    return null === $data$$120_key$$ || "undefined" === typeof $data$$120_key$$ ? "" : $data$$120_key$$;
+  }, js_registry:function($data$$119_key$$) {
+    $data$$119_key$$ = $js$$.registry.fetch($data$$119_key$$);
+    return null === $data$$119_key$$ || "undefined" === typeof $data$$119_key$$ ? "" : $data$$119_key$$;
   }, js_log:function($data$$) {
     console.log($data$$);
   }, concat:function($str$$) {
