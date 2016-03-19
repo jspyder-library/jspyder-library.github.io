@@ -2521,8 +2521,7 @@ jspyder.extend.fn("dtype", function() {
     };
     return function attachEnum($name$$, $_interface$$17_value$$, $values$$, $_obj$$14_strict$$, $constant$$) {
       $_obj$$14_strict$$ = this.obj;
-      $_interface$$17_value$$ = $enumFactory$$($values$$, $_interface$$17_value$$);
-      Array.isArray($values$$) || $makeEnum$$($values$$);
+      $_interface$$17_value$$ = $enumFactory$$(Array.isArray($values$$) ? $makeEnum$$($values$$) : $values$$, $_interface$$17_value$$);
       $_createBinding$$($_obj$$14_strict$$, $name$$, $_interface$$17_value$$);
       return this;
     };
