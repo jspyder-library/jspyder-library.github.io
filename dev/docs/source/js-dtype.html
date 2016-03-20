@@ -15,243 +15,1123 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">/* ****************************************************************************
+  <pre class="prettyprint lang-js">/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2015 Steven Jimenez
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the &quot;Software&quot;), to 
- * deal in the Software without restriction, including without limitation the 
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
- * sell copies of the Software, and to permit persons to whom the Software is 
+ * of this software and associated documentation files (the &quot;Software&quot;), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *  
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
- * ***************************************************************************/
+ */
 jspyder.extend.fn(&quot;dtype&quot;, function () {
-    
-<span id='jspyder-dtype'>    /**************************************************************************
+    var js = this,
+        js_alg = js.alg;
+
+<span id='jspyder-dtype'>    /**
 </span>     * @class jspyder.dtype
      * @member jspyder
-     * 
+     *
      * Attaches strong-typed fields to javascript objects, which cannot be
      * mutated from their initial data types (and can optionally be set
      * as constant values, or throw errors when invalid data types are
      * applied).
-     * 
+     *
      * @param {Object} obj
      *      The object against which all of the other operations will be run
      *      against.
-     * 
+     *
      * @param {Function} [fn]
      *      A callback function, which will be executed using the current
      *      jspyder.dtype object as the context, and the object [obj] as its
      *      first parameter.
-     *************************************************************************/
+     */
     function js_dtype(obj, fn) {
-        var dtype = Object.create(js_dtype);
+        var dtype = Object.create(js_dtype.fn);
         dtype.obj = obj;
         js.alg.use(dtype, obj);
         return dtype;
     }
-    
-<span id='jspyder-dtype-method-_typeError'>    /**************************************************************************
+
+<span id='jspyder-dtype-method-_typeError'>    /**
 </span>     * @private
      * Returns a TypeError based on a template. Private function standardizes
      * error message.
-     * 
+     *
      * @param {String} name
      *      Name assigned to the variable upon creation.
-     * 
+     *
      * @param {Mixed} val
      *      The value being assigned to the variable.
-     * 
+     *
      * @param {String} eType
-     *      The expected data type. 
-     *************************************************************************/
-    function _typeError(name, val, eType) {
-        return new TypeError(&quot;Attempted to assign &quot; + typeof val + &quot;(&quot; + val + &quot;) to &quot; + eType + &quot; \&quot;&quot; + name + &quot;\&quot;&quot;);
-    }
-    
-    function _constError(name, eType) {
-        return new TypeError(&quot;Attempted to set a value to a constant &quot; + eType + &quot; \&quot;&quot; + name + &quot;\&quot;&quot;);
-    }
-    
-<span id='jspyder-dtype-method-ubyte'>    /**************************************************************************
-</span>     * Attaches an unsigned byte (0x00-0xFF) to object &quot;o&quot;, with member name
-     * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
-     * be set to a constant (locked value) or a strict (checks type upon
-     * assignment).
-     * 
-     * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
-     * and trying to write to the variable throws an error.  If a variable is
-     * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
-     * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
-     * based on JavaScript&#39;s assignment heirarchy.
-     * 
-     * The value of a &quot;Strict&quot; type can be illustrated with the following
-     * example:
-     * 
-     *      var o = {};
-     *      js.dtype(o)
-     *          .ubyte(&quot;lazy&quot;, 5)
-     *          .ubyte(&quot;strict&quot;, 5, true);
-     * 
-     *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
-     *      o.strict += &quot;5&quot; // TypeError
-     * 
-     * @param {String} name
-     *      The name to identify the data-type with on object [o].
-     * 
-     * @param {Number} [value=0]
-     *      An initial assignment operation.  If this is a constant, then
-     *      this is how the first assignment will be made.  If this is strict,
-     *      then an invalid value will immediately throw a TypeError.
-     * 
-     * @param {Boolean} [strict=false]
-     *      Whether to mark this object for on-assignment type-checking.  If
-     *      true, then any assignment operations will trigger a type-check,
-     *      and invalid types will throw a TypeError.
-     * 
-     * @param {Boolean} [constant=false]
-     *      Whether to mark this object as a constant.  If identified as a
-     *      constant, then the value cannot be changed from the value assigned
-     *      by parameter [value].
-     *************************************************************************/
-    js_dtype.ubyte = function attachUByte(name, value, strict, constant) {
-        var data = new Uint8Array(new ArrayBuffer(1)),
-            _constant = false,
-            o = this.obj;
-            
-        var _interface = {
-            get: function () { return data[0]; },
-            set: function (v) {
-                if (!_constant) {
-                    var num = (typeof v === &quot;number&quot; &amp;&amp; v === v);
-                    if (strict &amp;&amp; !num) {
-                        throw _typeError(name, v, &quot;unsigned byte&quot;);
-                    }
-                    data[0] = v;
-                    return data[0];
-                }
-                else {
-                    throw _constError(name, &quot;unsigned byte&quot;);
-                }
-            },
-            enumerable: true
-        };
-        
-        _interface.set(value);
-        _constant = constant;
-        Object.defineProperty(o, name, _interface);
-        return this;
-    };
-
-<span id='jspyder-dtype-method-js_dtype["string"]'>    /** attaches a strong-typed string to the object */
-</span>    js_dtype[&quot;string&quot;] = function attachString(name, value, strict, constant) {
-        var data = String(value),
-            _constant = false,
-            o = this.obj;
-            
-        var _interface = {
-            get: function () { return data; },
-            set: function (v) {
-                if (!_constant) {
-                    if (strict &amp;&amp; (typeof v !== &quot;string&quot;)) {
-                        throw _typeError(name, v, &quot;string&quot;);
-                    }
-                    data = String(v);
-                    return data;
-                }
-                else {
-                    throw _constError(name, &quot;string&quot;);
-                }
-            },
-            enumerable: true
-        };
-        
-        _interface.set(value);
-        _constant = constant;
-        Object.defineProperty(o, name, _interface);
-        return this;
-    };
-
-<span id='jspyder-dtype-method-uchar'>    /** 
-</span>     * Attaches a strong-typed unsigned char type to the document.  Of note,
-     * this data type can take both numerical data (ushort) or character
-     * data (single characters). 
+     *      The expected data type.
      */
-    js_dtype.uchar = function attachChar(name, value, strict, constant) {
-        var data = new Uint16Array(new ArrayBuffer(2)),
-            _constant = false,
-            o = this.obj;
-        var _interface = {
-            get: function () { return String.fromCharCode(data[0]); },
-            set: function (v) {
-                if (!_constant) {
-                    var str = ((typeof v === &quot;string&quot;) &amp;&amp; (v.length === 1)),
-                        num = ((typeof v === &quot;number&quot;) &amp;&amp; (v === v));
-                    if (strict &amp;&amp; !str &amp;&amp; !num) {
-                        throw _typeError(name, v, &quot;uchar&quot;);
-                    }
-                    data[0] = (typeof v === &quot;string&quot; ? v.charCodeAt(0) : +v);
+    function _typeError(name, val, eType) {
+        throw new TypeError(&quot;Attempted to assign &quot; + typeof val + &quot;(&quot; + val + &quot;) to &quot; + eType + &quot; \&quot;&quot; + name + &quot;\&quot;&quot;);
+    }
+
+<span id='jspyder-dtype-method-_constError'>    /**
+</span>     * @private
+     * Returns a TypeError based on a template. Private function standardizes
+     * error message.
+     *
+     * @param {String} name
+     *      Name assigned to the variable upon creation.
+     *
+     * @param {String} eType
+     *      The expected data type.
+     */
+    function _constError(name, eType) {
+        throw new TypeError(&quot;Attempted to set a value to a constant &quot; + eType + &quot; \&quot;&quot; + name + &quot;\&quot;&quot;);
+    }
+
+<span id='jspyder-dtype-method-_createInterface'>    /**
+</span>     * @private
+     *
+     * @param {String}    _name         Variable name
+     * @param {String}    _jstype       JavaScript type name
+     * @param {String}    _dtypeText    JS-DType type name
+     * @param {Function}  _dtype        JS-DType coercion function
+     * @param {Mixed}     _value        The initial value to use.
+     * @param {Boolean}   _constant     Whether the variable should be assignable after initialization.
+     * @param {Boolean}   _strict       Whether the variable should use the verification assignment function.
+     * @param {Function} [_setFn]       Custom setter hook
+     * @param {Function} [_getFn]       Custom getter hook
+     * @param {Function} [_validateFn]  Custom validation hook for strict values
+     *
+     * @return {Object} Property definition
+     */
+    function _createInterface(_name, _jstype, _dtypeText, _dtype, _value, _constant, _strict, _setFn, _getFn, _validateFn) {
+        var _interface = { },
+            _baseSet = (typeof _setFn === &quot;function&quot;
+                ? function(v) { _value = _dtype(_setFn(v)); }
+                : function(v) { _value = _dtype(v); }),
+            _strictSet = (typeof _validateFn === &quot;function&quot;
+                ? function(v) { 
+                    typeof v === _jstype || _typeError(_name, v, _jstype);
+                    _baseSet(v);
                 }
-                else {
-                    throw _constError(name, &quot;uchar&quot;);
-                }
-            },
-            enumerable: true
-        };
-        _interface.set(value);
-        _constant = constant;
-        Object.defineProperty(o, name, _interface);
-        return this;
-    };
-    
-<span id='jspyder-dtype-method-jsstring'>    /** Creates a jspyder-string object, which can (itself) be passed as a reference */
-</span>    js_dtype.jsstring = function attachJsString(name, value, strict, constant) {
-        var data = &quot;&quot;,
-            _constant = false,
-            o = this.obj;
-            
-        var _interface = {
-            get: function () {
-                return data.join(&#39;&#39;);
-            },
-            set: function (v) {
-                if (!_constant) {
-                    if (strict &amp;&amp; typeof v !== &quot;string&quot;) {
-                        throw _typeError(name, v, &quot;jsstring&quot;);
-                    }
-                    else {
-                        if (typeof v === &quot;undefined&quot; || v === null) {
-                            v = &quot;&quot;;
-                        }
-                        data = v;
-                    }
-                }
-                else {
-                    throw _constError(name, &quot;jsstring&quot;);
-                }
-            },
-            enumerable: true
-        };
-        _interface.set(value);
-        _constant = constant;
-        Object.defineProperty(o, name, _interface);
-        return this;
+                : function(v) {
+                    _validateFn(v) || _typeError(_name, v, _jsType);
+                    _baseSet(v);
+                }),
+            _constSet = function(v) { _constError(_name, _jstype); },
+            _baseGet = (typeof _getFn === &quot;function&quot;
+                ? function() { return _getFn(_dtype(_value)); }
+                : function() { return _dtype(_value); });
+
+        _baseSet(_value);
+        _interface[&quot;get&quot;] = _baseGet;
+        _interface[&quot;enumerable&quot;] = true;
+
+        if (_constant) { _interface[&quot;set&quot;] = _constSet; }
+        else if (_strict) { _interface[&quot;set&quot;] = _strictSet; }
+        else { _interface[&quot;set&quot;] = _baseSet; }
+
+        return _interface;                    
     }
     
+<span id='jspyder-dtype-method-_createBinding'>    /**
+</span>     * @private
+     * Binds the interface to the wrapped object.
+     * 
+     * @param {Object} obj          The object to bind to
+     * @param {String} name         The name to bind the property under
+     * @param {Object} _interface   The getter/setter property
+     * 
+     * @return {Object} obj parameter
+     */
+    function _createBinding(obj, name, _interface) {
+        Object.defineProperty(obj, name, _interface);
+        
+        return obj;
+    }
+
+    js_dtype.fn = {
+<span id='jspyder-dtype-method-byte'>        /**
+</span>         * Attaches a signed byte (-0x80-0x7f) to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .byte(&quot;lazy&quot;, 5)
+         *          .byte(&quot;strict&quot;, 5, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;byte&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.byte();
+            var byte = js_alg[&quot;byte&quot;];
+            
+            return function attachInt8(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;byte&quot;, byte, value, constant, strict);
+
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-ubyte'>        /**
+</span>         * Attaches an unsigned byte (0x00-0xFF) to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .ubyte(&quot;lazy&quot;, 5)
+         *          .ubyte(&quot;strict&quot;, 5, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;ubyte&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.ubyte();
+            var ubyte = js_alg[&quot;ubyte&quot;];
+
+            return function attachUInt8(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;unsigned byte&quot;, ubyte, value, constant, strict);
+
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-short'>        /**
+</span>         * Attaches a signed short (-0x8000-0x7FFF) to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .short(&quot;lazy&quot;, 5)
+         *          .short(&quot;strict&quot;, 5, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;short&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.short();
+            var short = js_alg[&quot;short&quot;];
+
+            return function attachInt16(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;short&quot;, short, value, constant, strict);
+
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-ushort'>        /**
+</span>         * Attaches an unsigned short (0x0000-0xFFFF) to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .short(&quot;lazy&quot;, 5)
+         *          .short(&quot;strict&quot;, 5, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;ushort&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.short();
+            var short = js_alg[&quot;ushort&quot;];
+
+            return function attachUInt16(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;unsigned short&quot;, ushort, value, constant, strict);
+
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-int'>        /**
+</span>         * Attaches a signed int (-0x800000000-0x7FFFFFFF) to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .int(&quot;lazy&quot;, 5)
+         *          .int(&quot;strict&quot;, 5, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;int&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.int();
+            var int = js_alg[&quot;int&quot;];
+
+            return function attachInt32(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;integer&quot;, int, value, constant, strict);
+
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-uint'>        /**
+</span>         * Attaches an unsigned int (0x00000000-0xFFFFFFFF) to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .uint(&quot;lazy&quot;, 5)
+         *          .uint(&quot;strict&quot;, 5, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;uint&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.uint();
+            var int = js_alg[&quot;uint&quot;];
+
+            return function attachUInt32(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;unsigned integer&quot;, uint, value, constant, strict);
+
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-float'>        /**
+</span>         * Attaches a floating point number to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .float(&quot;lazy&quot;, 5)
+         *          .float(&quot;strict&quot;, 5, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;float&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.float();
+            var float = js_alg[&quot;float&quot;];
+
+            return function attachFloat(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;float&quot;, float, value, constant, strict);
+
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+        
+<span id='jspyder-dtype-method-double'>        /**
+</span>         * Attaches a double (Default JavaScript Number type) to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .double(&quot;lazy&quot;, 5)
+         *          .double(&quot;strict&quot;, 5, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;double&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.double();
+            var double = js_alg[&quot;double&quot;];
+
+            return function attachDouble(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;double&quot;, double, value, constant, strict);
+
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-fixed'>        /**
+</span>         * Attaches a signed fixed-point (-0x80000000-0x7FFFFFFF) to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .fixed(&quot;lazy&quot;, 5, 2)
+         *          .fixed(&quot;strict&quot;, 5, 2, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *      o.lazy = 0.123 // = 0.12
+         *      o.lazy += 0.009 // = 0.12
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         * 
+         * @param {Number} [decimals=0]
+         *      The number of decimal points to use on this fixed point number.
+         *      Once set, this value cannot be changed; but any any decimal points
+         *      beyond this power of 10 will be truncated.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;fixed&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.int();
+            var int = js_alg.int;
+            function fixed(decimals) {
+                decimals = js_alg.int(decimals);
+                decimals = Math.pow(10, decimals);
+                return function(value) {
+                    return int(value * decimals) / decimals;
+                };
+            }
+            
+            return function attachFixed(name, value, decimals, strict, constant) {
+                var _fixed = fixed(decimals),
+                    _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;fixed&quot;, _fixed, value, constant, strict);
+                    
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-ufixed'>        /**
+</span>         * Attaches a signed fixed-point (0x00000000-0xFFFFFFFF) to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .fixed(&quot;lazy&quot;, 5, 2)
+         *          .fixed(&quot;strict&quot;, 5, 2, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *      o.lazy = 0.123 // = 0.12
+         *      o.lazy += 0.009 // = 0.12
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         * 
+         * @param {Number} [decimals=0]
+         *      The number of decimal points to use on this fixed point number.
+         *      Once set, this value cannot be changed; but any any decimal points
+         *      beyond this power of 10 will be truncated.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;ufixed&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.int();
+            var uint = js_alg.int;
+            function fixed(decimals) {
+                decimals = js_alg.int(decimals);
+                decimals = Math.pow(10, decimals);
+                return function(value) {
+                    return uint(value * decimals) / decimals;
+                };
+            }
+            
+            return function attachFixed(name, value, decimals, strict, constant) {
+                var _fixed = fixed(decimals),
+                    _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;fixed&quot;, _fixed, value, constant, strict);
+                    
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-currency'>        /**
+</span>         * Creates a 2-decimal fixed-point number.
+         * 
+         * @param {String} name
+         * @param {Number} value
+         * @param {Boolean} [strict=false]
+         * @param {Boolean} [constant=false]
+         */
+        &quot;currency&quot;: function(name, value, strict, constant) {
+            return this.fixed(name, value, 2, strict, constant);
+        },
+
+<span id='jspyder-dtype-method-string'>        /**
+</span>         * Attaches a strong typed string to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .string(&quot;lazy&quot;, &quot;5 + 5 = &quot;)
+         *          .string(&quot;strict&quot;, &quot;5 + 5 = &quot;, true);
+         *
+         *      o.lazy += &quot;10&quot; // = &quot;5 + 5 = &quot; + &quot;10&quot; = &quot;5 + 5 = 10&quot;
+         *      o.strict += 10 // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=&quot;&quot;]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;string&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.string();
+            var string = js_alg[&quot;string&quot;];
+
+            return function attachDouble(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;string&quot;, &quot;string&quot;, string, value, constant, strict);
+
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+
+<span id='jspyder-dtype-method-uchar'>        /**
+</span>         * Attaches a strong-typed unsigned char type to the object.  Of note,
+         * this data type can take both numerical data (ushort) or character
+         * data (single characters).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .fixed(&quot;lazy&quot;, 5)
+         *          .fixed(&quot;strict&quot;, 5, true);
+         *
+         *      o.lazy += &quot;5&quot; // = 5 + &quot;5&quot; = &quot;55&quot;
+         *      o.strict += &quot;5&quot; // TypeError
+         *      o.lazy = 0.123 // = 0.12
+         *      o.lazy += 0.009 // = 0.12
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;uchar&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.string();
+            js_alg.ushort();
+            
+            var string = js_alg[&quot;string&quot;],
+                uint16 = js_alg[&quot;ushort&quot;],
+                isString = function(v) { return typeof v === &quot;string&quot;; },
+                isNumber = function(v) { return typeof v === &quot;number&quot;; },
+                uchar = function(v) {
+                    if(isNumber(v)) { return uint16(v); }
+                    v = string(v);
+                    if(v.length) { return v.charCodeAt(0); }
+                    return 0;
+                },
+                validate = function(v) { 
+                    return (isString(v) &amp;&amp; v.length === 1) || (isNumber(v));
+                };
+                
+            return function attachUChar(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, null, &quot;uchar&quot;, uchar, value, constant, strict, null, null, validate);
+                    
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-bool'>        /**
+</span>         * Attaches a boolean to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .bool(&quot;lazy&quot;, true)
+         *          .bool(&quot;strict&quot;, true, true);
+         *
+         *      o.lazy = 1 // = true
+         *      o.strict = 1 // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=true]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         * 
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;bool&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.bool();
+            var bool = js_alg[&quot;bool&quot;];
+            
+            return function attachBoolean(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;boolean&quot;, &quot;bool&quot;, bool, value, constant, strict);
+                    
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-bit'>        /**
+</span>         * Attaches a bit to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .bit(&quot;lazy&quot;, 1)
+         *          .bit(&quot;strict&quot;, 1, true);
+         *
+         *      o.lazy = &quot;1&quot; // = 1
+         *      o.strict = &quot;1&quot; // TypeError
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;bit&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.bool();
+            var bool = js_alg[&quot;bool&quot;],
+                bit = function(v) { return +bool(v); },
+                test = function(v) { return (typeof v === &quot;number&quot; &amp;&amp; (v === 1 || v === 0) ) || (typeof v === &quot;boolean&quot;); }
+                
+            return function attachBit(name, value, strict, constant) {
+                var _obj = this.obj,
+                    _interface = _createInterface(name, &quot;number&quot;, &quot;bit&quot;, bit, value, constant, strict, null, null, test);
+                    
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        }),
+        
+<span id='jspyder-dtype-method-enum'>        /**
+</span>         * Attaches an enum interface to object &quot;o&quot;, with member name
+         * &quot;name&quot;, with an initial value of &quot;value&quot;.  Optionally, the value can
+         * be set to a constant (locked value) or a strict (checks type upon
+         * assignment).
+         *
+         * If a variable is assigned as a &quot;Constant&quot;, then it becomes read-only,
+         * and trying to write to the variable throws an error.  If a variable is
+         * assigned as a &quot;Strict&quot;, then it will throw an error if an invalid data
+         * type is assigned; rather than attempt to &quot;guess&quot; the appropriate action
+         * based on JavaScript&#39;s assignment heirarchy.
+         *
+         * The value of a &quot;Strict&quot; type can be illustrated with the following
+         * example:
+         *
+         *      var o = {};
+         *      js.dtype(o)
+         *          .enum(&quot;lazy&quot;, 1, [&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;])
+         *          .enum(&quot;strict&quot;, 1, [&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;], true);
+         *
+         *      o.lazy = 1 | 2 | 4 // o.lazy.A === true, o.lazy.B === true, o.lazy.C === true, o.lazy.D === false
+         *      o.strict = &quot;1&quot; // TypeError
+         * 
+         *      o.lazy.A = true
+         *      o.lazy.B = true
+         *      o.lazy.C = false
+         *      o.lazy.D = false
+         * 
+         *      o.lazy.valueOf() // 3 
+         *
+         * @param {String} name
+         *      The name to identify the data-type with on object [o].
+         *
+         * @param {Number} [value=0]
+         *      An initial assignment operation.  If this is a constant, then
+         *      this is how the first assignment will be made.  If this is strict,
+         *      then an invalid value will immediately throw a TypeError.
+         * 
+         * @param {Array|Object} [values=0]
+         *      The possible values which can be assigned under this enum value.
+         *      
+         *      If an array is passed, then a list of enum values are generated
+         *      automatically; this is sufficient for most uses if data is note
+         *      stored between sessions.  
+         * 
+         *      If an object is passed, then the values from the object are used
+         *      to generate the interface.  This method allows finer control over
+         *      the available values, but does not ensure that each value is
+         *      unique; duplicate or overlapping bit-flags can be provided.
+         *
+         * @param {Boolean} [strict=false]
+         *      Whether to mark this object for on-assignment type-checking.  If
+         *      true, then any assignment operations will trigger a type-check,
+         *      and invalid types will throw a TypeError.
+         *
+         * @param {Boolean} [constant=false]
+         *      Whether to mark this object as a constant.  If identified as a
+         *      constant, then the value cannot be changed from the value assigned
+         *      by parameter [value].
+         */
+        &quot;enum&quot;: js.alg.use(js_dtype, function bootstrap() {
+            js_alg.makeEnum();
+            var makeEnum = js_alg[&quot;makeEnum&quot;],
+                enumFactory = function(name, values, value, strict, constant) {
+                    var _proxy = {},
+                        _interface = {
+                            valueOf: function() { return value; }
+                        };
+                        value = js.alg.number(value),
+                        bitValues = [];
+                        
+                    js.alg.each(values, function(bits, key) {
+                        if(key !== &quot;valueOf&quot;) {
+                            bitValues.push(bits);
+                            function setConst(v) { _constError(name + &quot;.&quot; + key, &quot;number&quot;); }
+                            function setBasic(v) { value = js.alg.number((v) ? (value | bits) : (value - (value &amp; bits)))|0; }
+                            function setStrict(v) { if(typeof v !== &quot;boolean&quot; &amp;&amp; typeof v !== &quot;number&quot;) { _typeError(name + &quot;.&quot; + key, v, &quot;number/boolean&quot;); } setBasic(v); }
+                            _proxy[key] = {
+                                &quot;enumerable&quot;: true,
+                                &quot;get&quot;: function() { return js.alg.number(value &amp; bits)|0; },
+                                &quot;set&quot;: (constant ? setConst : strict ? setStrict : setBasic)
+                            };
+                        }
+                    });
+                    js.alg.sortArrayNum(bitValues, true);
+                    
+                    Object.defineProperties(_interface, _proxy);
+                    
+                    function setEnumConst(v) { _constError(name, &quot;enum&quot;); }
+                    function setEnumStrict(v) { if(typeof v !== &quot;number&quot;) { _typeError(name, v, &quot;enum&quot;); } setEnumBasic(v); }
+                    function setEnumBasic(v) {
+                        v = js.alg.number(v)|0;
+                        var val = 0;
+                        js.alg.arrEach(bitValues, function(bit) {
+                            if( (v &amp; bit) === bit ) {
+                                val |= bit;
+                            }
+                            if( v &lt; bit ) {
+                                this.stop();
+                            }
+                        });
+                        value = val;
+                    }
+                    
+                    return {
+                        &quot;enumerable&quot;: true,
+                        &quot;get&quot;: function() { return _interface; },
+                        &quot;set&quot;: (constant ? setEnumConst : strict ? setEnumStrict : setEnumBasic)
+                    };
+                };
+            
+            return function attachEnum(name, value, values, strict, constant) {
+                var _obj = this.obj,
+                    _interface = enumFactory(name, Array.isArray(values) ? makeEnum(values) : values, value, strict, constant);
+                
+                _createBinding(_obj, name, _interface);
+                return this;
+            };
+        })
+    };
+    
+    js.alg.use(js_dtype.fn, function() {
+<span id='jspyder-dtype-property-this["int8"]'>        /**
+</span>         * @alias jspyder.dtype.byte
+         */
+        this[&quot;int8&quot;] = this[&quot;byte&quot;];
+
+<span id='jspyder-dtype-property-this["uint8"]'>        /**
+</span>         * @alias jspyder.dtype.ubyte
+         */
+        this[&quot;uint8&quot;] = this[&quot;ubyte&quot;];
+
+<span id='jspyder-dtype-property-this["int16"]'>        /**
+</span>         * @alias jspyder.dtype.short
+         */
+        this[&quot;int16&quot;] = this[&quot;short&quot;];
+
+<span id='jspyder-dtype-property-this["uint16"]'>        /**
+</span>         * @alias jspyder.dtype.ushort
+         */
+        this[&quot;uint16&quot;] = this[&quot;ushort&quot;];
+
+<span id='jspyder-dtype-property-this["int32"]'>        /**
+</span>         * @alias jspyder.dtype.int
+         */
+        this[&quot;int32&quot;] = this[&quot;int&quot;];
+
+<span id='jspyder-dtype-property-this["uint32"]'>        /**
+</span>         * @alias jspyder.dtype.uint
+         */
+        this[&quot;uint32&quot;] = this[&quot;uint&quot;];
+    });
+
     return js_dtype;
 });</pre>
 </body>

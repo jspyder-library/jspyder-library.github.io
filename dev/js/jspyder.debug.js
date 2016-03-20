@@ -633,7 +633,7 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
     var $js$$ = $global$$.jspyder = function jspyder() {
     };
     $js$$.extend = function js_extend($name$$, $obj$$) {
-      Object.defineProperty(this, $name$$, {value:$obj$$});
+      this.hasOwnProperty($name$$) || Object.defineProperty(this, $name$$, {value:$obj$$});
       return this;
     };
     $js$$.extend.fn = function js_extend_fn($name$$, $fn$$, $args$$) {
@@ -736,8 +736,8 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       return $js$$;
     }, magnitude:function $$js_alg$$$magnitude$($n$$) {
       $n$$ = $js$$.alg.number($n$$);
-      var $y$$ = Math.pow(10, ($n$$ | 0).toString().length - 1);
-      return Math.ceil($n$$ / $y$$) * $y$$;
+      var $y$$ = Math.pow(10, ((0 > $n$$ ? -$n$$ : $n$$) | 0).toString().length - 1);
+      return Math[0 > $n$$ ? "floor" : "ceil"]($n$$ / $y$$) * $y$$;
     }, escapeString:function $$js_alg$$$escapeString$($str$$) {
       return $js$$.alg.string($str$$).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
     }, use:function $$js_alg$$$use$($_this$$, $fn$$, $args$$) {
@@ -758,7 +758,7 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       var $_n$$ = +$n$$;
       return $_n$$ == $n$$ || $_n$$ === $_n$$ ? $_n$$ : $d$$ || 0;
     }, string:function $$js_alg$$$string$($s$$, $d$$) {
-      return "string" === typeof $s$$ ? $s$$ : "object" === typeof $s$$ && $s$$.isPrototypeOf(RegExp) ? $s$$ = ("" + $s$$).match(/^\/(.*)\/[a-z]*$/, "$1") : $s$$ || 0 === $s$$ ? "" + $s$$ : $d$$ || "";
+      return "string" === typeof $s$$ ? $s$$ : $s$$ && "function" === typeof $s$$.toString ? $s$$.toString() : null !== $s$$ && "object" === typeof $s$$ && $s$$.isPrototypeOf(RegExp) ? $s$$ = ("" + $s$$).match(/^\/(.*)\/[a-z]*$/, "$1") : $s$$ || 0 === $s$$ ? "" + $s$$ : $d$$ || "";
     }, object:function $$js_alg$$$object$($o$$, $d$$) {
       return $o$$ && "object" === typeof $o$$ ? $o$$ : $d$$ || {};
     }, array:function $$js_alg$$$array$($a$$, $d$$) {
@@ -845,9 +845,14 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       };
       return $js_alg$$.uint($u$$0$$);
     }, "float":function $$js_alg$$$float$($u$$0$$) {
-      $js_alg$$["float"] = "undefined" === typeof Float32Array ? function($u$$) {
-        $u$$ = +(+$u$$).toPrecision(8);
-        return $u$$ == $u$$ ? $u$$ : 0;
+      $js_alg$$["float"] = "undefined" === typeof window.Float32Array ? function($sign_u$$) {
+        $sign_u$$ = 2 * (0 < x) - 1;
+        for (var $exp$$ = 0, $base$$ = x * $sign_u$$, $frac$$ = 0;2 <= $base$$ || 1 > $base$$;) {
+          2 <= $base$$ && ($base$$ /= 2, $exp$$++), 1 > $base$$ && ($base$$ *= 2, $exp$$--);
+        }
+        $frac$$ = x / Math.pow(2, $exp$$) - 1;
+        $frac$$ = 1 + Math.round(8388608 * $frac$$) / 8388608;
+        return +($sign_u$$ * $frac$$ * Math.pow(2, $exp$$)).toPrecision(8);
       } : function($u$$) {
         var $buffer$$15_byteArray$$ = new ArrayBuffer(4), $buffer$$15_byteArray$$ = new Float32Array($buffer$$15_byteArray$$);
         $buffer$$15_byteArray$$[0] = $u$$;
@@ -942,32 +947,13 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
       return $base$$;
     }, cloneObj:function $$js_alg$$$cloneObj$($obj$$) {
       return $obj$$ && "object" === typeof $obj$$ ? $js$$.alg.mergeObj($obj$$.constructor(), $obj$$) : $obj$$;
-    }, deepCloneObj:function $$js_alg$$$deepCloneObj$($obj$$0$$, $JSCompiler_OptimizeArgumentsArray_p0$$) {
+    }, deepCloneObj:function $$js_alg$$$deepCloneObj$($obj$$0$$) {
       if (!$obj$$0$$ || "object" !== typeof $obj$$0$$) {
         return $obj$$0$$;
       }
       $obj$$0$$ = this.cloneObj($obj$$0$$);
-      var $depchain$$ = $js$$.alg.array($JSCompiler_OptimizeArgumentsArray_p0$$);
       $js$$.alg.each($obj$$0$$, function($value$$, $key$$, $obj$$) {
-        for (var $i$$19_map$$ = 0;$i$$19_map$$ < $depchain$$.length;$i$$19_map$$++) {
-          if ($depchain$$[$i$$19_map$$].from === $value$$) {
-            $obj$$[$key$$] = $depchain$$[$i$$19_map$$].to;
-            return;
-          }
-        }
-        $i$$19_map$$ = {from:$value$$, to:{}};
-        $depchain$$.push($i$$19_map$$);
-        $i$$19_map$$.cleanup = $obj$$[$key$$] = $js$$.alg.deepCloneObj($value$$, $depchain$$);
-      });
-      $js$$.alg.each($obj$$0$$, function refill($value$$, $key$$, $obj$$) {
-        for (var $i$$ = 0;$i$$ < $depchain$$.length;$i$$++) {
-          if ($value$$ === $depchain$$[$i$$].to && $depchain$$[$i$$].cleanup) {
-            $obj$$[$key$$] = $depchain$$[$i$$].cleanup;
-            break;
-          } else {
-            "object" === typeof $value$$ && $js$$.alg.each($value$$, refill);
-          }
-        }
+        $obj$$[$key$$] = $js$$.alg.deepCloneObj($value$$);
       });
       return $obj$$0$$;
     }, keycodes:{KC_Backspace:8, KC_Tab:9, KC_Enter:13, KC_Shift:16, KC_Ctrl:17, KC_Alt:18, KC_Pause:19, KC_Break:19, KC_CapsLock:20, KC_Escape:27, KC_Space:32, KC_PageUp:33, KC_PageDown:34, KC_End:35, KC_Home:36, KC_LeftArrow:37, KC_UpArrow:38, KC_RightArrow:39, KC_DownArrow:40, KC_Insert:45, KC_Delete:46, KC_0:48, KC_1:49, KC_2:50, KC_3:51, KC_4:52, KC_5:53, KC_6:54, KC_7:55, KC_8:56, KC_9:57, KC_A:65, KC_B:66, KC_C:67, KC_D:68, KC_E:69, KC_F:70, KC_G:71, KC_H:72, KC_I:73, KC_J:74, KC_K:75, KC_L:76, 
@@ -1005,11 +991,11 @@ $jscomp.string.endsWith$install = function $$jscomp$string$endsWith$install$() {
     function $__getDomClasses$$($element$$) {
       return $__isElement$$($element$$) ? $element$$.className.replace(/(^\s+)|(\s(?=\s))|(\s+$)/g, "").split(" ") : [];
     }
-    function $_parseHtml$$($i$$21_s$$) {
+    function $_parseHtml$$($i$$19_s$$) {
       var $div$$ = $document$$.createElement("div"), $arr$$ = [];
-      $div$$.innerHTML = $i$$21_s$$;
-      for ($i$$21_s$$ = 0;$i$$21_s$$ < $div$$.children.length;$i$$21_s$$++) {
-        $arr$$.push($div$$.children[$i$$21_s$$]);
+      $div$$.innerHTML = $i$$19_s$$;
+      for ($i$$19_s$$ = 0;$i$$19_s$$ < $div$$.children.length;$i$$19_s$$++) {
+        $arr$$.push($div$$.children[$i$$19_s$$]);
       }
       return $arr$$;
     }
@@ -1479,13 +1465,10 @@ jspyder.extend.fn("ajax", function() {
   return $js_ajax$$;
 });
 jspyder.extend.fn("canvas", function() {
-  function $js_canvas$$($alt_settings$$) {
-    $alt_settings$$ = $alt_settings$$ || {};
-    var $c$$ = $js$$.dom("<canvas></canvas>"), $attrs$$ = {height:$js$$.alg.number($alt_settings$$.height, 150), width:$js$$.alg.number($alt_settings$$.width, 300)}, $css$$ = $alt_settings$$.css;
-    $alt_settings$$ = $js$$.alg.string($alt_settings$$.alt, "Your browser does not support Canvas elements.");
-    $c$$.setAttrs($attrs$$);
-    $c$$.setCss($css$$);
-    $c$$.setHtml($alt_settings$$);
+  function $js_canvas$$($settings$$) {
+    $settings$$ = $settings$$ || {};
+    var $c$$ = $js$$.dom($settings$$.canvas || "<canvas></canvas>"), $css$$ = $settings$$.css, $attrs$$ = {height:$js$$.alg.number($settings$$.height, 150), width:$js$$.alg.number($settings$$.width, 300)};
+    $settings$$.canvas || $c$$.setCss($css$$).setAttrs($attrs$$);
     return Object.create($js_canvas$$.fn, {canvas:{value:$c$$}, queue:{value:[]}, context:{value:$c$$._element[0] && $c$$._element[0].getContext && $c$$._element[0].getContext("2d")}});
   }
   function $__mergeSettings$$($settings$$) {
@@ -1517,6 +1500,20 @@ jspyder.extend.fn("canvas", function() {
     var $size$$ = {height:0, width:0, x:0, y:0}, $element$$ = this.canvas && this.canvas._element && this.canvas._element[0], $rect$$;
     $element$$ && ($rect$$ = $element$$.getBoundingClientRect(), $size$$.width = $element$$.width, $size$$.height = $element$$.height, $size$$.x = $rect$$.x, $size$$.y = $rect$$.y);
     return $size$$;
+  }, exportImageUrl:function $$js_canvas$$$fn$exportImageUrl$($type$$) {
+    var $dataUrl$$ = "";
+    this.canvas && this.canvas.element(0, function() {
+      $dataUrl$$ = this.toDataURL("image/" + $type$$);
+    });
+    return $dataUrl$$;
+  }, getImageUrl:function $$js_canvas$$$fn$getImageUrl$($type$$, $fn$$) {
+    $js$$.alg.use(this, $fn$$, [this.exportImageUrl($type$$)]);
+    return this;
+  }, exportImage:function $$js_canvas$$$fn$exportImage$($type$$) {
+    return $js$$.dom("<img></img>").setAttrs({src:this.exportImageUrl($type$$)});
+  }, getImage:function $$js_canvas$$$fn$getImage$($type$$, $fn$$) {
+    $js$$.alg.use(this, $fn$$, [this.exportImage($type$$)]);
+    return this;
   }, clear:function $$js_canvas$$$fn$clear$() {
     var $self$$ = this;
     this.getSize(function($size$$) {
@@ -1613,8 +1610,10 @@ jspyder.extend.fn("canvas", function() {
     $offsetY_settings$$ = $offsetY_settings$$ || {};
     var $sections$$ = $offsetY_settings$$.sections = $offsetY_settings$$.sections || [], $chartY_size$$ = this.exportSize(), $borderWidth$$ = $offsetY_settings$$.borderWidth = $js$$.alg.number($offsetY_settings$$.borderWidth, 1), $width$$ = $offsetY_settings$$.width = $js$$.alg.number($offsetY_settings$$.width, $chartY_size$$.width), $height$$ = $offsetY_settings$$.height = $js$$.alg.number($offsetY_settings$$.height, $chartY_size$$.height), $chartX$$ = $offsetY_settings$$.x = $js$$.alg.number($offsetY_settings$$.x, 
     0), $chartY_size$$ = $offsetY_settings$$.y = $js$$.alg.number($offsetY_settings$$.y, 0), $fill$$ = $offsetY_settings$$.fill = $js$$.alg.string($offsetY_settings$$.fill, "white"), $border$$ = $offsetY_settings$$.border = $js$$.alg.string($offsetY_settings$$.border, "black"), $lineColor$$ = $offsetY_settings$$.lineColor = $js$$.alg.string($offsetY_settings$$.lineColor, "rgba(0, 0, 0, 0.3)"), $labels$$ = $offsetY_settings$$.labels = $offsetY_settings$$.labels || [], $labelSize$$ = $offsetY_settings$$.labelSize = 
-    $js$$.alg.number($offsetY_settings$$.labelSize, 16), $min$$ = $offsetY_settings$$.min = $js$$.alg.number($offsetY_settings$$.min, Infinity), $max$$ = $offsetY_settings$$.max = $js$$.alg.number($offsetY_settings$$.max, -Infinity), $self$$ = this, $cols$$, $colWidth$$;
-    $offsetY_settings$$ = 1.2 * $labelSize$$;
+    $js$$.alg.number($offsetY_settings$$.labelSize, 16), $min$$ = $offsetY_settings$$.min = $js$$.alg.number($offsetY_settings$$.min, Infinity), $max$$ = $offsetY_settings$$.max = $js$$.alg.number($offsetY_settings$$.max, -Infinity), $format$$ = $js$$.alg.bindFn(this, $offsetY_settings$$.format || function($n$$) {
+      return $n$$;
+    }), $self$$ = this, $cols$$, $colWidth$$;
+    $offsetY_settings$$ = 1.5 * $labelSize$$;
     $self$$.cmd.rectangle.call(this, {width:$width$$, height:$height$$, x:$chartX$$, y:$chartY_size$$, fill:$fill$$, borderWidth:$borderWidth$$, border:$border$$});
     $width$$ -= 2 * $borderWidth$$;
     $height$$ -= 2 * $borderWidth$$;
@@ -1633,8 +1632,8 @@ jspyder.extend.fn("canvas", function() {
     $max$$ = 1.1 * $js$$.alg.magnitude($max$$);
     $js$$.alg.iterate(0, 5, function($i$$) {
       $self$$.cmd.line.call($self$$, {x:$chartX$$, y:$height$$ * (5 - $i$$) / 5, width:$width$$ + $chartX$$, height:0, color:$lineColor$$});
-      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$i$$ / 5 * $max$$ | 0, textalign:"left"});
-      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$i$$ / 5 * $max$$ | 0, textalign:"right"});
+      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$ | 0), textalign:"left"});
+      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$ | 0), textalign:"right"});
     });
     $width$$ -= 50;
     $chartX$$ += 50;
@@ -1655,7 +1654,9 @@ jspyder.extend.fn("canvas", function() {
     $offsetY$$1_settings$$ = $offsetY$$1_settings$$ || {};
     var $sections$$ = $offsetY$$1_settings$$.sections = $offsetY$$1_settings$$.sections || [], $chartY$$1_size$$ = this.exportSize(), $borderWidth$$ = $offsetY$$1_settings$$.borderWidth = $js$$.alg.number($offsetY$$1_settings$$.borderWidth, 1), $width$$ = $offsetY$$1_settings$$.width = $js$$.alg.number($offsetY$$1_settings$$.width, $chartY$$1_size$$.width), $height$$ = $offsetY$$1_settings$$.height = $js$$.alg.number($offsetY$$1_settings$$.height, $chartY$$1_size$$.height), $chartX$$ = $offsetY$$1_settings$$.x = 
     $js$$.alg.number($offsetY$$1_settings$$.x, 0), $chartY$$1_size$$ = $offsetY$$1_settings$$.y = $js$$.alg.number($offsetY$$1_settings$$.y, 0), $fill$$ = $offsetY$$1_settings$$.fill = $js$$.alg.string($offsetY$$1_settings$$.fill, "white"), $border$$ = $offsetY$$1_settings$$.border = $js$$.alg.string($offsetY$$1_settings$$.border, "black"), $labels$$ = $offsetY$$1_settings$$.labels = $offsetY$$1_settings$$.labels || [], $labelSize$$ = $offsetY$$1_settings$$.labelSize = $js$$.alg.number($offsetY$$1_settings$$.labelSize, 
-    16), $lineColor$$0$$ = $offsetY$$1_settings$$.linecolor = $js$$.alg.string($offsetY$$1_settings$$.linecolor, "rgba(0, 0, 0, 0.3)"), $min$$ = $js$$.alg.number($offsetY$$1_settings$$.min, Infinity), $max$$ = $js$$.alg.number($offsetY$$1_settings$$.max, -Infinity), $self$$ = this, $cols$$;
+    16), $lineColor$$0$$ = $offsetY$$1_settings$$.linecolor = $js$$.alg.string($offsetY$$1_settings$$.linecolor, "rgba(0, 0, 0, 0.3)"), $min$$ = $js$$.alg.number($offsetY$$1_settings$$.min, Infinity), $max$$ = $js$$.alg.number($offsetY$$1_settings$$.max, -Infinity), $format$$ = $js$$.alg.bindFn(this, $offsetY$$1_settings$$.format || function($n$$) {
+      return $n$$ | 0;
+    }), $self$$ = this, $cols$$;
     $offsetY$$1_settings$$ = 1.5 * $labelSize$$;
     $self$$.cmd.rectangle.call(this, {width:$width$$, height:$height$$, x:$chartX$$, y:$chartY$$1_size$$, fill:$fill$$, borderWidth:$borderWidth$$, border:$border$$});
     $width$$ -= 2 * $borderWidth$$;
@@ -1675,8 +1676,8 @@ jspyder.extend.fn("canvas", function() {
     $max$$ = 1.1 * $js$$.alg.magnitude($max$$);
     $js$$.alg.iterate(0, 5, function($i$$) {
       $self$$.cmd.line.call($self$$, {x:$chartX$$, y:$height$$ * (5 - $i$$) / 5, width:$width$$ + $chartX$$, height:0, color:$lineColor$$0$$});
-      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$i$$ / 5 * $max$$ | 0, textalign:"left"});
-      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$i$$ / 5 * $max$$ | 0, textalign:"right"});
+      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$), textalign:"left"});
+      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$), textalign:"right"});
     });
     var $width$$ = $width$$ - 50, $chartX$$ = $chartX$$ + 50, $workArea$$ = {x:$chartX$$, y:$chartY$$1_size$$, height:$height$$ - $chartY$$1_size$$, width:$width$$ - $chartX$$, vertWidth:($width$$ - $chartX$$) / ($cols$$ - 1)};
     $js$$.alg.iterate(0, $cols$$, function($i$$) {
@@ -1686,15 +1687,14 @@ jspyder.extend.fn("canvas", function() {
     });
     $js$$.alg.arrEach($sections$$, function($group$$, $g$$) {
       var $lineColor$$ = $group$$.fill = $js$$.alg.string($group$$.fill, "transparent"), $lineOutline$$ = $group$$.border = $js$$.alg.string($group$$.border, "black"), $lineOutlineWidth$$ = $group$$.borderWidth = $js$$.alg.number($group$$.borderWidth, 1), $dotColor$$ = $group$$.dotfill = $js$$.alg.string($group$$.dotfill, $lineColor$$), $dotOutline$$ = $group$$.dotBorder = $js$$.alg.string($group$$.dotBorder, $lineOutline$$), $dotOutlineWidth$$ = $group$$.dotBorderWidth = $js$$.alg.string($group$$.dotBorderWidth, 
-      $lineOutlineWidth$$);
-      $group$$.dotRadius = $js$$.alg.number($group$$.dotRadius, 4);
+      $lineOutlineWidth$$), $dotRadius$$ = $group$$.dotRadius = $js$$.alg.number($group$$.dotRadius, 4);
       $js$$.alg.arrEach($group$$ && $group$$.values, function($v2_val$$, $b$$, $v1_values$$) {
         $v1_values$$ = $workArea$$.height - ($workArea$$.y + $workArea$$.height * $js$$.alg.number($v1_values$$[$b$$ - 1]) / ($max$$ || 1));
         $v2_val$$ = $workArea$$.height - ($workArea$$.y + $workArea$$.height * $js$$.alg.number($v2_val$$) / ($max$$ || 1));
         var $x$$ = $workArea$$.x + $workArea$$.vertWidth * ($b$$ - 1), $dotX$$ = $workArea$$.x + $workArea$$.vertWidth * $b$$;
         $b$$ && $self$$.cmd.line.call($self$$, {x:$x$$, y:$v1_values$$, width:$workArea$$.vertWidth, height:$v2_val$$ - $v1_values$$, color:$lineOutline$$, thickness:$lineOutlineWidth$$});
-        $self$$.cmd.circle.call($self$$, {y:$v2_val$$, x:$dotX$$, radius:4, fill:$dotColor$$, border:$dotOutline$$, thickness:$dotOutlineWidth$$});
-        $self$$.cmd.circle.call($self$$, {y:$v1_values$$, x:$x$$, radius:4, fill:$dotColor$$, border:$dotOutline$$, thickness:$dotOutlineWidth$$});
+        $self$$.cmd.circle.call($self$$, {y:$v2_val$$, x:$dotX$$, radius:$dotRadius$$, fill:$dotColor$$, border:$dotOutline$$, thickness:$dotOutlineWidth$$});
+        $self$$.cmd.circle.call($self$$, {y:$v1_values$$, x:$x$$, radius:$dotRadius$$, fill:$dotColor$$, border:$dotOutline$$, thickness:$dotOutlineWidth$$});
       });
     });
   }}};
@@ -2170,27 +2170,27 @@ js.extend.fn("download", function() {
     $dl$$.setName($def$$.name).setType($def$$.type).setData($def$$.data).setCharset($def$$.charset);
     return $dl$$;
   }
-  function $__save$$($filereader_name$$, $type$$, $blob$$) {
-    $type$$ = $js$$.alg.string($type$$, $safeType$$);
-    $filereader_name$$ = $js$$.alg.string($filereader_name$$, "download.txt");
+  function $__save$$($name$$, $filereader_type$$, $blob$$) {
+    $filereader_type$$ = $js$$.alg.string($filereader_type$$, $safeType$$);
+    $name$$ = $js$$.alg.string($name$$, "download.txt");
     if ($__reDataUrl$$.test($blob$$)) {
-      return $saveBlob$$ ? $saveBlob$$($__encode$$($blob$$), $filereader_name$$) : $__triggerSave$$($blob$$);
+      return $saveBlob$$ ? $saveBlob$$($__encode$$($blob$$), $name$$) : $__triggerSave$$($name$$, $blob$$);
     }
-    $blob$$ = $blob$$ instanceof $Blob$$ ? $blob$$ : new $Blob$$([$blob$$], {type:$type$$});
+    $blob$$ = $blob$$ instanceof $Blob$$ ? $blob$$ : new $Blob$$([$blob$$], {type:$filereader_type$$});
     if ($saveBlob$$) {
-      return $saveBlob$$($blob$$, $filereader_name$$);
+      return $saveBlob$$($blob$$, $name$$);
     }
     if ($URL$$) {
-      return "Chrome" === $js$$.env.browser.name && $type$$ !== $safeType$$ && ($blob$$ = $sliceBlob$$.call($blob$$, 0, $blob$$.size, $safeType$$)), $__triggerSave$$($filereader_name$$, $URL$$.createObjectURL($blob$$));
+      return "Chrome" === $js$$.env.browser.name && $filereader_type$$ !== $safeType$$ && ($blob$$ = $sliceBlob$$.call($blob$$, 0, $blob$$.size, $safeType$$)), $__triggerSave$$($name$$, $URL$$.createObjectURL($blob$$));
     }
     if ("string" === typeof $blob$$ || $blob$$ instanceof String) {
-      return $__triggerSave$$("data:" + $type$$ + $__decode$$($blob$$));
+      return $__triggerSave$$($name$$, "data:" + $filereader_type$$ + $__decode$$($blob$$));
     }
-    $filereader_name$$ = new FileReader;
-    $filereader_name$$.onload = function $$filereader_name$$$onload$($e$$) {
-      $__triggerSave$$(this.result);
+    $filereader_type$$ = new FileReader;
+    $filereader_type$$.onload = function $$filereader_type$$$onload$($e$$) {
+      $__triggerSave$$($name$$, this.result);
     };
-    $filereader_name$$.readAsDataURL($blob$$);
+    $filereader_type$$.readAsDataURL($blob$$);
     return !0;
   }
   function $__triggerSave$$($filename$$, $url$$) {
@@ -2310,11 +2310,272 @@ js.extend.fn("download", function() {
   };
   return $download$$;
 });
+jspyder.extend.fn("dtype", function() {
+  function $js_dtype$$($obj$$, $fn$$) {
+    var $dtype$$ = Object.create($js_dtype$$.fn);
+    $dtype$$.obj = $obj$$;
+    $js$$.alg.use($dtype$$, $obj$$);
+    return $dtype$$;
+  }
+  function $_typeError$$($name$$, $val$$, $eType$$) {
+    throw new TypeError("Attempted to assign " + typeof $val$$ + "(" + $val$$ + ") to " + $eType$$ + ' "' + $name$$ + '"');
+  }
+  function $_constError$$($name$$, $eType$$) {
+    throw new TypeError("Attempted to set a value to a constant " + $eType$$ + ' "' + $name$$ + '"');
+  }
+  function $_createInterface$$($_name$$, $_jstype$$, $_dtypeText__interface$$, $_dtype$$, $_value$$, $_constant$$, $_strict$$, $_setFn$$, $_getFn$$, $_validateFn$$) {
+    $_dtypeText__interface$$ = {};
+    var $_baseSet$$ = "function" === typeof $_setFn$$ ? function($v$$) {
+      $_value$$ = $_dtype$$($_setFn$$($v$$));
+    } : function($v$$) {
+      $_value$$ = $_dtype$$($v$$);
+    }, $_strictSet$$ = "function" === typeof $_validateFn$$ ? function($v$$) {
+      typeof $v$$ === $_jstype$$ || $_typeError$$($_name$$, $v$$, $_jstype$$);
+      $_baseSet$$($v$$);
+    } : function($v$$) {
+      $_validateFn$$($v$$) || $_typeError$$($_name$$, $v$$, _jsType);
+      $_baseSet$$($v$$);
+    }, $_constSet$$ = function $$_constSet$$$($v$$) {
+      $_constError$$($_name$$, $_jstype$$);
+    }, $_baseGet$$ = "function" === typeof $_getFn$$ ? function() {
+      return $_getFn$$($_dtype$$($_value$$));
+    } : function() {
+      return $_dtype$$($_value$$);
+    };
+    $_baseSet$$($_value$$);
+    $_dtypeText__interface$$.get = $_baseGet$$;
+    $_dtypeText__interface$$.enumerable = !0;
+    $_dtypeText__interface$$.set = $_constant$$ ? $_constSet$$ : $_strict$$ ? $_strictSet$$ : $_baseSet$$;
+    return $_dtypeText__interface$$;
+  }
+  function $_createBinding$$($obj$$, $name$$, $_interface$$) {
+    Object.defineProperty($obj$$, $name$$, $_interface$$);
+    return $obj$$;
+  }
+  var $js$$ = this, $js_alg$$ = $js$$.alg;
+  $js_dtype$$.fn = {"byte":$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.byte();
+    var $byte$$ = $js_alg$$["byte"];
+    return function attachInt8($name$$, $_interface$$2_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$2_value$$ = $_createInterface$$($name$$, "number", "byte", $byte$$, $_interface$$2_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$2_value$$);
+      return this;
+    };
+  }), ubyte:$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.ubyte();
+    var $ubyte$$ = $js_alg$$.ubyte;
+    return function attachUInt8($name$$, $_interface$$3_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$3_value$$ = $_createInterface$$($name$$, "number", "unsigned byte", $ubyte$$, $_interface$$3_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$3_value$$);
+      return this;
+    };
+  }), "short":$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.short();
+    var $short$$ = $js_alg$$["short"];
+    return function attachInt16($name$$, $_interface$$4_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$4_value$$ = $_createInterface$$($name$$, "number", "short", $short$$, $_interface$$4_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$4_value$$);
+      return this;
+    };
+  }), ushort:$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.short();
+    return function attachUInt16($name$$, $_interface$$5_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$5_value$$ = $_createInterface$$($name$$, "number", "unsigned short", ushort, $_interface$$5_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$5_value$$);
+      return this;
+    };
+  }), "int":$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.int();
+    var $int$$ = $js_alg$$["int"];
+    return function attachInt32($name$$, $_interface$$6_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$6_value$$ = $_createInterface$$($name$$, "number", "integer", $int$$, $_interface$$6_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$6_value$$);
+      return this;
+    };
+  }), uint:$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.uint();
+    return function attachUInt32($name$$, $_interface$$7_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$7_value$$ = $_createInterface$$($name$$, "number", "unsigned integer", uint, $_interface$$7_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$7_value$$);
+      return this;
+    };
+  }), "float":$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.float();
+    var $float$$ = $js_alg$$["float"];
+    return function attachFloat($name$$, $_interface$$8_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$8_value$$ = $_createInterface$$($name$$, "number", "float", $float$$, $_interface$$8_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$8_value$$);
+      return this;
+    };
+  }), "double":$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.double();
+    var $double$$ = $js_alg$$["double"];
+    return function attachDouble($name$$, $_interface$$9_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$9_value$$ = $_createInterface$$($name$$, "number", "double", $double$$, $_interface$$9_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$9_value$$);
+      return this;
+    };
+  }), fixed:$js$$.alg.use($js_dtype$$, function bootstrap() {
+    function $fixed$$($decimals$$) {
+      $decimals$$ = $js_alg$$.int($decimals$$);
+      $decimals$$ = Math.pow(10, $decimals$$);
+      return function($value$$) {
+        return $int$$($value$$ * $decimals$$) / $decimals$$;
+      };
+    }
+    $js_alg$$.int();
+    var $int$$ = $js_alg$$.int;
+    return function attachFixed($name$$, $_interface$$10_value$$, $_obj$$8_decimals$$, $strict$$, $constant$$) {
+      var $_fixed$$ = $fixed$$($_obj$$8_decimals$$);
+      $_obj$$8_decimals$$ = this.obj;
+      $_interface$$10_value$$ = $_createInterface$$($name$$, "number", "fixed", $_fixed$$, $_interface$$10_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$8_decimals$$, $name$$, $_interface$$10_value$$);
+      return this;
+    };
+  }), ufixed:$js$$.alg.use($js_dtype$$, function bootstrap() {
+    function $fixed$$($decimals$$) {
+      $decimals$$ = $js_alg$$.int($decimals$$);
+      $decimals$$ = Math.pow(10, $decimals$$);
+      return function($value$$) {
+        return $uint$$($value$$ * $decimals$$) / $decimals$$;
+      };
+    }
+    $js_alg$$.int();
+    var $uint$$ = $js_alg$$.int;
+    return function attachFixed($name$$, $_interface$$11_value$$, $_obj$$9_decimals$$, $strict$$, $constant$$) {
+      var $_fixed$$ = $fixed$$($_obj$$9_decimals$$);
+      $_obj$$9_decimals$$ = this.obj;
+      $_interface$$11_value$$ = $_createInterface$$($name$$, "number", "fixed", $_fixed$$, $_interface$$11_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$9_decimals$$, $name$$, $_interface$$11_value$$);
+      return this;
+    };
+  }), currency:function $$js_dtype$$$fn$currency$($name$$, $value$$, $strict$$, $constant$$) {
+    return this.fixed($name$$, $value$$, 2, $strict$$, $constant$$);
+  }, string:$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.string();
+    var $string$$ = $js_alg$$.string;
+    return function attachDouble($name$$, $_interface$$12_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$12_value$$ = $_createInterface$$($name$$, "string", "string", $string$$, $_interface$$12_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$12_value$$);
+      return this;
+    };
+  }), uchar:$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.string();
+    $js_alg$$.ushort();
+    var $string$$ = $js_alg$$.string, $uint16$$ = $js_alg$$.ushort, $uchar$$ = function $$uchar$$$($v$$) {
+      if ("number" === typeof $v$$) {
+        return $uint16$$($v$$);
+      }
+      $v$$ = $string$$($v$$);
+      return $v$$.length ? $v$$.charCodeAt(0) : 0;
+    }, $validate$$ = function $$validate$$$($v$$) {
+      return "string" === typeof $v$$ && 1 === $v$$.length || "number" === typeof $v$$;
+    };
+    return function attachUChar($name$$, $_interface$$13_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$13_value$$ = $_createInterface$$($name$$, null, "uchar", $uchar$$, $_interface$$13_value$$, $constant$$, $strict$$, null, null, $validate$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$13_value$$);
+      return this;
+    };
+  }), bool:$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.bool();
+    var $bool$$ = $js_alg$$.bool;
+    return function attachBoolean($name$$, $_interface$$14_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$14_value$$ = $_createInterface$$($name$$, "boolean", "bool", $bool$$, $_interface$$14_value$$, $constant$$, $strict$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$14_value$$);
+      return this;
+    };
+  }), bit:$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.bool();
+    var $bool$$ = $js_alg$$.bool, $bit$$ = function $$bit$$$($v$$) {
+      return +$bool$$($v$$);
+    }, $test$$ = function $$test$$$($v$$) {
+      return "number" === typeof $v$$ && (1 === $v$$ || 0 === $v$$) || "boolean" === typeof $v$$;
+    };
+    return function attachBit($name$$, $_interface$$15_value$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$15_value$$ = $_createInterface$$($name$$, "number", "bit", $bit$$, $_interface$$15_value$$, $constant$$, $strict$$, null, null, $test$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$15_value$$);
+      return this;
+    };
+  }), "enum":$js$$.alg.use($js_dtype$$, function bootstrap() {
+    $js_alg$$.makeEnum();
+    var $makeEnum$$ = $js_alg$$.makeEnum, $enumFactory$$ = function $$enumFactory$$$($name$$, $values$$, $value$$, $strict$$, $constant$$) {
+      function $setEnumConst$$($v$$) {
+        $_constError$$($name$$, "enum");
+      }
+      function $setEnumStrict$$($v$$) {
+        "number" !== typeof $v$$ && $_typeError$$($name$$, $v$$, "enum");
+        $setEnumBasic$$($v$$);
+      }
+      function $setEnumBasic$$($v$$) {
+        $v$$ = $js$$.alg.number($v$$) | 0;
+        var $val$$ = 0;
+        $js$$.alg.arrEach(bitValues, function($bit$$) {
+          ($v$$ & $bit$$) === $bit$$ && ($val$$ |= $bit$$);
+          $v$$ < $bit$$ && this.stop();
+        });
+        $value$$ = $val$$;
+      }
+      var $_proxy$$ = {}, $_interface$$ = {valueOf:function() {
+        return $value$$;
+      }};
+      $value$$ = $js$$.alg.number($value$$);
+      bitValues = [];
+      $js$$.alg.each($values$$, function($bits$$, $key$$) {
+        if ("valueOf" !== $key$$) {
+          var $setStrict$$ = function $$setStrict$$$($v$$) {
+            "boolean" !== typeof $v$$ && "number" !== typeof $v$$ && $_typeError$$($name$$ + "." + $key$$, $v$$, "number/boolean");
+            $setBasic$$($v$$);
+          }, $setBasic$$ = function $$setBasic$$$($v$$) {
+            $value$$ = $js$$.alg.number($v$$ ? $value$$ | $bits$$ : $value$$ - ($value$$ & $bits$$)) | 0;
+          }, $setConst$$ = function $$setConst$$$($v$$) {
+            $_constError$$($name$$ + "." + $key$$, "number");
+          };
+          bitValues.push($bits$$);
+          $_proxy$$[$key$$] = {enumerable:!0, get:function $$_proxy$$$$key$$$get$() {
+            return $js$$.alg.number($value$$ & $bits$$) | 0;
+          }, set:$constant$$ ? $setConst$$ : $strict$$ ? $setStrict$$ : $setBasic$$};
+        }
+      });
+      $js$$.alg.sortArrayNum(bitValues, !0);
+      Object.defineProperties($_interface$$, $_proxy$$);
+      return {enumerable:!0, get:function() {
+        return $_interface$$;
+      }, set:$constant$$ ? $setEnumConst$$ : $strict$$ ? $setEnumStrict$$ : $setEnumBasic$$};
+    };
+    return function attachEnum($name$$, $_interface$$17_value$$, $values$$, $strict$$, $constant$$) {
+      var $_obj$$ = this.obj;
+      $_interface$$17_value$$ = $enumFactory$$($name$$, Array.isArray($values$$) ? $makeEnum$$($values$$) : $values$$, $_interface$$17_value$$, $strict$$, $constant$$);
+      $_createBinding$$($_obj$$, $name$$, $_interface$$17_value$$);
+      return this;
+    };
+  })};
+  $js$$.alg.use($js_dtype$$.fn, function() {
+    this.int8 = this["byte"];
+    this.uint8 = this.ubyte;
+    this.int16 = this["short"];
+    this.uint16 = this.ushort;
+    this.int32 = this["int"];
+    this.uint32 = this.uint;
+  });
+  return $js_dtype$$;
+});
 jspyder.extend.fn("form", function() {
   function $js_form$$($config$$, $fn$$) {
     var $form$$ = Object.create($js_form$$.fn, {_dom:{value:$js$$.dom("<form></form>")}, _template:{value:{}}});
     $config$$ && ($config$$.success && ($form$$._success = $config$$.success), $config$$.failure && ($form$$._failure = $config$$.failure), $config$$.reset && ($form$$._reset = $config$$.reset), $config$$.fields && $form$$.addFields($config$$.fields));
-    "function" === typeof $fn$$ && $fn$$.apply(this);
+    $js$$.alg.use(this, $fn$$);
     return $form$$;
   }
   var $js$$ = this;
@@ -2400,13 +2661,12 @@ jspyder.extend.fn("form", function() {
     }]) : $value$$ = $field$$6_name$$.exportValue());
     return $value$$;
   }, templates:{}, values:function $$js_form$$$fn$values$($fn$$) {
-    var $values$$ = {}, $$field$$, $name$$, $_export$$ = function $$_export$$$($v$$) {
-      $values$$[$name$$] = $$field$$;
+    var $$field$$, $name$$, $_export$$ = function $$_export$$$($v$$) {
     };
     for ($name$$ in this._fields) {
-      $$field$$ = this._fields[$name$$].field, $values$$[$name$$] = null, $$field$$.getValue($_export$$);
+      $$field$$ = this._fields[$name$$].field, $$field$$.getValue($_export$$);
     }
-    $fn$$.apply(this, [$values$$]);
+    $js$$.alg.use(this, $fn$$, [valid, invalid]);
     return this;
   }, fieldTemplate:{type:"input", values:[]}, submit:function $$js_form$$$fn$submit$($onSuccess$$, $onFail$$) {
     $onSuccess$$ = "function" === typeof $onSuccess$$ ? $onSuccess$$ : this._success;
@@ -2435,13 +2695,13 @@ jspyder.extend.fn("form", function() {
         ($isValid$$ ? $valid$$ : $invalid$$ || ($invalid$$ = {}))[$name$$] = $value$$;
       }
     });
-    $fn$$.apply(this, [$valid$$, $invalid$$]);
+    $js$$.alg.use(this, $fn$$, [$valid$$, $invalid$$]);
     return this;
   }, attach:function $$js_form$$$fn$attach$($fn$$, $data$$) {
     var $dom$$ = this._dom, $fields$$ = this._fields, $name$$;
     for ($name$$ in $fields$$) {
     }
-    "function" === typeof $fn$$ && $fn$$.apply($dom$$, [this, $dom$$, $data$$]);
+    $js$$.alg.use($dom$$, $fn$$, [this, $dom$$, $data$$]);
     return this;
   }, compile:function $$js_form$$$fn$compile$($templateId$$, $data$$, $fn$$) {
     return this._compiler($templateId$$, $data$$, $fn$$, "compile");
@@ -2470,7 +2730,7 @@ jspyder.extend.fn("form", function() {
       $fields$$[$name$$] = $fieldSet$$.field;
     });
     $dom$$.template($fields$$ || {});
-    "function" === typeof $fn$$ && $fn$$.apply(this, [$dom$$]);
+    $js$$.alg.use(this, $fn$$, [$dom$$]);
     return $dom$$;
   }};
   $js_form$$.registerControl = $js_form$$.fn.registerControl;
@@ -2565,11 +2825,13 @@ jspyder.extend.fn("form", function() {
         $js$$.dom(this).getValue(function($v$$) {
           $calStruct$$.date.setDay($v$$);
           $calStruct$$.setTitle(!0);
+          $js$$.dom($calStruct$$.input).trigger("change");
         });
         $calStruct$$.enableClose();
       });
       $calStruct$$.setTitle();
       $calStruct$$.preventClose();
+      $js$$.dom($calStruct$$.input).trigger("change");
     }, buildWeekdays:function $$__calStructFactory$$$fn$buildWeekdays$($weekday$$, $daynum$$, $daylist$$, $data$$) {
       $data$$.html += ['<div class="date-title date-title-index-', $daynum$$ + 1, '" style="width:', 100 / $data$$.wlen, '%">', $weekday$$, "</div>"].join("");
     }, buildNumberedDays:function $$__calStructFactory$$$fn$buildNumberedDays$($day$$, $daynum$$, $daylist$$, $data$$) {
@@ -3000,16 +3262,16 @@ jspyder.extend.fn("form", function() {
       }};
       return $fns$$;
     }
-    function $__searchLoop$$($text$$23_valObj$$, $i$$46_value$$, $values$$, $data$$) {
-      $i$$46_value$$ = $js$$.alg.string($text$$23_valObj$$.value);
-      $text$$23_valObj$$ = $js$$.alg.string($text$$23_valObj$$.text, $i$$46_value$$);
-      $data$$.regexp.test($text$$23_valObj$$) && $data$$.match.push('<li class="search-item" data-value="' + $i$$46_value$$ + '" title="' + $text$$23_valObj$$ + '">' + $text$$23_valObj$$ + "</li>");
+    function $__searchLoop$$($text$$23_valObj$$, $i$$44_value$$, $values$$, $data$$) {
+      $i$$44_value$$ = $js$$.alg.string($text$$23_valObj$$.value);
+      $text$$23_valObj$$ = $js$$.alg.string($text$$23_valObj$$.text, $i$$44_value$$);
+      $data$$.regexp.test($text$$23_valObj$$) && $data$$.match.push('<li class="search-item" data-value="' + $i$$44_value$$ + '" title="' + $text$$23_valObj$$ + '">' + $text$$23_valObj$$ + "</li>");
       $data$$.match.length >= $data$$.depth && this.stop();
     }
-    function $__searchValue$$($text$$24_valObj$$, $i$$47_value$$, $values$$, $data$$) {
-      $i$$47_value$$ = $js$$.alg.string($text$$24_valObj$$.value);
-      $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$47_value$$);
-      $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$47_value$$) && ($data$$.match = {value:$i$$47_value$$, text:$text$$24_valObj$$}, this.stop());
+    function $__searchValue$$($text$$24_valObj$$, $i$$45_value$$, $values$$, $data$$) {
+      $i$$45_value$$ = $js$$.alg.string($text$$24_valObj$$.value);
+      $text$$24_valObj$$ = $js$$.alg.string($text$$24_valObj$$.text, $i$$45_value$$);
+      $data$$.find.test($data$$.searchText ? $text$$24_valObj$$ : $i$$45_value$$) && ($data$$.match = {value:$i$$45_value$$, text:$text$$24_valObj$$}, this.stop());
     }
     function $searchValue$$($config$$, $data$$86_value$$, $searchText$$) {
       $data$$86_value$$ = {match:null, find:new RegExp("^" + $data$$86_value$$ + "$"), searchText:$searchText$$};
@@ -3198,17 +3460,26 @@ js.extend.fn("sp", function() {
     }
   }
   function $__generateXML$$($name$$, $table$$, $rows$$, $columns$$0$$, $styles$$) {
+    function $__row$$($row$$, $columns$$, $src$$) {
+      var $__row$$ = [];
+      $js$$.alg.arrEach($columns$$, function($colName$$) {
+        $__row$$.push($__cell$$($row$$[$colName$$][$src$$]));
+      });
+      return $__row$$.join("");
+    }
+    function $__cell$$($content$$) {
+      return ['<ss:Cell><ss:Data ss:Type="String">', $content$$, "</ss:Data></ss:Cell>"].join("");
+    }
     return ['<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?>', ['<ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><ss:Styles><ss:Style ss:ID="1"><ss:Font ss:Bold="1" /></ss:Style></ss:Styles>', ['<ss:Worksheet ss:Name="', $name$$, '"><ss:Table>', function __rows($rows$$, $columns$$) {
-      function $__pushRow$$($col$$, $i$$, $cols$$, $data$$) {
-        __rows.push(['<ss:Cell><ss:Data ss:Type="String">', $rows$$[$col$$][$data$$], "</ss:Data></ss:Cell>"].join(""));
-      }
       var __rows = [];
       __rows.push('<ss:Row ss:StyleID="1">');
-      $js$$.alg.arrEach($columns$$, $__pushRow$$, "text");
+      $js$$.alg.arrEach($columns$$, function($colName$$) {
+        __rows.push($__cell$$($table$$.exportColumn($colName$$).text));
+      });
       __rows.push("</ss:Row>");
-      $js$$.alg.arrEach($rows$$, function($row$$, $i$$) {
+      $js$$.alg.arrEach($rows$$, function($row$$) {
         __rows.push("<ss:Row>");
-        $js$$.alg.arrEach($columns$$, $__pushRow$$, "value");
+        __rows.push($__row$$($row$$, $columns$$, "value"));
         __rows.push("</ss:Row>");
       });
       return __rows.join("");
@@ -3218,7 +3489,7 @@ js.extend.fn("sp", function() {
     return ["\ufeff", function __headers($table$$, $columns$$) {
       var __headers = [];
       $js$$.alg.arrEach($columns$$, function($column$$) {
-        __headers.push(['"', $table$$.getColumn($column$$).text || " ", '"'].join(""));
+        __headers.push(['"', $table$$.exportColumn($column$$).text || " ", '"'].join(""));
       });
       return __headers.join(",");
     }($table$$0$$, $columns$$0$$), "\r\n", function __rows$$0($rows$$, $columns$$) {
@@ -3234,28 +3505,46 @@ js.extend.fn("sp", function() {
       return $__rows$$.join("\r\n");
     }($rows$$0$$, $columns$$0$$)].join("");
   }
-  function $__spUserSuccess$$($config$$, $sender$$, $args$$) {
+  function $__spUserSuccess$$($config$$, $success$$, $sender$$, $args$$) {
     this._email = this._user.get_email();
     this._username = this._user.get_loginName();
-    this._userid = this._user.get_userId();
-    $js$$.alg.use(this, $config$$.success, [$sender$$, $args$$]);
+    this._userid = this._user.get_id();
+    $js$$.alg.use(this, $success$$, [$sender$$, $args$$]);
   }
-  function $__spUserFailure$$($config$$, $sender$$, $args$$) {
-    $js$$.alg.use(this, $config$$.failure, [$sender$$, $args$$]);
+  function $__spUserFailure$$($config$$, $failure$$, $sender$$, $args$$) {
+    $js$$.alg.use(this, $failure$$, [$sender$$, $args$$]);
   }
-  function $__isMemberSuccess$$($successFn$$, $failureFn$$, $sender$$, $args$$) {
+  function $__getGroupByFn$$($testFn$$, $e$$, $name$$, $success$$, $failure$$, $sender$$, $args$$) {
+    $e$$ = $e$$.getEnumerator();
+    for (var $group$$ = null;$e$$.moveNext();) {
+      if ($group$$ = $e$$.get_current(), $group$$[$testFn$$]() === $name$$) {
+        Object.defineProperties(this, {_group:{value:$group$$}, _id:{value:$group$$.get_id()}, _name:{value:$group$$.get_title()}});
+        $js$$.alg.use(this, $success$$, [$group$$]);
+        return;
+      }
+    }
+    $js$$.alg.use(this, $failure$$, [$sender$$, $args$$]);
+  }
+  function $__isMemberSuccess$$($user$$, $successFn$$, $failureFn$$, $sender$$, $args$$) {
     for (var $userInGroup$$ = !1, $enumerator$$ = this._group.get_users().getEnumerator(), $groupUser$$ = null;$enumerator$$.moveNext();) {
-      if ($groupUser$$ = $enumerator$$.get_current(), $groupUser$$.get_id() === user.get_id()) {
+      if ($groupUser$$ = $enumerator$$.get_current(), $groupUser$$.get_id() === $user$$.get_id()) {
         $userInGroup$$ = !0;
         break;
       }
     }
     $js$$.alg.use(this, $userInGroup$$ ? $successFn$$ : $failureFn$$, [$sender$$, $args$$]);
   }
-  function $__isMemberFailure$$($failureFn$$, $sender$$, $args$$) {
+  function $__isMemberFailure$$($user$$, $failureFn$$, $sender$$, $args$$) {
     $js$$.alg.use(this, $failureFn$$, [$sender$$, $args$$]);
   }
   var $js$$ = window.jspyder;
+  $sp$$.getContext = function $$sp$$$getContext$($url$$, $fn$$) {
+    $js$$.alg.use($sp$$.exportContext($url$$), $fn$$);
+    return $sp$$;
+  };
+  $sp$$.exportContext = function $$sp$$$exportContext$($url$$) {
+    return $url$$ ? new window.SP.ClientContext($url$$) : window.SP.ClientContext.get_current();
+  };
   $sp$$.list = function spList($config$$, $fn$$) {
     window.SP || $js$$.log.warn("Ensure that MicrosoftAjax.js, sp.runtime.js, and sp.js have been loaded before using JSpyder SharePoint Interface");
     var $list$$ = Object.create($sp$$.list.fn);
@@ -3294,7 +3583,7 @@ js.extend.fn("sp", function() {
     $row$$ && $js$$.alg.use(this, $fn$$, [$row$$]);
     return this;
   }, exportRowById:function $$sp$$$list$fn$exportRowById$($id$$) {
-    for (var $found$$ = null, $row$$ = null, $i$$ = 0;$row$$ = this.getRow($i$$++);) {
+    for (var $found$$ = null, $row$$ = null, $i$$ = 0;$row$$ = this.exportRow($i$$++);) {
       if ($row$$.ID.value === $id$$) {
         $found$$ = $row$$;
         break;
@@ -3316,7 +3605,7 @@ js.extend.fn("sp", function() {
     $js$$.alg.use(this, $fn$$, [$count$$]);
     return this;
   }, pull:function $$sp$$$list$fn$pull$($success$$, $failure$$) {
-    var $ctx$$ = new window.SP.ClientContext(this._url), $list$$7_listItems$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $caml$$ = new window.SP.CamlQuery, $successFn$$ = "function" === typeof $success$$ ? $success$$ : this._success, $failureFn$$ = "function" === typeof $failure$$ ? $failure$$ : this._failure;
+    var $ctx$$ = $sp$$.exportContext(this._url), $list$$7_listItems$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $caml$$ = new window.SP.CamlQuery, $successFn$$ = "function" === typeof $success$$ ? $success$$ : this._success, $failureFn$$ = "function" === typeof $failure$$ ? $failure$$ : this._failure;
     $caml$$.set_viewXml(this.caml);
     $list$$7_listItems$$ = $list$$7_listItems$$.getItems($caml$$);
     $ctx$$.load($list$$7_listItems$$);
@@ -3334,14 +3623,14 @@ js.extend.fn("sp", function() {
     });
     return this;
   }, push:function $$sp$$$list$fn$push$($success$$, $failure$$) {
-    var $ctx$$ = new window.SP.ClientContext(this._url), $data$$99_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$99_list$$ = {clientContext:$ctx$$, items:[], list:$data$$99_list$$, self:this};
-    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$99_list$$);
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$99_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$99_list$$.items, $failure$$]));
+    var $ctx$$ = $sp$$.exportContext(this._url), $data$$98_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$98_list$$ = {clientContext:$ctx$$, items:[], list:$data$$98_list$$, self:this};
+    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$98_list$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$98_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$98_list$$.items, $failure$$]));
     return this;
-  }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$53_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
-    $i$$53_rowID$$ = $row$$.ID.value;
+  }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$49_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
+    $i$$49_rowID$$ = $row$$.ID.value;
     $itemInfo_listItem_rows$$ = $itemInfo_listItem_rows$$ = null;
-    0 > $row$$.ID.value ? ($itemInfo_listItem_rows$$ = new SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$53_rowID$$), $data$$.newrow = !1);
+    0 > $i$$49_rowID$$ ? ($itemInfo_listItem_rows$$ = new window.SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$49_rowID$$), $data$$.newrow = !1);
     $data$$.listItem = $itemInfo_listItem_rows$$;
     $js$$.alg.each($row$$, $data$$.self._pushLoopDirtyRowColumns, $data$$);
     $data$$.items.push($itemInfo_listItem_rows$$);
@@ -3353,20 +3642,20 @@ js.extend.fn("sp", function() {
     return this.getRowById($id$$, function($row$$) {
       $js$$.alg.each($row$$, this._updateRowEach, $js$$.alg.cloneObj($values$$));
     });
-  }, _updateRowEach:function $$sp$$$list$fn$_updateRowEach$($colData$$, $colName$$1_value$$, $row$$, $data$$) {
-    $colName$$1_value$$ = $data$$[$colData$$.name];
-    $row$$ = $colName$$1_value$$ !== $colData$$.value;
-    "undefined" !== typeof $colName$$1_value$$ && $row$$ && ($colData$$.value = $colName$$1_value$$);
-  }, createRow:function $$sp$$$list$fn$createRow$($data$$103_values$$) {
+  }, _updateRowEach:function $$sp$$$list$fn$_updateRowEach$($colData$$, $colName$$3_value$$, $row$$, $data$$) {
+    $colName$$3_value$$ = $data$$[$colData$$.name];
+    $row$$ = $colName$$3_value$$ !== $colData$$.value;
+    "undefined" !== typeof $colName$$3_value$$ && $row$$ && ($colData$$.value = $colName$$3_value$$);
+  }, createRow:function $$sp$$$list$fn$createRow$($data$$102_values$$) {
     var $columns$$ = this._columns;
-    $data$$103_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$103_values$$)};
-    $js$$.alg.each($columns$$, this._createRowEach, $data$$103_values$$);
-    $data$$103_values$$.row.ID.value = $data$$103_values$$.rowID;
-    this._dirtyRows.push($data$$103_values$$.row);
+    $data$$102_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$102_values$$)};
+    $js$$.alg.each($columns$$, this._createRowEach, $data$$102_values$$);
+    $data$$102_values$$.row.ID.value = $data$$102_values$$.rowID;
+    this._dirtyRows.push($data$$102_values$$.row);
     return this;
-  }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$2_value$$, $column$$, $cell$$1_data$$) {
+  }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$4_value$$, $column$$, $cell$$1_data$$) {
     var $row$$ = $cell$$1_data$$.row;
-    $colName$$2_value$$ = $cell$$1_data$$.values[$colData$$.name];
+    $colName$$4_value$$ = $cell$$1_data$$.values[$colData$$.name];
     $cell$$1_data$$ = Object.create($colData$$, {rowID:{value:$cell$$1_data$$.rowID}, dirty:{get:function() {
       return null !== $colValue$$;
     }}, value:{get:function() {
@@ -3374,10 +3663,10 @@ js.extend.fn("sp", function() {
     }, set:function($v$$) {
       $colData$$.internal && ($colValue$$ = $v$$);
     }}});
-    var $colValue$$ = "undefined" !== typeof $colName$$2_value$$ ? $colName$$2_value$$ : $colData$$.default || null;
+    var $colValue$$ = "undefined" !== typeof $colName$$4_value$$ ? $colName$$4_value$$ : $colData$$.default || null;
     $row$$[$colData$$.name] = $cell$$1_data$$;
   }, getPermissions:function $$sp$$$list$fn$getPermissions$($success$$, $failure$$) {
-    var $ctx$$ = new window.SP.ClientContext(this._url), $web$$ = $ctx$$.get_web(), $data$$ = {currentUser:$web$$.get_currentUser(), web:$web$$};
+    var $ctx$$ = $sp$$.exportContext(this._url), $web$$ = $ctx$$.get_web(), $data$$ = {currentUser:$web$$.get_currentUser(), web:$web$$};
     $ctx$$.load($data$$.currentUser);
     $ctx$$.load($web$$, "EffectiveBasePermissions");
     $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, this._getPermissionsSuccess, [$data$$, $success$$]), $js$$.alg.bindFn(this, this._getPermissionsSuccess, [null, $failure$$]));
@@ -3435,7 +3724,7 @@ js.extend.fn("sp", function() {
   }, _sum:function $$sp$$$query$fn$_sum$($column$$, $key$$, $columns$$) {
     $columns$$[$key$$] = $column$$.value || $column$$.default;
   }, _sumRows:function $$sp$$$query$fn$_sumRows$($row$$, $_$$, $rows$$, $columns$$) {
-    $js$$.alg.each($row$$, $sp$$.query.fn._sumColumns, $columns$$);
+    $js$$.alg.each($columns$$, $sp$$.query.fn._sumColumns, $row$$);
   }, _sumColumns:function $$sp$$$query$fn$_sumColumns$($sumValue$$, $colName$$, $out$$, $column$$4_row$$) {
     if ($column$$4_row$$ = $column$$4_row$$[$colName$$]) {
       var $rowValue$$ = $column$$4_row$$ && $column$$4_row$$.value;
@@ -3481,14 +3770,12 @@ js.extend.fn("sp", function() {
   $sp$$.column.fn = {internal:"", text:"", type:"string", default:"", valueOf:function $$sp$$$column$fn$valueOf$() {
     return this.value;
   }};
-  $sp$$.user = function $$sp$$$user$($config$$) {
-    var $ctx$$ = new window.SP.ClientContext($config$$.url), $spUser_userCollection$$ = $ctx$$.get_web().get_siteUsers(), $user$$ = null;
+  $sp$$.user = function $$sp$$$user$($config$$, $success$$, $failure$$) {
     $config$$ = $config$$ || {};
-    $user$$ = $config$$.userid ? $spUser_userCollection$$.getById($config$$.userid) : $config$$.login ? $spUser_userCollection$$.getByLoginName($config$$.login) : $config$$.email ? $spUser_userCollection$$.getByEmail($config$$.email) : $spUser_userCollection$$.get_currentUser();
-    $spUser_userCollection$$ = Object.create($sp$$.user, {_user:{value:$user$$}});
+    var $ctx$$ = $sp$$.exportContext($config$$.url), $spUser_web$$ = $ctx$$.get_web(), $userCollection$$ = $spUser_web$$.get_siteUserInfoList(), $user$$ = null, $user$$ = $config$$.userid ? $userCollection$$.getById($config$$.userid) : $config$$.login ? $userCollection$$.getByLoginName($config$$.login) : $config$$.email ? $userCollection$$.getByEmail($config$$.email) : $spUser_web$$.get_currentUser(), $spUser_web$$ = Object.create($js$$.sp.user.fn, {_user:{value:$user$$}});
     $ctx$$.load($user$$);
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn($spUser_userCollection$$, $__spUserSuccess$$, [$config$$]), $js$$.alg.bindFn($spUser_userCollection$$, $__spUserFailure$$, [$config$$]));
-    return $spUser_userCollection$$;
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn($spUser_web$$, $__spUserSuccess$$, [$config$$, $success$$]), $js$$.alg.bindFn($spUser_web$$, $__spUserFailure$$, [$config$$, $failure$$]));
+    return $spUser_web$$;
   };
   $sp$$.user.getById = function $$sp$$$user$getById$($userid$$, $url$$) {
     return $sp$$.user({userid:$userid$$, url:$url$$});
@@ -3499,22 +3786,32 @@ js.extend.fn("sp", function() {
   $sp$$.user.getByEmail = function $$sp$$$user$getByEmail$($email$$, $url$$) {
     return $sp$$.user({email:$email$$, url:$url$$});
   };
-  $sp$$.user.fn = {_user:null, _email:null, _userid:null, _username:null, _url:null, memberOfGroup:function $$sp$$$user$fn$memberOfGroup$($group$$, $fn$$) {
-    var $yes$$ = $js$$.alg.bindFn(this, $fn$$, [!0]), $no$$ = $js$$.alg.bindFn(this, $fn$$, [!1]);
-    $sp$$.group($group$$).isMember(this._user, $yes$$, $no$$);
+  $sp$$.user.fn = {_user:null, _email:null, _userid:null, _username:null, _url:null, isMemberOfGroup:function $$sp$$$user$fn$isMemberOfGroup$($group$$, $fn$$) {
+    var $yes$$ = $js$$.alg.bindFn(this, $fn$$, [!0]), $no$$ = $js$$.alg.bindFn(this, $fn$$, [!1]), $user$$ = this._user;
+    $sp$$.group($group$$, function() {
+      this.isMember($user$$, $yes$$, $no$$);
+    }, $no$$);
     return this;
   }};
-  $sp$$.group = function $$sp$$$group$($config$$) {
-    var $groups$$ = (new window.SP.ClientContext($config$$.url)).get_web().get_siteGroups(), $group$$ = null, $spGroup$$ = null;
-    $config$$ && $config$$.isPrototypeOf($sp$$.group.fn) ? $spGroup$$ = $config$$ : ($config$$.name ? $group$$ = $groups$$.getByName($config$$.name) : $config$$.groupid && ($group$$ = $groups$$.getById($config$$.groupid)), $spGroup$$ = Object.create($sp$$.group.fn, {_url:{value:$js$$.alg.string($config$$.url, "")}, _group:{value:$group$$}}));
+  $sp$$.group = function $$sp$$$group$($config$$14_successFn$$, $success$$, $failure$$) {
+    $config$$14_successFn$$ = $config$$14_successFn$$ || {};
+    var $ctx$$ = $sp$$.exportContext($config$$14_successFn$$.url), $groups$$ = $ctx$$.get_web().get_siteGroups(), $spGroup$$ = null;
+    if ($config$$14_successFn$$ && $config$$14_successFn$$.isPrototypeOf($sp$$.group.fn)) {
+      $spGroup$$ = $config$$14_successFn$$;
+    } else {
+      $ctx$$.load($groups$$);
+      var $spGroup$$ = Object.create($sp$$.group.fn, {_url:{value:$js$$.alg.string($config$$14_successFn$$.url, "")}}), $failureFn$$ = $js$$.alg.bindFn($spGroup$$, $failure$$);
+      $config$$14_successFn$$ = $config$$14_successFn$$.name ? $js$$.alg.bindFn($spGroup$$, $__getGroupByFn$$, ["get_title", $groups$$, $config$$14_successFn$$.name, $success$$, $failure$$]) : $config$$14_successFn$$.groupid ? $js$$.alg.bindFn($spGroup$$, $__getGroupByFn$$, ["get_id", $groups$$, $config$$14_successFn$$.groupid, $success$$, $failure$$]) : $failureFn$$;
+      $ctx$$.executeQueryAsync($config$$14_successFn$$, $failureFn$$);
+    }
     return $spGroup$$;
   };
   $sp$$.group.fn = {_url:null, _group:null, isMember:function $$sp$$$group$fn$isMember$($user$$, $success$$, $failure$$) {
-    var $ctx$$ = null, $ctx$$ = new window.SP.ClientContext(this._url);
+    var $ctx$$ = null, $ctx$$ = $sp$$.exportContext(this._url);
     $ctx$$.get_web();
     $ctx$$.load($user$$);
     $ctx$$.load(this._group, "Users");
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__isMemberSuccess$$, [$success$$, $failure$$]), $js$$.alg.bindFn(this, $__isMemberFailure$$, [$failure$$]));
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__isMemberSuccess$$, [$user$$, $success$$, $failure$$]), $js$$.alg.bindFn(this, $__isMemberFailure$$, [$user$$, $failure$$]));
     return this;
   }};
   return $sp$$;
@@ -3561,9 +3858,9 @@ jspyder.extend.fn("template", function() {
   }
   var $_templates$$ = $js$$.createRegistry(), $_library$$ = $js$$.createRegistry(), $__master_key$$ = (4294967295 * Math.random() | 0).toString(32), $reFuncArgs$$ = /\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?/i, $reString$$ = /"(?:[^"\\]|\\.)*"/i, $reCommandLiteral$$ = /`(?:[^`\\]|\\.)*`/i, $reNumber$$ = /\d+(?:\.\d+)?/, $reVariable$$ = /\$\{\D[a-z0-9_]*\}/i, $reFuncName$$ = /\@\D[a-z0-9_]*/i, $reFunction$$ = /\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)/i, 
   $reSymbol$$ = /(\@\D[a-z0-9_]*\((?:\s*(`(?:[^`\\]|\\.)*`|"(?:[^"\\]|\\.)*"|\d+(?:\.\d+)?|\$\{\D[a-z0-9_]*\})(?:\s*,\s*(?!\)))?)*\)|\$\{\D[a-z0-9_]*\})/i;
-  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$101_template$$, $data$$, $fn$$) {
-    $name$$101_template$$ = $_templates$$.fetch($name$$101_template$$);
-    return this.compileExplicit($name$$101_template$$, $data$$, $fn$$);
+  $js_template$$.fn = {compile:function $$js_template$$$fn$compile$($name$$122_template$$, $data$$, $fn$$) {
+    $name$$122_template$$ = $_templates$$.fetch($name$$122_template$$);
+    return this.compileExplicit($name$$122_template$$, $data$$, $fn$$);
   }, compileExplicit:function $$js_template$$$fn$compileExplicit$($template$$4_tmp$$, $data$$, $fn$$) {
     "function" !== typeof $data$$ || $fn$$ || ($fn$$ = $data$$, $data$$ = null);
     "undefined" === typeof $template$$4_tmp$$ && ($template$$4_tmp$$ = "");
@@ -3682,9 +3979,9 @@ jspyder.extend.fn("template", function() {
     return "";
   }, map_item:function($map$$, $id$$) {
     return ($map$$ = this[$map$$]) ? $map$$[$id$$] : $id$$;
-  }, js_registry:function($data$$119_key$$) {
-    $data$$119_key$$ = $js$$.registry.fetch($data$$119_key$$);
-    return null === $data$$119_key$$ || "undefined" === typeof $data$$119_key$$ ? "" : $data$$119_key$$;
+  }, js_registry:function($data$$118_key$$) {
+    $data$$118_key$$ = $js$$.registry.fetch($data$$118_key$$);
+    return null === $data$$118_key$$ || "undefined" === typeof $data$$118_key$$ ? "" : $data$$118_key$$;
   }, js_log:function($data$$) {
     console.log($data$$);
   }, concat:function($str$$) {

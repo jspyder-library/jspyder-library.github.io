@@ -1655,7 +1655,7 @@ jspyder.extend.fn("canvas", function() {
     var $sections$$ = $offsetY$$1_settings$$.sections = $offsetY$$1_settings$$.sections || [], $chartY$$1_size$$ = this.exportSize(), $borderWidth$$ = $offsetY$$1_settings$$.borderWidth = $js$$.alg.number($offsetY$$1_settings$$.borderWidth, 1), $width$$ = $offsetY$$1_settings$$.width = $js$$.alg.number($offsetY$$1_settings$$.width, $chartY$$1_size$$.width), $height$$ = $offsetY$$1_settings$$.height = $js$$.alg.number($offsetY$$1_settings$$.height, $chartY$$1_size$$.height), $chartX$$ = $offsetY$$1_settings$$.x = 
     $js$$.alg.number($offsetY$$1_settings$$.x, 0), $chartY$$1_size$$ = $offsetY$$1_settings$$.y = $js$$.alg.number($offsetY$$1_settings$$.y, 0), $fill$$ = $offsetY$$1_settings$$.fill = $js$$.alg.string($offsetY$$1_settings$$.fill, "white"), $border$$ = $offsetY$$1_settings$$.border = $js$$.alg.string($offsetY$$1_settings$$.border, "black"), $labels$$ = $offsetY$$1_settings$$.labels = $offsetY$$1_settings$$.labels || [], $labelSize$$ = $offsetY$$1_settings$$.labelSize = $js$$.alg.number($offsetY$$1_settings$$.labelSize, 
     16), $lineColor$$0$$ = $offsetY$$1_settings$$.linecolor = $js$$.alg.string($offsetY$$1_settings$$.linecolor, "rgba(0, 0, 0, 0.3)"), $min$$ = $js$$.alg.number($offsetY$$1_settings$$.min, Infinity), $max$$ = $js$$.alg.number($offsetY$$1_settings$$.max, -Infinity), $format$$ = $js$$.alg.bindFn(this, $offsetY$$1_settings$$.format || function($n$$) {
-      return $n$$;
+      return $n$$ | 0;
     }), $self$$ = this, $cols$$;
     $offsetY$$1_settings$$ = 1.5 * $labelSize$$;
     $self$$.cmd.rectangle.call(this, {width:$width$$, height:$height$$, x:$chartX$$, y:$chartY$$1_size$$, fill:$fill$$, borderWidth:$borderWidth$$, border:$border$$});
@@ -1676,8 +1676,8 @@ jspyder.extend.fn("canvas", function() {
     $max$$ = 1.1 * $js$$.alg.magnitude($max$$);
     $js$$.alg.iterate(0, 5, function($i$$) {
       $self$$.cmd.line.call($self$$, {x:$chartX$$, y:$height$$ * (5 - $i$$) / 5, width:$width$$ + $chartX$$, height:0, color:$lineColor$$0$$});
-      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$ | 0), textalign:"left"});
-      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$ | 0), textalign:"right"});
+      $self$$.cmd.text.call($self$$, {x:$labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$), textalign:"left"});
+      $self$$.cmd.text.call($self$$, {x:$width$$ - $labelSize$$ / 3, y:$height$$ * (5 - $i$$) / 5 - $labelSize$$ / 3, size:$labelSize$$, font:"Arial", text:$format$$($i$$ / 5 * $max$$), textalign:"right"});
     });
     var $width$$ = $width$$ - 50, $chartX$$ = $chartX$$ + 50, $workArea$$ = {x:$chartX$$, y:$chartY$$1_size$$, height:$height$$ - $chartY$$1_size$$, width:$width$$ - $chartX$$, vertWidth:($width$$ - $chartX$$) / ($cols$$ - 1)};
     $js$$.alg.iterate(0, $cols$$, function($i$$) {
@@ -2314,7 +2314,7 @@ jspyder.extend.fn("dtype", function() {
   function $js_dtype$$($obj$$, $fn$$) {
     var $dtype$$ = Object.create($js_dtype$$.fn);
     $dtype$$.obj = $obj$$;
-    js.alg.use($dtype$$, $obj$$);
+    $js$$.alg.use($dtype$$, $obj$$);
     return $dtype$$;
   }
   function $_typeError$$($name$$, $val$$, $eType$$) {
@@ -2352,8 +2352,8 @@ jspyder.extend.fn("dtype", function() {
     Object.defineProperty($obj$$, $name$$, $_interface$$);
     return $obj$$;
   }
-  var $js_alg$$ = js.alg;
-  $js_dtype$$.fn = {"byte":js.alg.use($js_dtype$$, function bootstrap() {
+  var $js$$ = this, $js_alg$$ = $js$$.alg;
+  $js_dtype$$.fn = {"byte":$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.byte();
     var $byte$$ = $js_alg$$["byte"];
     return function attachInt8($name$$, $_interface$$2_value$$, $strict$$, $constant$$) {
@@ -2362,7 +2362,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$2_value$$);
       return this;
     };
-  }), ubyte:js.alg.use($js_dtype$$, function bootstrap() {
+  }), ubyte:$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.ubyte();
     var $ubyte$$ = $js_alg$$.ubyte;
     return function attachUInt8($name$$, $_interface$$3_value$$, $strict$$, $constant$$) {
@@ -2371,7 +2371,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$3_value$$);
       return this;
     };
-  }), "short":js.alg.use($js_dtype$$, function bootstrap() {
+  }), "short":$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.short();
     var $short$$ = $js_alg$$["short"];
     return function attachInt16($name$$, $_interface$$4_value$$, $strict$$, $constant$$) {
@@ -2380,7 +2380,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$4_value$$);
       return this;
     };
-  }), ushort:js.alg.use($js_dtype$$, function bootstrap() {
+  }), ushort:$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.short();
     return function attachUInt16($name$$, $_interface$$5_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
@@ -2388,7 +2388,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$5_value$$);
       return this;
     };
-  }), "int":js.alg.use($js_dtype$$, function bootstrap() {
+  }), "int":$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.int();
     var $int$$ = $js_alg$$["int"];
     return function attachInt32($name$$, $_interface$$6_value$$, $strict$$, $constant$$) {
@@ -2397,7 +2397,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$6_value$$);
       return this;
     };
-  }), uint:js.alg.use($js_dtype$$, function bootstrap() {
+  }), uint:$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.uint();
     return function attachUInt32($name$$, $_interface$$7_value$$, $strict$$, $constant$$) {
       var $_obj$$ = this.obj;
@@ -2405,7 +2405,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$7_value$$);
       return this;
     };
-  }), "float":js.alg.use($js_dtype$$, function bootstrap() {
+  }), "float":$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.float();
     var $float$$ = $js_alg$$["float"];
     return function attachFloat($name$$, $_interface$$8_value$$, $strict$$, $constant$$) {
@@ -2414,7 +2414,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$8_value$$);
       return this;
     };
-  }), "double":js.alg.use($js_dtype$$, function bootstrap() {
+  }), "double":$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.double();
     var $double$$ = $js_alg$$["double"];
     return function attachDouble($name$$, $_interface$$9_value$$, $strict$$, $constant$$) {
@@ -2423,7 +2423,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$9_value$$);
       return this;
     };
-  }), fixed:js.alg.use($js_dtype$$, function bootstrap() {
+  }), fixed:$js$$.alg.use($js_dtype$$, function bootstrap() {
     function $fixed$$($decimals$$) {
       $decimals$$ = $js_alg$$.int($decimals$$);
       $decimals$$ = Math.pow(10, $decimals$$);
@@ -2440,7 +2440,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$8_decimals$$, $name$$, $_interface$$10_value$$);
       return this;
     };
-  }), ufixed:js.alg.use($js_dtype$$, function bootstrap() {
+  }), ufixed:$js$$.alg.use($js_dtype$$, function bootstrap() {
     function $fixed$$($decimals$$) {
       $decimals$$ = $js_alg$$.int($decimals$$);
       $decimals$$ = Math.pow(10, $decimals$$);
@@ -2459,7 +2459,7 @@ jspyder.extend.fn("dtype", function() {
     };
   }), currency:function $$js_dtype$$$fn$currency$($name$$, $value$$, $strict$$, $constant$$) {
     return this.fixed($name$$, $value$$, 2, $strict$$, $constant$$);
-  }, string:js.alg.use($js_dtype$$, function bootstrap() {
+  }, string:$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.string();
     var $string$$ = $js_alg$$.string;
     return function attachDouble($name$$, $_interface$$12_value$$, $strict$$, $constant$$) {
@@ -2468,7 +2468,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$12_value$$);
       return this;
     };
-  }), uchar:js.alg.use($js_dtype$$, function bootstrap() {
+  }), uchar:$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.string();
     $js_alg$$.ushort();
     var $string$$ = $js_alg$$.string, $uint16$$ = $js_alg$$.ushort, $uchar$$ = function $$uchar$$$($v$$) {
@@ -2486,7 +2486,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$13_value$$);
       return this;
     };
-  }), bool:js.alg.use($js_dtype$$, function bootstrap() {
+  }), bool:$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.bool();
     var $bool$$ = $js_alg$$.bool;
     return function attachBoolean($name$$, $_interface$$14_value$$, $strict$$, $constant$$) {
@@ -2495,7 +2495,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$14_value$$);
       return this;
     };
-  }), bit:js.alg.use($js_dtype$$, function bootstrap() {
+  }), bit:$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.bool();
     var $bool$$ = $js_alg$$.bool, $bit$$ = function $$bit$$$($v$$) {
       return +$bool$$($v$$);
@@ -2508,7 +2508,7 @@ jspyder.extend.fn("dtype", function() {
       $_createBinding$$($_obj$$, $name$$, $_interface$$15_value$$);
       return this;
     };
-  }), "enum":js.alg.use($js_dtype$$, function bootstrap() {
+  }), "enum":$js$$.alg.use($js_dtype$$, function bootstrap() {
     $js_alg$$.makeEnum();
     var $makeEnum$$ = $js_alg$$.makeEnum, $enumFactory$$ = function $$enumFactory$$$($name$$, $values$$, $value$$, $strict$$, $constant$$) {
       function $setEnumConst$$($v$$) {
@@ -2519,9 +2519,9 @@ jspyder.extend.fn("dtype", function() {
         $setEnumBasic$$($v$$);
       }
       function $setEnumBasic$$($v$$) {
-        $v$$ = js.alg.number($v$$) | 0;
+        $v$$ = $js$$.alg.number($v$$) | 0;
         var $val$$ = 0;
-        js.alg.arrEach(bitValues, function($bit$$) {
+        $js$$.alg.arrEach(bitValues, function($bit$$) {
           ($v$$ & $bit$$) === $bit$$ && ($val$$ |= $bit$$);
           $v$$ < $bit$$ && this.stop();
         });
@@ -2530,25 +2530,25 @@ jspyder.extend.fn("dtype", function() {
       var $_proxy$$ = {}, $_interface$$ = {valueOf:function() {
         return $value$$;
       }};
-      $value$$ = js.alg.number($value$$);
+      $value$$ = $js$$.alg.number($value$$);
       bitValues = [];
-      js.alg.each($values$$, function($bits$$, $key$$) {
+      $js$$.alg.each($values$$, function($bits$$, $key$$) {
         if ("valueOf" !== $key$$) {
           var $setStrict$$ = function $$setStrict$$$($v$$) {
-            "number" !== typeof $v$$ && $_typeError$$($name$$ + "." + $key$$, $v$$, "number");
+            "boolean" !== typeof $v$$ && "number" !== typeof $v$$ && $_typeError$$($name$$ + "." + $key$$, $v$$, "number/boolean");
             $setBasic$$($v$$);
           }, $setBasic$$ = function $$setBasic$$$($v$$) {
-            $value$$ = js.alg.number($v$$ ? $value$$ | $bits$$ : $value$$ - ($value$$ & $bits$$)) | 0;
+            $value$$ = $js$$.alg.number($v$$ ? $value$$ | $bits$$ : $value$$ - ($value$$ & $bits$$)) | 0;
           }, $setConst$$ = function $$setConst$$$($v$$) {
             $_constError$$($name$$ + "." + $key$$, "number");
           };
           bitValues.push($bits$$);
           $_proxy$$[$key$$] = {enumerable:!0, get:function $$_proxy$$$$key$$$get$() {
-            return js.alg.number($value$$ & $bits$$) | 0;
+            return $js$$.alg.number($value$$ & $bits$$) | 0;
           }, set:$constant$$ ? $setConst$$ : $strict$$ ? $setStrict$$ : $setBasic$$};
         }
       });
-      js.alg.sortArrayNum(bitValues, !0);
+      $js$$.alg.sortArrayNum(bitValues, !0);
       Object.defineProperties($_interface$$, $_proxy$$);
       return {enumerable:!0, get:function() {
         return $_interface$$;
@@ -2561,7 +2561,7 @@ jspyder.extend.fn("dtype", function() {
       return this;
     };
   })};
-  js.alg.use($js_dtype$$.fn, function() {
+  $js$$.alg.use($js_dtype$$.fn, function() {
     this.int8 = this["byte"];
     this.uint8 = this.ubyte;
     this.int16 = this["short"];
@@ -2575,7 +2575,7 @@ jspyder.extend.fn("form", function() {
   function $js_form$$($config$$, $fn$$) {
     var $form$$ = Object.create($js_form$$.fn, {_dom:{value:$js$$.dom("<form></form>")}, _template:{value:{}}});
     $config$$ && ($config$$.success && ($form$$._success = $config$$.success), $config$$.failure && ($form$$._failure = $config$$.failure), $config$$.reset && ($form$$._reset = $config$$.reset), $config$$.fields && $form$$.addFields($config$$.fields));
-    "function" === typeof $fn$$ && $fn$$.apply(this);
+    $js$$.alg.use(this, $fn$$);
     return $form$$;
   }
   var $js$$ = this;
@@ -2661,13 +2661,12 @@ jspyder.extend.fn("form", function() {
     }]) : $value$$ = $field$$6_name$$.exportValue());
     return $value$$;
   }, templates:{}, values:function $$js_form$$$fn$values$($fn$$) {
-    var $values$$ = {}, $$field$$, $name$$, $_export$$ = function $$_export$$$($v$$) {
-      $values$$[$name$$] = $$field$$;
+    var $$field$$, $name$$, $_export$$ = function $$_export$$$($v$$) {
     };
     for ($name$$ in this._fields) {
-      $$field$$ = this._fields[$name$$].field, $values$$[$name$$] = null, $$field$$.getValue($_export$$);
+      $$field$$ = this._fields[$name$$].field, $$field$$.getValue($_export$$);
     }
-    $fn$$.apply(this, [$values$$]);
+    $js$$.alg.use(this, $fn$$, [valid, invalid]);
     return this;
   }, fieldTemplate:{type:"input", values:[]}, submit:function $$js_form$$$fn$submit$($onSuccess$$, $onFail$$) {
     $onSuccess$$ = "function" === typeof $onSuccess$$ ? $onSuccess$$ : this._success;
@@ -2696,13 +2695,13 @@ jspyder.extend.fn("form", function() {
         ($isValid$$ ? $valid$$ : $invalid$$ || ($invalid$$ = {}))[$name$$] = $value$$;
       }
     });
-    $fn$$.apply(this, [$valid$$, $invalid$$]);
+    $js$$.alg.use(this, $fn$$, [$valid$$, $invalid$$]);
     return this;
   }, attach:function $$js_form$$$fn$attach$($fn$$, $data$$) {
     var $dom$$ = this._dom, $fields$$ = this._fields, $name$$;
     for ($name$$ in $fields$$) {
     }
-    "function" === typeof $fn$$ && $fn$$.apply($dom$$, [this, $dom$$, $data$$]);
+    $js$$.alg.use($dom$$, $fn$$, [this, $dom$$, $data$$]);
     return this;
   }, compile:function $$js_form$$$fn$compile$($templateId$$, $data$$, $fn$$) {
     return this._compiler($templateId$$, $data$$, $fn$$, "compile");
@@ -2731,7 +2730,7 @@ jspyder.extend.fn("form", function() {
       $fields$$[$name$$] = $fieldSet$$.field;
     });
     $dom$$.template($fields$$ || {});
-    "function" === typeof $fn$$ && $fn$$.apply(this, [$dom$$]);
+    $js$$.alg.use(this, $fn$$, [$dom$$]);
     return $dom$$;
   }};
   $js_form$$.registerControl = $js_form$$.fn.registerControl;
@@ -2826,11 +2825,13 @@ jspyder.extend.fn("form", function() {
         $js$$.dom(this).getValue(function($v$$) {
           $calStruct$$.date.setDay($v$$);
           $calStruct$$.setTitle(!0);
+          $js$$.dom($calStruct$$.input).trigger("change");
         });
         $calStruct$$.enableClose();
       });
       $calStruct$$.setTitle();
       $calStruct$$.preventClose();
+      $js$$.dom($calStruct$$.input).trigger("change");
     }, buildWeekdays:function $$__calStructFactory$$$fn$buildWeekdays$($weekday$$, $daynum$$, $daylist$$, $data$$) {
       $data$$.html += ['<div class="date-title date-title-index-', $daynum$$ + 1, '" style="width:', 100 / $data$$.wlen, '%">', $weekday$$, "</div>"].join("");
     }, buildNumberedDays:function $$__calStructFactory$$$fn$buildNumberedDays$($day$$, $daynum$$, $daylist$$, $data$$) {
@@ -3459,17 +3460,26 @@ js.extend.fn("sp", function() {
     }
   }
   function $__generateXML$$($name$$, $table$$, $rows$$, $columns$$0$$, $styles$$) {
+    function $__row$$($row$$, $columns$$, $src$$) {
+      var $__row$$ = [];
+      $js$$.alg.arrEach($columns$$, function($colName$$) {
+        $__row$$.push($__cell$$($row$$[$colName$$][$src$$]));
+      });
+      return $__row$$.join("");
+    }
+    function $__cell$$($content$$) {
+      return ['<ss:Cell><ss:Data ss:Type="String">', $content$$, "</ss:Data></ss:Cell>"].join("");
+    }
     return ['<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?>', ['<ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><ss:Styles><ss:Style ss:ID="1"><ss:Font ss:Bold="1" /></ss:Style></ss:Styles>', ['<ss:Worksheet ss:Name="', $name$$, '"><ss:Table>', function __rows($rows$$, $columns$$) {
-      function $__pushRow$$($col$$, $i$$, $cols$$, $data$$) {
-        __rows.push(['<ss:Cell><ss:Data ss:Type="String">', $rows$$[$col$$][$data$$], "</ss:Data></ss:Cell>"].join(""));
-      }
       var __rows = [];
       __rows.push('<ss:Row ss:StyleID="1">');
-      $js$$.alg.arrEach($columns$$, $__pushRow$$, "text");
+      $js$$.alg.arrEach($columns$$, function($colName$$) {
+        __rows.push($__cell$$($table$$.exportColumn($colName$$).text));
+      });
       __rows.push("</ss:Row>");
-      $js$$.alg.arrEach($rows$$, function($row$$, $i$$) {
+      $js$$.alg.arrEach($rows$$, function($row$$) {
         __rows.push("<ss:Row>");
-        $js$$.alg.arrEach($columns$$, $__pushRow$$, "value");
+        __rows.push($__row$$($row$$, $columns$$, "value"));
         __rows.push("</ss:Row>");
       });
       return __rows.join("");
@@ -3479,7 +3489,7 @@ js.extend.fn("sp", function() {
     return ["\ufeff", function __headers($table$$, $columns$$) {
       var __headers = [];
       $js$$.alg.arrEach($columns$$, function($column$$) {
-        __headers.push(['"', $table$$.getColumn($column$$).text || " ", '"'].join(""));
+        __headers.push(['"', $table$$.exportColumn($column$$).text || " ", '"'].join(""));
       });
       return __headers.join(",");
     }($table$$0$$, $columns$$0$$), "\r\n", function __rows$$0($rows$$, $columns$$) {
@@ -3613,14 +3623,14 @@ js.extend.fn("sp", function() {
     });
     return this;
   }, push:function $$sp$$$list$fn$push$($success$$, $failure$$) {
-    var $ctx$$ = $sp$$.exportContext(this._url), $data$$99_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$99_list$$ = {clientContext:$ctx$$, items:[], list:$data$$99_list$$, self:this};
-    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$99_list$$);
-    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$99_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$99_list$$.items, $failure$$]));
+    var $ctx$$ = $sp$$.exportContext(this._url), $data$$98_list$$ = $ctx$$.get_web().get_lists().getByTitle(this._name), $data$$98_list$$ = {clientContext:$ctx$$, items:[], list:$data$$98_list$$, self:this};
+    this.eachDirtyRow(this._pushLoopDirtyRows, $data$$98_list$$);
+    $ctx$$.executeQueryAsync($js$$.alg.bindFn(this, $__successPush$$, [$data$$98_list$$.items, $success$$]), $js$$.alg.bindFn(this, $__failurePush$$, [$data$$98_list$$.items, $failure$$]));
     return this;
-  }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$51_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
-    $i$$51_rowID$$ = $row$$._columns && $row$$._columns.ID.value;
+  }, _pushLoopDirtyRows:function $$sp$$$list$fn$_pushLoopDirtyRows$($row$$, $i$$49_rowID$$, $itemInfo_listItem_rows$$, $data$$) {
+    $i$$49_rowID$$ = $row$$.ID.value;
     $itemInfo_listItem_rows$$ = $itemInfo_listItem_rows$$ = null;
-    0 > $i$$51_rowID$$ ? ($itemInfo_listItem_rows$$ = new window.SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$51_rowID$$), $data$$.newrow = !1);
+    0 > $i$$49_rowID$$ ? ($itemInfo_listItem_rows$$ = new window.SP.ListItemCreationInformation, $itemInfo_listItem_rows$$ = $data$$.list.addItem($itemInfo_listItem_rows$$), $data$$.newrow = !0) : ($itemInfo_listItem_rows$$ = $data$$.list.getItemById($i$$49_rowID$$), $data$$.newrow = !1);
     $data$$.listItem = $itemInfo_listItem_rows$$;
     $js$$.alg.each($row$$, $data$$.self._pushLoopDirtyRowColumns, $data$$);
     $data$$.items.push($itemInfo_listItem_rows$$);
@@ -3632,20 +3642,20 @@ js.extend.fn("sp", function() {
     return this.getRowById($id$$, function($row$$) {
       $js$$.alg.each($row$$, this._updateRowEach, $js$$.alg.cloneObj($values$$));
     });
-  }, _updateRowEach:function $$sp$$$list$fn$_updateRowEach$($colData$$, $colName$$1_value$$, $row$$, $data$$) {
-    $colName$$1_value$$ = $data$$[$colData$$.name];
-    $row$$ = $colName$$1_value$$ !== $colData$$.value;
-    "undefined" !== typeof $colName$$1_value$$ && $row$$ && ($colData$$.value = $colName$$1_value$$);
-  }, createRow:function $$sp$$$list$fn$createRow$($data$$103_values$$) {
+  }, _updateRowEach:function $$sp$$$list$fn$_updateRowEach$($colData$$, $colName$$3_value$$, $row$$, $data$$) {
+    $colName$$3_value$$ = $data$$[$colData$$.name];
+    $row$$ = $colName$$3_value$$ !== $colData$$.value;
+    "undefined" !== typeof $colName$$3_value$$ && $row$$ && ($colData$$.value = $colName$$3_value$$);
+  }, createRow:function $$sp$$$list$fn$createRow$($data$$102_values$$) {
     var $columns$$ = this._columns;
-    $data$$103_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$103_values$$)};
-    $js$$.alg.each($columns$$, this._createRowEach, $data$$103_values$$);
-    $data$$103_values$$.row.ID.value = $data$$103_values$$.rowID;
-    this._dirtyRows.push($data$$103_values$$.row);
+    $data$$102_values$$ = {row:{}, rowID:-1, values:$js$$.alg.mergeObj({}, $data$$102_values$$)};
+    $js$$.alg.each($columns$$, this._createRowEach, $data$$102_values$$);
+    $data$$102_values$$.row.ID.value = $data$$102_values$$.rowID;
+    this._dirtyRows.push($data$$102_values$$.row);
     return this;
-  }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$2_value$$, $column$$, $cell$$1_data$$) {
+  }, _createRowEach:function $$sp$$$list$fn$_createRowEach$($colData$$, $colName$$4_value$$, $column$$, $cell$$1_data$$) {
     var $row$$ = $cell$$1_data$$.row;
-    $colName$$2_value$$ = $cell$$1_data$$.values[$colData$$.name];
+    $colName$$4_value$$ = $cell$$1_data$$.values[$colData$$.name];
     $cell$$1_data$$ = Object.create($colData$$, {rowID:{value:$cell$$1_data$$.rowID}, dirty:{get:function() {
       return null !== $colValue$$;
     }}, value:{get:function() {
@@ -3653,7 +3663,7 @@ js.extend.fn("sp", function() {
     }, set:function($v$$) {
       $colData$$.internal && ($colValue$$ = $v$$);
     }}});
-    var $colValue$$ = "undefined" !== typeof $colName$$2_value$$ ? $colName$$2_value$$ : $colData$$.default || null;
+    var $colValue$$ = "undefined" !== typeof $colName$$4_value$$ ? $colName$$4_value$$ : $colData$$.default || null;
     $row$$[$colData$$.name] = $cell$$1_data$$;
   }, getPermissions:function $$sp$$$list$fn$getPermissions$($success$$, $failure$$) {
     var $ctx$$ = $sp$$.exportContext(this._url), $web$$ = $ctx$$.get_web(), $data$$ = {currentUser:$web$$.get_currentUser(), web:$web$$};
@@ -3969,9 +3979,9 @@ jspyder.extend.fn("template", function() {
     return "";
   }, map_item:function($map$$, $id$$) {
     return ($map$$ = this[$map$$]) ? $map$$[$id$$] : $id$$;
-  }, js_registry:function($data$$119_key$$) {
-    $data$$119_key$$ = $js$$.registry.fetch($data$$119_key$$);
-    return null === $data$$119_key$$ || "undefined" === typeof $data$$119_key$$ ? "" : $data$$119_key$$;
+  }, js_registry:function($data$$118_key$$) {
+    $data$$118_key$$ = $js$$.registry.fetch($data$$118_key$$);
+    return null === $data$$118_key$$ || "undefined" === typeof $data$$118_key$$ ? "" : $data$$118_key$$;
   }, js_log:function($data$$) {
     console.log($data$$);
   }, concat:function($str$$) {

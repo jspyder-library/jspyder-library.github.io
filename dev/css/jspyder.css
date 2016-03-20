@@ -2027,7 +2027,8 @@ a {
   top: 0;
   bottom: 0;
   left: 0;
-  right: 0; }
+  right: 0;
+  z-index: 2147483647; }
   .js-dialog-background .js-dialog {
     position: absolute;
     top: 50%;
@@ -2073,8 +2074,9 @@ a {
       background-color: #bdbdbd; }
       .js-dialog-background .js-dialog .js-dialog-footer .footer-container {
         min-height: 0;
-        text-align: right; }
+        text-align: right;
+        padding: 0.4em 0 0.4em 0.4em; }
         .js-dialog-background .js-dialog .js-dialog-footer .footer-container .js-control-button {
-          margin: 0.4em 0.4em 0.4em 0; }
+          margin-right: 0.4em; }
 
 /*# sourceMappingURL=jspyder.css.map */

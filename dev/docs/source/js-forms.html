@@ -106,9 +106,7 @@ jspyder.extend.fn(&quot;form&quot;, function () {
             }
         }
 
-        if (typeof fn === &quot;function&quot;) {
-            fn.apply(this);
-        }
+        js.alg.use(this, fn);
 
         return form;
     }
@@ -600,7 +598,7 @@ jspyder.extend.fn(&quot;form&quot;, function () {
                 $field.getValue(_export);
             }
                 
-            fn.apply(this, [values]);
+            js.alg.use(this, fn, [valid, invalid]);
             return this;
         },
         
@@ -700,7 +698,7 @@ jspyder.extend.fn(&quot;form&quot;, function () {
                 return;
             });
             
-            fn.apply(this, [valid, invalid]);
+            js.alg.use(this, fn, [valid, invalid]);
             
             return this;
         },
@@ -736,10 +734,7 @@ jspyder.extend.fn(&quot;form&quot;, function () {
             }
             
             // cycle through fields
-            
-            if(typeof fn === &quot;function&quot;) {
-                fn.apply(dom, [this, dom, data]);
-            }
+            js.alg.use(dom, fn, [this, dom, data]);
             
             return this; 
         },
@@ -858,7 +853,7 @@ jspyder.extend.fn(&quot;form&quot;, function () {
             });
             
             dom.template(fields || {});
-            (typeof fn === &quot;function&quot;) &amp;&amp; fn.apply(this, [dom]);
+            js.alg.use(this, fn, [dom]);
                 
             return dom;
         }
@@ -1052,11 +1047,13 @@ jspyder.extend.fn(&quot;form&quot;, function () {
                         js.dom(this).getValue(function(v) {
                             calStruct.date.setDay(v);
                             calStruct.setTitle(true);
+                            js.dom(calStruct.input).trigger(&quot;change&quot;);
                         });
                         calStruct.enableClose();
                     });
                     calStruct.setTitle();
                     calStruct.preventClose();
+                    js.dom(calStruct.input).trigger(&quot;change&quot;);
                     return;
                 },
                 buildWeekdays: function (weekday, daynum, daylist, data) {
